@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Enter.ai - AI 코칭 예약</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 네비게이션 헤더 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <%= link_to root_path, class: "text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors" do %>
+              Enter.ai
+            <% end %>
+          </div>
+          
+          <div class="hidden md:flex items-center space-x-8">
+            <%= link_to "서비스", "#services", class: "text-gray-700 hover:text-indigo-600 transition-colors" %>
+            <%= link_to "프로세스", "#process", class: "text-gray-700 hover:text-indigo-600 transition-colors" %>
+            <%= link_to "예약하기", new_reservation_path, 
+                        class: "bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" %>
+          </div>
+          
+          <!-- 모바일 메뉴 버튼 -->
+          <div class="md:hidden">
+            <button type="button" class="text-gray-700 hover:text-indigo-600" id="mobile-menu-button">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 모바일 메뉴 -->
+      <div class="hidden md:hidden bg-white border-t" id="mobile-menu">
+        <div class="px-4 py-4 space-y-3">
+          <%= link_to "서비스", "#services", class: "block text-gray-700 hover:text-indigo-600 transition-colors" %>
+          <%= link_to "프로세스", "#process", class: "block text-gray-700 hover:text-indigo-600 transition-colors" %>
+          <%= link_to "예약하기", new_reservation_path, 
+                      class: "block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition-colors text-center" %>
+        </div>
+      </div>
+    </nav>
+    
+    <%= yield %>
+    
+    <!-- 모바일 메뉴 스크립트 -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
+
+

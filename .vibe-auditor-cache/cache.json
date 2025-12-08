@@ -1,0 +1,35 @@
+{
+  "static_analysis_deployment": {
+    "timestamp": "2025-12-08T03:51:37.312367",
+    "result": {
+      "mode": "deployment",
+      "languages": [
+        "ruby",
+        "javascript"
+      ],
+      "issues": [
+        {
+          "tool": "rubocop",
+          "severity": "info",
+          "message": "RuboCop is not installed",
+          "suggestion": "gem install rubocop"
+        },
+        {
+          "tool": "semgrep",
+          "severity": "info",
+          "message": "Semgrep is not available on Windows. For security scanning, use WSL or Linux.",
+          "suggestion": "Install WSL: https://aka.ms/wsl or use Linux/macOS"
+        }
+      ],
+      "summary": {
+        "total_issues": 2,
+        "by_severity": {
+          "critical": 0,
+          "warning": 0,
+          "info": 2
+        }
+      }
+    },
+    "project_hash": "b6a6e1222f020f43c3b089c4076b5dc15f71a570c104cd61890387c0d2aa04e6"
+  }
+}

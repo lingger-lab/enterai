@@ -1,0 +1,19 @@
+새로운 예약이 접수되었습니다
+
+새로운 AI 코칭 예약이 접수되었습니다.
+
+예약 정보:
+- 이름: <%= @reservation.name %>
+- 연락처: <%= @reservation.phone %>
+- 이메일: <%= @reservation.email %>
+- 예약 일시: <%= @reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분") %>
+- 코칭 형태: <%= @reservation.coaching_type %>
+<% if @reservation.selected_subjects.any? %>
+- 선택 과목: <%= @reservation.selected_subjects.join(", ") %>
+<% end %>
+<% if @reservation.requests.present? %>
+- 요청사항: <%= @reservation.requests %>
+<% end %>
+
+예약 ID: #<%= @reservation.id %>
+

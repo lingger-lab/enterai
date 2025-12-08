@@ -1,0 +1,64 @@
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto">
+    <!-- 성공 메시지 -->
+    <div class="bg-white rounded-lg shadow-xl p-8 text-center">
+      <div class="mb-6">
+        <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+          <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">예약이 완료되었습니다!</h1>
+        <p class="text-gray-600">예약 확인 이메일과 문자를 발송했습니다.</p>
+      </div>
+      
+      <!-- 예약 정보 요약 -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-6 text-left">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">예약 정보</h2>
+        <dl class="space-y-3">
+          <div class="flex justify-between">
+            <dt class="text-gray-600">이름</dt>
+            <dd class="font-medium text-gray-900"><%= @reservation.name %></dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-600">연락처</dt>
+            <dd class="font-medium text-gray-900"><%= @reservation.phone %></dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-600">이메일</dt>
+            <dd class="font-medium text-gray-900"><%= @reservation.email %></dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-600">예약 일시</dt>
+            <dd class="font-medium text-gray-900">
+              <%= @reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분") %>
+            </dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-600">코칭 형태</dt>
+            <dd class="font-medium text-gray-900"><%= @reservation.coaching_type %></dd>
+          </div>
+          <% if @reservation.selected_subjects.any? %>
+            <div class="flex justify-between">
+              <dt class="text-gray-600">선택 과목</dt>
+              <dd class="font-medium text-gray-900"><%= @reservation.selected_subjects.join(", ") %></dd>
+            </div>
+          <% end %>
+        </dl>
+      </div>
+      
+      <!-- 안내 메시지 -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <p class="text-sm text-blue-800">
+          예약 일시 24시간 전에 리마인더 메시지를 발송해드립니다.<br>
+          문의사항이 있으시면 언제든지 연락주세요.
+        </p>
+      </div>
+      
+      <!-- 홈으로 돌아가기 -->
+      <%= link_to "홈으로 돌아가기", root_path, 
+                  class: "inline-block bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all" %>
+    </div>
+  </div>
+</div>
+
