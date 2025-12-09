@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_01_01_000002) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_09_124647) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -31,6 +31,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_01_01_000002) do
     t.string "phone_encrypted_iv", comment: "연락처 암호화 IV"
     t.text "email_encrypted", comment: "암호화된 이메일"
     t.string "email_encrypted_iv", comment: "이메일 암호화 IV"
+    t.text "encrypted_name", comment: "암호화된 이름 (attr_encrypted)"
+    t.string "encrypted_name_iv", comment: "이름 암호화 IV (attr_encrypted)"
+    t.text "encrypted_phone", comment: "암호화된 연락처 (attr_encrypted)"
+    t.string "encrypted_phone_iv", comment: "연락처 암호화 IV (attr_encrypted)"
+    t.text "encrypted_email", comment: "암호화된 이메일 (attr_encrypted)"
+    t.string "encrypted_email_iv", comment: "이메일 암호화 IV (attr_encrypted)"
     t.index ["email"], name: "index_reservations_on_email"
     t.index ["reservation_datetime"], name: "index_reservations_on_reservation_datetime"
   end
