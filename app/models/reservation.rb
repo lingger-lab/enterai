@@ -1,8 +1,11 @@
 class Reservation < ApplicationRecord
   # 개인정보 암호화 설정
-  attr_encrypted :name, key: ENV.fetch('ENCRYPTION_KEY', Rails.application.credentials.secret_key_base[0..31])
-  attr_encrypted :phone, key: ENV.fetch('ENCRYPTION_KEY', Rails.application.credentials.secret_key_base[0..31])
-  attr_encrypted :email, key: ENV.fetch('ENCRYPTION_KEY', Rails.application.credentials.secret_key_base[0..31])
+  # ENV['ENCRYPTION_KEY']가 없으면 기본값 사용 (개발/테스트용)
+  ENCRYPTION_KEY = ENV['ENCRYPTION_KEY'] || Rails.application.credentials.secret_key_base&.first(32) || '12345678901234567890123456789012'
+
+  attr_encrypted :name, key: ENCRYPTION_KEY
+  attr_encrypted :phone, key: ENCRYPTION_KEY
+  attr_encrypted :email, key: ENCRYPTION_KEY
   
   # 유효성 검사 (암호화 전 원본 데이터 검증)
   validates :name, presence: true, length: { maximum: 100 }
