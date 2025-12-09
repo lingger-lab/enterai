@@ -1,13 +1,11 @@
-const path = require('path');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // 개발 환경: 절대 경로 사용 및 모든 파일 포함
+  // Windows와 Linux 모두 호환되는 상대 경로 사용
   content: [
-    path.resolve(__dirname, "../app/views/**/*.{html,erb}"),
-    path.resolve(__dirname, "../app/helpers/**/*.rb"),
-    path.resolve(__dirname, "../app/javascript/**/*.js"),
-    path.resolve(__dirname, "../app/assets/stylesheets/**/*.css"),
+    "./app/views/**/*.{html,erb}",
+    "./app/helpers/**/*.rb",
+    "./app/javascript/**/*.js",
+    "./app/assets/stylesheets/**/*.css",
   ],
   // 개발 환경: 모든 Tailwind 유틸리티 클래스를 포함하도록 safelist 사용
   // 패턴이 작동하지 않으므로 직접 클래스 추가

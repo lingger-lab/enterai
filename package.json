@@ -11,7 +11,8 @@
     "postcss": "^8.4.32"
   },
   "scripts": {
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify --content \"./app/views/**/*.{html,erb}\" --content \"./app/helpers/**/*.rb\" --content \"./app/javascript/**/*.js\" && node -e \"require('fs').copyFileSync('app/assets/builds/application.css', 'app/assets/stylesheets/application.css')\""
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
+    "watch:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch"
   },
   "engines": {
     "node": ">=18.0.0",
