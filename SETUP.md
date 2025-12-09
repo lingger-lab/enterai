@@ -1,8 +1,8 @@
-# Enter.ai 설치 가이드
+# EnterLab 설치 가이드
 
 ## 프로젝트 개요
 
-Enter.ai는 AI 1:1 코칭 예약 및 자동 알림 웹서비스입니다.  
+EnterLab은 AI 1:1 코칭 예약 및 자동 알림 웹서비스입니다.  
 AI에 대한 이해가 부족한 초보자도, 개인 맞춤형 코칭을 통해 AI 수익화 기술을 빠르게 익히고 실행할 수 있도록 돕는 **국내망 기반 플랫폼**입니다.
 
 ### 🇰🇷 국내망 기술 조합
@@ -113,8 +113,8 @@ DATABASE_HOST=localhost
 
 # SendGrid 설정 (https://sendgrid.com 에서 API 키 발급)
 SENDGRID_API_KEY=your_sendgrid_api_key
-SENDGRID_FROM_EMAIL=noreply@enter.ai
-SENDGRID_DOMAIN=enter.ai
+SENDGRID_FROM_EMAIL=noreply@enterlab.com
+SENDGRID_DOMAIN=enterlab.com
 
 # Naver Cloud SENS 설정 (https://www.ncloud.com 에서 서비스 신청)
 SENS_ACCESS_KEY=your_sens_access_key
@@ -123,14 +123,14 @@ SENS_SERVICE_ID=your_sens_service_id
 SENS_SENDER_NUMBER=01012345678
 
 # 관리자 설정
-ADMIN_EMAIL=admin@enter.ai
+ADMIN_EMAIL=admin@enterlab.com
 CONTACT_PHONE=050-0000-0000
 
 # 개인정보 암호화 키 (32자리 문자열, 보안을 위해 반드시 변경하세요)
 ENCRYPTION_KEY=your_32_character_encryption_key_here
 
 # 호스트 설정 (프로덕션)
-HOST=enter.ai
+HOST=enterlab.com
 ```
 
 ### 3. 데이터베이스 생성 및 마이그레이션
@@ -241,7 +241,7 @@ bundle exec sidekiq
 
 1. 콘솔 상단 **"Management"** > **"API 인증키 관리"** 메뉴로 이동
 2. **"API 인증키 생성"** 클릭
-3. 인증키 이름 입력 (예: "Enter.ai SMS")
+3. 인증키 이름 입력 (예: "EnterLab SMS")
 4. **Access Key ID**와 **Secret Key** 확인 및 안전하게 저장
    - ⚠️ Secret Key는 한 번만 표시되므로 반드시 저장하세요
 

@@ -1,4 +1,4 @@
-# Enter.ai - AI 코칭 예약 시스템
+# EnterLab - AI 코칭 예약 시스템
 
 Ruby on Rails 8.0 기반의 AI 코칭 예약 및 자동 알림 웹서비스입니다.
 
@@ -68,8 +68,8 @@ DATABASE_HOST=localhost
 
 # SendGrid
 SENDGRID_API_KEY=your_sendgrid_api_key
-SENDGRID_FROM_EMAIL=noreply@enter.ai
-SENDGRID_DOMAIN=enter.ai
+SENDGRID_FROM_EMAIL=noreply@enterlab.com
+SENDGRID_DOMAIN=enterlab.com
 
 # Twilio
 TWILIO_ACCOUNT_SID=your_twilio_account_sid
@@ -77,13 +77,13 @@ TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_PHONE_NUMBER=+1234567890
 
 # 관리자 이메일
-ADMIN_EMAIL=admin@enter.ai
+ADMIN_EMAIL=admin@enterlab.com
 
 # 연락처
 CONTACT_PHONE=02-1234-5678
 
 # 호스트 (프로덕션)
-HOST=enter.ai
+HOST=enterlab.com
 ```
 
 ### 5. 서버 실행

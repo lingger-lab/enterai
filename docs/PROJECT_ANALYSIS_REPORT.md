@@ -1,4 +1,4 @@
-# 📊 [Enter.ai] 프로젝트 문서 분석 및 개선사항 보고서
+# 📊 [EnterLab] 프로젝트 문서 분석 및 개선사항 보고서
 
 **생성일**: 2025-12-09
 **분석 범위**: PRD, TRD, Tasks.md 및 전체 프로젝트 구조
@@ -105,7 +105,7 @@ docs/HEAD_SECTION_DEBUG.md
 
 **수정안**:
 ```markdown
-# [Enter.ai] AI 코딩 착수용 프롬프트 (Tasks)
+# [EnterLab] AI 코딩 착수용 프롬프트 (Tasks)
 
 너는 Ruby on Rails 8.0 (Hotwire 포함)의 수석 개발자야.
 첨부한 [PRD]와 [TRD] 문서를 기반으로, 100% 국내망 환경에서 작동하도록 구현해.
@@ -188,7 +188,7 @@ class SmsNotificationJob < ApplicationJob
     reservation = Reservation.find(reservation_id)
     SensSmsService.send_sms(
       reservation.phone,
-      "[Enter.ai] #{reservation.name}님, 예약이 완료되었습니다."
+      "[EnterLab] #{reservation.name}님, 예약이 완료되었습니다."
     )
   end
 end

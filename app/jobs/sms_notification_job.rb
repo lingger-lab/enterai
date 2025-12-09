@@ -21,7 +21,7 @@ class SmsNotificationJob < ApplicationJob
   
   def sms_message(reservation)
     <<~MESSAGE
-      [Enter.ai] 예약이 완료되었습니다!
+      [EnterLab] 예약이 완료되었습니다!
       
       예약 일시: #{reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분")}
       코칭 형태: #{reservation.coaching_type}

@@ -1,0 +1,19 @@
+<%= turbo_stream.replace "reservation_form" do %>
+  <%= turbo_frame_tag "reservation_form" do %>
+    <!-- 에러 메시지 표시 -->
+    <% if @reservation.errors.any? %>
+      <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-6 mb-6">
+        <h3 class="text-red-800 font-semibold mb-3 text-lg">다음 오류를 확인해주세요:</h3>
+        <ul class="list-disc list-inside text-red-700 space-y-2">
+          <% @reservation.errors.full_messages.each do |message| %>
+            <li class="text-base"><%= message %></li>
+          <% end %>
+        </ul>
+        <div class="mt-6">
+          <%= link_to "다시 시도", new_reservation_path, 
+                      class: "inline-block bg-indigo-600 text-white py-3 px-6 rounded-2xl font-semibold hover:bg-indigo-700 transition-all" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

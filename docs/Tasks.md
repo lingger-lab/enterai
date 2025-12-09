@@ -1,4 +1,4 @@
-# [Enter.ai] AI 코딩 착수용 프롬프트 (Tasks)
+# [EnterLab] AI 코딩 착수용 프롬프트 (Tasks)
 
 너는 Ruby on Rails 8.0 (Hotwire 포함)의 수석 개발자야.
 첨부한 [PRD]와 [TRD] 문서를 기반으로, 100% 국내망 환경에서 작동하도록 구현해.
@@ -34,7 +34,7 @@ SENS_SERVICE_ID=your_service_id
 SENS_SENDER_NUMBER=01012345678
 
 # 관리자 이메일
-ADMIN_EMAIL=admin@enter.ai
+ADMIN_EMAIL=admin@enterlab.com
 
 # 개인정보 암호화 키
 ENCRYPTION_KEY=your_32_character_encryption_key

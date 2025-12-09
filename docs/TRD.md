@@ -1,6 +1,6 @@
-# [Enter.ai] 기술 사양서 (TRD)
+# [EnterLab] 기술 사양서 (TRD)
 
-# ⚙ [Enter.ai] 기술 사양서 (TRD.md)
+# ⚙ [EnterLab] 기술 사양서 (TRD.md)
 
 ## 🇰🇷 국내망 기반 버전 — (050 가상번호 + Naver Cloud SENS + SendGrid)
 
@@ -121,7 +121,7 @@ end
 class ReservationMailer < ApplicationMailer
   def confirmation(reservation)
     @reservation = reservation
-    mail(to: @reservation.email, subject: 'Enter.ai 예약이 완료되었습니다')
+    mail(to: @reservation.email, subject: 'EnterLab 예약이 완료되었습니다')
   end
 end
 ```
@@ -136,7 +136,7 @@ class Reservation < ApplicationRecord
 
   def send_notifications
     ReservationMailer.confirmation(self).deliver_later
-    SensSmsService.send_sms(phone, "[Enter.ai] #{@name}님, 예약이 완료되었습니다.")
+    SensSmsService.send_sms(phone, "[EnterLab] #{@name}님, 예약이 완료되었습니다.")
   end
 end
 ```
