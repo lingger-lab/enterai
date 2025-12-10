@@ -2,6 +2,7 @@ services:
   # Rails 웹 애플리케이션
   - type: web
     name: enterlab-web
+    runtime: ruby
     plan: free
     buildCommand: |
       bundle install
@@ -70,6 +71,7 @@ services:
   # Sidekiq 백그라운드 작업 처리
   - type: worker
     name: enterlab-worker
+    runtime: ruby
     plan: free
     buildCommand: |
       bundle install
@@ -124,6 +126,7 @@ services:
     name: enterlab-redis
     plan: free
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
 
 databases:
   # PostgreSQL 데이터베이스
