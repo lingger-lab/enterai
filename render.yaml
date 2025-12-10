@@ -1,0 +1,150 @@
+services:
+  # PostgreSQL 데이터베이스
+  - type: pspg
+    name: enterlab-postgres
+    plan: free
+    databaseName: enterlab_production
+    user: enterlab_user
+
+  # Redis (Sidekiq 작업 큐 및 캐시용)
+  - type: redis
+    name: enterlab-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
+  # Rails 웹 애플리케이션
+  - type: web
+    name: enterlab-web
+    runtime: ruby
+    plan: free
+    buildCommand: |
+      bundle install
+      npm install
+      npm run build:css
+      bundle exec rails assets:precompile
+      bundle exec rails db:migrate
+    startCommand: bundle exec puma -C config/puma.rb
+    env: ruby
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+        generateValue: true
+      - key: SECRET_KEY_BASE
+        sync: false
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: enterlab-postgres
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: enterlab-redis
+          property: connectionString
+      # SendGrid 이메일 설정
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: SENDGRID_FROM_EMAIL
+        value: noreply@enterlab.com
+      - key: SENDGRID_DOMAIN
+        value: enterlab.com
+      # Naver Cloud SENS SMS 설정
+      - key: SENS_ACCESS_KEY
+        sync: false
+      - key: SENS_SECRET_KEY
+        sync: false
+      - key: SENS_SERVICE_ID
+        sync: false
+      - key: SENS_SENDER_NUMBER
+        sync: false
+      # 개인정보 암호화 키
+      - key: ENCRYPTION_KEY
+        sync: false
+        generateValue: true
+      # 관리자 설정
+      - key: ADMIN_EMAIL
+        value: admin@enterlab.com
+      # 호스트 설정
+      - key: HOST
+        fromService:
+          type: web
+          name: enterlab-web
+          property: host
+      # 연락처
+      - key: CONTACT_PHONE
+        value: 050-0000-0000
+      # Rails 설정
+      - key: RAILS_MAX_THREADS
+        value: 5
+      - key: RAILS_MIN_THREADS
+        value: 5
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+    autoDeploy: true
+    dependsOn:
+      - enterlab-postgres
+      - enterlab-redis
+
+  # Sidekiq 백그라운드 작업 처리
+  - type: worker
+    name: enterlab-worker
+    runtime: ruby
+    plan: free
+    buildCommand: |
+      bundle install
+      npm install
+      npm run build:css
+    startCommand: bundle exec sidekiq
+    env: ruby
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+        generateValue: true
+      - key: SECRET_KEY_BASE
+        sync: false
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: enterlab-postgres
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: enterlab-redis
+          property: connectionString
+      # SendGrid 이메일 설정
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: SENDGRID_FROM_EMAIL
+        value: noreply@enterlab.com
+      - key: SENDGRID_DOMAIN
+        value: enterlab.com
+      # Naver Cloud SENS SMS 설정
+      - key: SENS_ACCESS_KEY
+        sync: false
+      - key: SENS_SECRET_KEY
+        sync: false
+      - key: SENS_SERVICE_ID
+        sync: false
+      - key: SENS_SENDER_NUMBER
+        sync: false
+      # 개인정보 암호화 키
+      - key: ENCRYPTION_KEY
+        sync: false
+        generateValue: true
+      # 관리자 설정
+      - key: ADMIN_EMAIL
+        value: admin@enterlab.com
+      # Rails 설정
+      - key: RAILS_MAX_THREADS
+        value: 5
+    autoDeploy: true
+    dependsOn:
+      - enterlab-postgres
+      - enterlab-redis
+
