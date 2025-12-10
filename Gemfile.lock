@@ -149,8 +149,11 @@ GEM
     nio4r (2.7.5)
     nokogiri (1.18.10-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.18.10-x86_64-linux-gnu)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.6.2-x64-mingw-ucrt)
+    pg (1.6.2-x86_64-linux)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -234,6 +237,8 @@ GEM
     stringio (3.1.9)
     tailwindcss-rails (2.7.9-x64-mingw-ucrt)
       railties (>= 7.0.0)
+    tailwindcss-rails (2.7.9-x86_64-linux)
+      railties (>= 7.0.0)
     thor (1.4.0)
     timeout (0.4.4)
     tsort (0.2.0)
@@ -261,6 +266,7 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   attr_encrypted (~> 4.0)
