@@ -6,8 +6,6 @@ services:
     plan: free
     buildCommand: |
       bundle install
-      npm install
-      npm run build:css
       bundle exec rails assets:precompile
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
@@ -75,8 +73,6 @@ services:
     plan: free
     buildCommand: |
       bundle install
-      npm install
-      npm run build:css
     startCommand: bundle exec sidekiq
     envVars:
       - key: RAILS_ENV
