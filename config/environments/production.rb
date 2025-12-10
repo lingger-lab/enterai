@@ -23,11 +23,10 @@ Rails.application.configure do
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
-  # Propshaft 설정: 프로덕션에서도 app/assets를 읽을 수 있도록 설정
+  # Propshaft는 기본적으로 프로덕션에서도 app/assets를 직접 읽을 수 있습니다
   # assets:precompile이 실행되면 public/assets에 복사되지만,
-  # 복사되지 않은 경우를 대비해 app/assets도 읽을 수 있도록 함
-  config.assets.compile = true
-  config.assets.check_precompiled_asset = false
+  # Propshaft는 public/assets에 파일이 없으면 자동으로 app/assets에서 읽습니다
+  # Sprockets용 설정은 Propshaft에는 적용되지 않으므로 제거
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
