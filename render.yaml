@@ -119,15 +119,15 @@ services:
         value: 5
     autoDeploy: true
 
+  # Redis (Sidekiq 작업 큐 및 캐시용)
+  - type: redis
+    name: enterlab-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
 databases:
   # PostgreSQL 데이터베이스
   - name: enterlab-postgres
     plan: free
     databaseName: enterlab_production
     user: enterlab_user
-
-redis:
-  # Redis (Sidekiq 작업 큐 및 캐시용)
-  - name: enterlab-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru
