@@ -72,65 +72,9 @@ services:
     healthCheckPath: /
     autoDeploy: true
 
-  # Sidekiq 백그라운드 작업 처리
-  - type: worker
-    name: enterlab-worker
-    runtime: ruby
-    plan: free
-    buildCommand: |
-      bundle install
-      bundle exec rails assets:clobber
-      npm run build:css || bundle exec rails tailwindcss:build
-      [ -f app/assets/builds/application.css ] && cp app/assets/builds/application.css app/assets/stylesheets/application.css || true
-      bundle exec rails assets:precompile
-      ls -la public/assets/.manifest.json || echo "Warning: manifest file not found"
-    startCommand: bundle exec sidekiq
-    envVars:
-      - key: RAILS_ENV
-        value: production
-      - key: RAILS_SERVE_STATIC_FILES
-        value: "true"
-      - key: RAILS_MASTER_KEY
-        sync: false
-      - key: SECRET_KEY_BASE
-        sync: false
-      - key: DATABASE_URL
-        fromDatabase:
-          name: enterlab-postgres
-          property: connectionString
-      - key: REDIS_URL
-        fromService:
-          name: enterlab-redis
-          type: redis
-          property: connectionString
-      # SendGrid 이메일 설정
-      - key: SENDGRID_API_KEY
-        sync: false
-      - key: SENDGRID_FROM_EMAIL
-        value: noreply@enterlab.com
-      - key: SENDGRID_DOMAIN
-        value: enterlab.com
-      # Naver Cloud SENS SMS 설정
-      - key: SENS_ACCESS_KEY
-        sync: false
-      - key: SENS_SECRET_KEY
-        sync: false
-      - key: SENS_SERVICE_ID
-        sync: false
-      - key: SENS_SENDER_NUMBER
-        sync: false
-      # 개인정보 암호화 키
-      - key: ENCRYPTION_KEY
-        sync: false
-      # 관리자 설정
-      - key: ADMIN_EMAIL
-        value: admin@enterlab.com
-      # Rails 설정
-      - key: RAILS_MAX_THREADS
-        value: 5
-    autoDeploy: true
-
   # Redis (Sidekiq 작업 큐 및 캐시용)
+  # 참고: Free 플랜에서는 Worker 서비스를 사용할 수 없으므로 제거됨
+  # Sidekiq이 필요한 경우 유료 플랜으로 업그레이드하거나, Web 서비스 내에서 실행 가능
   - type: redis
     name: enterlab-redis
     plan: free
