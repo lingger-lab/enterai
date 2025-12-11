@@ -8,6 +8,7 @@ services:
       bundle install
       bundle exec rails assets:clobber
       bundle exec rails tailwindcss:build
+      cp app/assets/builds/application.css app/assets/stylesheets/application.css
       bundle exec rails assets:precompile
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
@@ -79,6 +80,7 @@ services:
       bundle install
       bundle exec rails assets:clobber
       bundle exec rails tailwindcss:build
+      cp app/assets/builds/application.css app/assets/stylesheets/application.css
       bundle exec rails assets:precompile
     startCommand: bundle exec sidekiq
     envVars:
