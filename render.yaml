@@ -1,5 +1,5 @@
 services:
-  # Rails 웹 애플리케이션
+  # Rails 웹 애플리케이션 (Blueprint 재동기화)
   - type: web
     name: enterlab-web
     runtime: ruby
