@@ -18,12 +18,13 @@ Rails.application.configure do
 
   # Enable static file serving from the `/public` folder (turn off if using NGINX/Apache for it).
   # Render.com에서는 Rails가 정적 파일을 서빙해야 함
-  # 에셋을 Rails 서버가 직접 서빙하도록 설정
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || true
-  
+  config.public_file_server.enabled = true
+
   # Propshaft 프로덕션 설정
   # Propshaft는 assets:precompile 실행 시 public/assets/.manifest.json을 생성합니다
   # 이 manifest 파일을 통해 에셋 경로를 매핑하므로 반드시 생성되어야 합니다
+  # 에셋을 찾을 수 없을 때 에러 발생
+  config.assets.unknown_asset_fallback = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"

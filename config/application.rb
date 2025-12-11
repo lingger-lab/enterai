@@ -29,13 +29,9 @@ module EnterAi
 
     # ✅ Propshaft + Tailwind 활성화
     config.assets.enabled = true
-    config.assets.debug = true
-    
-    # Propshaft 에셋 경로 설정 (프로덕션에서도 app/assets를 읽을 수 있도록)
-    config.assets.paths << Rails.root.join("app/assets")
+
+    # Propshaft 에셋 경로 설정
     config.assets.paths << Rails.root.join("app/assets/builds")
-    config.assets.paths << Rails.root.join("app/assets/stylesheets")
-    config.assets.paths << Rails.root.join("app/assets/javascripts")
   end
 end
 

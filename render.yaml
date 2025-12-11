@@ -6,11 +6,9 @@ services:
     plan: free
     buildCommand: |
       bundle install
-      bundle exec rails assets:clobber
-      npm run build:css || bundle exec rails tailwindcss:build
-      [ -f app/assets/builds/application.css ] && cp app/assets/builds/application.css app/assets/stylesheets/application.css || true
+      npm install
+      npm run build:css
       bundle exec rails assets:precompile
-      ls -la public/assets/.manifest.json || echo "Warning: manifest file not found"
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
