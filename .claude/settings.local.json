@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:css:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(bundle exec rails:*)",
+      "Bash(bin/importmap pin:*)",
+      "Bash(./bin/importmap pin stimulus turbo)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

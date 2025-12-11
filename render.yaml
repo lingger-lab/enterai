@@ -8,7 +8,8 @@ services:
       bundle install
       npm install
       npm run build:css
-      bundle exec rails assets:precompile
+      bundle exec rails assets:precompile RAILS_ENV=production
+      ls -la public/assets/ | head -20
       ls -la public/assets/.manifest.json || echo "Warning: manifest file not found"
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
