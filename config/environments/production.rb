@@ -18,7 +18,8 @@ Rails.application.configure do
 
   # Enable static file serving from the `/public` folder (turn off if using NGINX/Apache for it).
   # Render.com에서는 Rails가 정적 파일을 서빙해야 함
-  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present? || ENV["RENDER"].present?
+  # 에셋을 Rails 서버가 직접 서빙하도록 설정
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || true
   
   # Propshaft 프로덕션 설정
   # Propshaft는 assets:precompile 실행 시 public/assets/.manifest.json을 생성합니다
