@@ -1,14 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-const path = require('path');
-
 module.exports = {
-  // 절대 경로 사용으로 빌드 환경에서도 안정적으로 작동
   content: [
-    path.join(__dirname, '../app/views/**/*.{html,erb,html.erb}'),
-    path.join(__dirname, '../app/helpers/**/*.rb'),
-    path.join(__dirname, '../app/javascript/**/*.js'),
-    path.join(__dirname, '../app/views/**/*.turbo_stream.erb'),
-    path.join(__dirname, '../app/views/layouts/**/*.erb'),
+    "./app/views/**/*.{html,erb}",
+    "./app/helpers/**/*.rb",
+    "./app/javascript/**/*.js",
+    "./app/components/**/*.{rb,html,erb}",
   ],
 
   // Safelist: 동적으로 생성되거나 content 스캔이 안 되는 클래스만 추가
