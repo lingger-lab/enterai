@@ -10,6 +10,7 @@ services:
       npm run build:css || bundle exec rails tailwindcss:build
       [ -f app/assets/builds/application.css ] && cp app/assets/builds/application.css app/assets/stylesheets/application.css || true
       bundle exec rails assets:precompile
+      ls -la public/assets/.manifest.json || echo "Warning: manifest file not found"
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
@@ -82,6 +83,7 @@ services:
       npm run build:css || bundle exec rails tailwindcss:build
       [ -f app/assets/builds/application.css ] && cp app/assets/builds/application.css app/assets/stylesheets/application.css || true
       bundle exec rails assets:precompile
+      ls -la public/assets/.manifest.json || echo "Warning: manifest file not found"
     startCommand: bundle exec sidekiq
     envVars:
       - key: RAILS_ENV
