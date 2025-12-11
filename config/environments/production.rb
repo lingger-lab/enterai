@@ -24,6 +24,11 @@ Rails.application.configure do
   # Propshaft 프로덕션 설정
   # Propshaft는 assets:precompile 실행 시 public/assets/.manifest.json을 생성합니다
   # 이 manifest 파일을 통해 에셋 경로를 매핑하므로 반드시 생성되어야 합니다
+  
+  # Propshaft 에셋 컴파일 디버깅을 위한 설정
+  config.assets.debug = false
+  config.assets.digest = true
+  config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
