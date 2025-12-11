@@ -6,12 +6,16 @@ services:
     plan: free
     buildCommand: |
       bundle install
+      bundle exec rails assets:clobber
+      bundle exec rails tailwindcss:build
       bundle exec rails assets:precompile
       bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
       - key: RAILS_ENV
         value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
       - key: RAILS_MASTER_KEY
         sync: false
       - key: SECRET_KEY_BASE
@@ -73,10 +77,15 @@ services:
     plan: free
     buildCommand: |
       bundle install
+      bundle exec rails assets:clobber
+      bundle exec rails tailwindcss:build
+      bundle exec rails assets:precompile
     startCommand: bundle exec sidekiq
     envVars:
       - key: RAILS_ENV
         value: production
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
       - key: RAILS_MASTER_KEY
         sync: false
       - key: SECRET_KEY_BASE
