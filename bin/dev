@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Procfile.dev를 사용하여 모든 프로세스를 동시에 실행
+# (Rails 서버 + CSS 빌드 + Sidekiq)
+#
+# 사용법: bin/dev
+#
+# foreman이 없으면 설치: gem install foreman
+
+if command -v foreman &> /dev/null; then
+  exec foreman start -f Procfile.dev "$@"
+else
+  echo "foreman이 설치되어 있지 않습니다."
+  echo "설치: gem install foreman"
+  echo ""
+  echo "또는 각 프로세스를 별도 터미널에서 실행하세요:"
+  echo "  터미널 1: bundle exec rails server -p 3000"
+  echo "  터미널 2: npm run build:css -- --watch"
+  echo "  터미널 3: bundle exec sidekiq -C config/sidekiq.yml"
+  exit 1
+fi

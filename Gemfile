@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.3.10"
+ruby ">= 3.3.0"
 
 # Rails 8.0
 gem "rails", "~> 8.0.0"
@@ -36,6 +36,9 @@ gem "devise", "~> 4.9"
 
 # 비동기 작업 처리
 gem "sidekiq", "~> 7.0"
+
+# 페이지네이션
+gem "pagy", "~> 9.0"
 
 # 환경 변수 관리
 gem "dotenv-rails"

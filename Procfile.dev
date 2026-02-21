@@ -1,0 +1,3 @@
+web: bundle exec rails server -p 3000
+css: npm run build:css -- --watch
+sidekiq: bundle exec sidekiq -C config/sidekiq.yml

@@ -1,0 +1,12 @@
+<tr id="<%= dom_id(reservation) %>">
+  <td class="px-6 py-4 text-sm text-gray-500"><%= reservation.id %></td>
+  <td class="px-6 py-4 text-sm font-medium text-gray-900"><%= reservation.name %></td>
+  <td class="px-6 py-4 text-sm text-gray-600"><%= reservation.phone %></td>
+  <td class="px-6 py-4 text-sm text-gray-600"><%= reservation.reservation_datetime.strftime("%m/%d %H:%M") %></td>
+  <td class="px-6 py-4 text-sm text-gray-600"><%= reservation.coaching_type %></td>
+  <td class="px-6 py-4"><%= render "admin/reservations/status_badge", reservation: reservation %></td>
+  <td class="px-6 py-4 text-sm text-gray-400"><%= reservation.created_at.strftime("%m/%d") %></td>
+  <td class="px-6 py-4 text-right">
+    <%= link_to "상세", admin_reservation_path(reservation), class: "text-indigo-600 hover:text-indigo-800 text-sm font-medium" %>
+  </td>
+</tr>

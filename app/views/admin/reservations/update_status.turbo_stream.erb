@@ -1,0 +1,24 @@
+<%= turbo_stream.replace dom_id(@reservation) do %>
+  <%= render partial: "admin/reservations/reservation", locals: { reservation: @reservation } %>
+<% end %>
+
+<%= turbo_stream.replace "status-panel" do %>
+  <div class="bg-white rounded-xl shadow-sm p-6 space-y-4" id="status-panel">
+    <h2 class="text-lg font-semibold text-gray-900">상태 변경</h2>
+    <div class="space-y-2">
+      <% Reservation::STATUSES.each do |status| %>
+        <% if status != @reservation.status %>
+          <%= button_to Reservation::STATUS_LABELS[status],
+              update_status_admin_reservation_path(@reservation, status: status),
+              method: :patch,
+              class: "w-full px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 text-left",
+              data: { turbo_confirm: "상태를 '#{Reservation::STATUS_LABELS[status]}'(으)로 변경하시겠습니까?" } %>
+        <% else %>
+          <div class="w-full px-4 py-2 bg-indigo-50 border border-indigo-200 rounded-lg text-sm font-medium text-indigo-700 text-left">
+            <%= Reservation::STATUS_LABELS[status] %> (현재)
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,10 @@
+# Sidekiq 설정
+# 참고: https://github.com/sidekiq/sidekiq/wiki/Advanced-Options
+
+:concurrency: 5
+:timeout: 25
+
+:queues:
+  - [default, 5]
+  - [mailers, 3]
+  - [low, 1]

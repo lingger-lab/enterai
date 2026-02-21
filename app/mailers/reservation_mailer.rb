@@ -1,21 +1,42 @@
 class ReservationMailer < ApplicationMailer
-  # 사용자에게 예약 확인 이메일 발송
-  def confirmation(reservation)
+  def reservation_created(reservation)
     @reservation = reservation
-    mail(
-      to: @reservation.email,
-      subject: "[EnterLab] 예약이 완료되었습니다"
-    )
+    @datetime = format_datetime(reservation.reservation_datetime)
+    @contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    mail(to: reservation.email, subject: "[EnterLab] 예약이 완료되었습니다")
   end
-  
-  # 관리자에게 신규 예약 알림 이메일 발송
-  def admin_notification(reservation)
+
+  def reservation_confirmed(reservation)
     @reservation = reservation
-    admin_email = ENV.fetch("ADMIN_EMAIL", "admin@enterlab.com")
-    mail(
-      to: admin_email,
-      subject: "[EnterLab] 새로운 예약이 접수되었습니다"
-    )
+    @datetime = format_datetime(reservation.reservation_datetime)
+    @contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    mail(to: reservation.email, subject: "[EnterLab] 예약이 확정되었습니다")
+  end
+
+  def reservation_cancelled(reservation)
+    @reservation = reservation
+    @datetime = format_datetime(reservation.reservation_datetime)
+    @contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    mail(to: reservation.email, subject: "[EnterLab] 예약이 취소되었습니다")
+  end
+
+  def schedule_changed(reservation)
+    @reservation = reservation
+    @datetime = format_datetime(reservation.reservation_datetime)
+    @contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    mail(to: reservation.email, subject: "[EnterLab] 예약 일정이 변경되었습니다")
+  end
+
+  def reminder(reservation)
+    @reservation = reservation
+    @datetime = format_datetime(reservation.reservation_datetime)
+    @contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    mail(to: reservation.email, subject: "[EnterLab] 내일 예약이 있습니다")
+  end
+
+  private
+
+  def format_datetime(datetime)
+    datetime.strftime("%Y년 %m월 %d일 %H시 %M분")
   end
 end
-

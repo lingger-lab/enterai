@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_09_124647) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_22_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "reservations", force: :cascade do |t|
     t.string "name", null: false, comment: "이름"
@@ -25,19 +37,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_09_124647) do
     t.boolean "privacy_agreed", default: false, null: false, comment: "개인정보 동의"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "name_encrypted", comment: "암호화된 이름"
-    t.string "name_encrypted_iv", comment: "이름 암호화 IV"
-    t.text "phone_encrypted", comment: "암호화된 연락처"
-    t.string "phone_encrypted_iv", comment: "연락처 암호화 IV"
-    t.text "email_encrypted", comment: "암호화된 이메일"
-    t.string "email_encrypted_iv", comment: "이메일 암호화 IV"
     t.text "encrypted_name", comment: "암호화된 이름 (attr_encrypted)"
     t.string "encrypted_name_iv", comment: "이름 암호화 IV (attr_encrypted)"
     t.text "encrypted_phone", comment: "암호화된 연락처 (attr_encrypted)"
     t.string "encrypted_phone_iv", comment: "연락처 암호화 IV (attr_encrypted)"
     t.text "encrypted_email", comment: "암호화된 이메일 (attr_encrypted)"
     t.string "encrypted_email_iv", comment: "이메일 암호화 IV (attr_encrypted)"
+    t.string "status", default: "pending", null: false, comment: "예약 상태"
+    t.string "reminder_job_id"
     t.index ["email"], name: "index_reservations_on_email"
     t.index ["reservation_datetime"], name: "index_reservations_on_reservation_datetime"
+    t.index ["status"], name: "index_reservations_on_status"
   end
 end

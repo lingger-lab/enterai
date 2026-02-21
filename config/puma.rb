@@ -8,9 +8,8 @@ max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-port ENV.fetch("PORT") { 3000 }
+# Cloud Run은 PORT 환경변수를 자동 주입 (기본 8080)
+port ENV.fetch("PORT") { 8080 }
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -36,4 +35,5 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
+
 

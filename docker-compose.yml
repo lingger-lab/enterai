@@ -1,0 +1,58 @@
+# 로컬 개발/테스트용 Docker Compose
+# 사용법: docker compose up
+
+services:
+  # Redis (Sidekiq 작업 큐)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: enterlab
+      POSTGRES_PASSWORD: enterlab_dev
+      POSTGRES_DB: enterlab_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Rails 웹 서버
+  web:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+    ports:
+      - "3000:8080"
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://enterlab:enterlab_dev@postgres:5432/enterlab_development
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY_BASE: local_dev_secret_key_base_replace_in_production
+      RAILS_LOG_TO_STDOUT: "1"
+      PORT: "8080"
+    depends_on:
+      - postgres
+      - redis
+
+  # Sidekiq 워커 (같은 이미지, 다른 명령어)
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://enterlab:enterlab_dev@postgres:5432/enterlab_development
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY_BASE: local_dev_secret_key_base_replace_in_production
+      RAILS_LOG_TO_STDOUT: "1"
+    depends_on:
+      - postgres
+      - redis
+
+volumes:
+  redis_data:
+  postgres_data:

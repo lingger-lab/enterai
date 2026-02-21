@@ -1,0 +1,380 @@
+{
+  "timestamp": "2026-02-21T18:32:58.422Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-02-22T12:00:00.000Z",
+    "activeFeatures": [
+      "enterai-main",
+      "migrate",
+      "initializers",
+      "jobs",
+      "admin",
+      "admin_users",
+      "db",
+      "mailers",
+      "javascript",
+      "helpers"
+    ],
+    "primaryFeature": "config",
+    "features": {
+      "config": {
+        "phase": "completed",
+        "phaseNumber": 5,
+        "matchRate": 100,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {
+          "analysis": "docs/03-analysis/config.analysis.md",
+          "report": "docs/04-report/config.report.md"
+        },
+        "timestamps": {
+          "started": "2026-02-21T14:06:40.123Z",
+          "completed": "2026-02-22T12:00:00.000Z",
+          "lastUpdated": "2026-02-22T12:00:00.000Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\docs\\04-report\\config.report.md"
+      },
+      "enterai-main": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T14:14:18.118Z",
+          "lastUpdated": "2026-02-21T17:57:49.223Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\models\\reservation.rb"
+      },
+      "migrate": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:39:05.488Z",
+          "lastUpdated": "2026-02-21T18:00:48.206Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260222000002_remove_legacy_encryption_columns.rb"
+      },
+      "initializers": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:39:19.639Z",
+          "lastUpdated": "2026-02-21T17:59:42.171Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\pagy.rb"
+      },
+      "jobs": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:42:10.576Z",
+          "lastUpdated": "2026-02-21T17:57:29.329Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\jobs\\sms_notification_job.rb"
+      },
+      "admin": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:42:48.474Z",
+          "lastUpdated": "2026-02-21T17:59:59.787Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin\\reservations_controller.rb"
+      },
+      "admin_users": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:43:54.239Z",
+          "lastUpdated": "2026-02-21T16:43:54.239Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin_users\\sessions_controller.rb"
+      },
+      "db": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T16:45:26.705Z",
+          "lastUpdated": "2026-02-21T16:45:26.705Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\db\\seeds.rb"
+      },
+      "mailers": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T17:55:50.457Z",
+          "lastUpdated": "2026-02-21T17:55:50.457Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\mailers\\reservation_mailer.rb"
+      },
+      "javascript": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T17:58:35.342Z",
+          "lastUpdated": "2026-02-21T17:58:35.342Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\javascript\\controllers\\step_form_controller.js"
+      },
+      "helpers": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T18:00:17.244Z",
+          "lastUpdated": "2026-02-21T18:00:17.244Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\app\\helpers\\application_helper.rb"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-02-21T12:45:05.031Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-02-22T12:00:00.000Z"
+    },
+    "history": [
+      {
+        "timestamp": "2026-02-21T14:06:40.123Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T14:14:18.118Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:38:52.804Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:39:05.488Z",
+        "feature": "migrate",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:39:19.639Z",
+        "feature": "initializers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:39:27.323Z",
+        "feature": "initializers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:41:53.390Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:42:10.576Z",
+        "feature": "jobs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:42:37.248Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:42:48.474Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:42:54.338Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:43:54.239Z",
+        "feature": "admin_users",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:43:59.754Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T16:45:26.705Z",
+        "feature": "db",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:55:41.334Z",
+        "feature": "initializers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:55:50.457Z",
+        "feature": "mailers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:56:31.011Z",
+        "feature": "jobs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:56:44.409Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:56:53.257Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:56:58.671Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:57:20.642Z",
+        "feature": "jobs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:57:29.329Z",
+        "feature": "jobs",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:57:38.573Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:57:49.223Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:57:55.117Z",
+        "feature": "migrate",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:58:35.342Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:59:01.852Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:59:42.171Z",
+        "feature": "initializers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:59:50.618Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T17:59:59.787Z",
+        "feature": "admin",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T18:00:17.244Z",
+        "feature": "helpers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T18:00:48.206Z",
+        "feature": "migrate",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-22T12:00:00.000Z",
+        "feature": "config",
+        "phase": "completed",
+        "action": "report_generated"
+      }
+    ]
+  }
+}

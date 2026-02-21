@@ -1,0 +1,91 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <%= link_to "← 목록", admin_reservations_path, class: "text-gray-500 hover:text-gray-700 text-sm" %>
+      <h1 class="text-2xl font-bold text-gray-900">예약 #<%= @reservation.id %></h1>
+      <%= render "admin/reservations/status_badge", reservation: @reservation %>
+    </div>
+    <div class="flex space-x-3">
+      <%= link_to "수정", edit_admin_reservation_path(@reservation),
+          class: "px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50" %>
+      <%= button_to "SMS 발송", send_sms_admin_reservation_path(@reservation),
+          method: :post,
+          class: "px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700",
+          data: { turbo_confirm: "SMS를 발송하시겠습니까?" } %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- 예약 정보 -->
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 space-y-6">
+      <h2 class="text-lg font-semibold text-gray-900">예약 정보</h2>
+
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
+        <div>
+          <dt class="text-sm text-gray-500">이름</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900"><%= @reservation.name %></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-gray-500">연락처</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900"><%= @reservation.phone %></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-gray-500">이메일</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900"><%= @reservation.email %></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-gray-500">예약 일시</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900">
+            <%= @reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분") %>
+          </dd>
+        </div>
+        <div>
+          <dt class="text-sm text-gray-500">코칭 형태</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900"><%= @reservation.coaching_type %></dd>
+        </div>
+        <div>
+          <dt class="text-sm text-gray-500">선택 과목</dt>
+          <dd class="mt-1 text-sm font-medium text-gray-900">
+            <% if @reservation.selected_subjects.present? %>
+              <%= @reservation.selected_subjects.join(", ") %>
+            <% else %>
+              <span class="text-gray-400">없음</span>
+            <% end %>
+          </dd>
+        </div>
+      </dl>
+
+      <% if @reservation.requests.present? %>
+        <div>
+          <dt class="text-sm text-gray-500">요청사항</dt>
+          <dd class="mt-1 text-sm text-gray-900 bg-gray-50 rounded-lg p-3"><%= @reservation.requests %></dd>
+        </div>
+      <% end %>
+
+      <div class="text-xs text-gray-400 pt-4 border-t">
+        접수일: <%= @reservation.created_at.strftime("%Y-%m-%d %H:%M") %>
+        · 수정일: <%= @reservation.updated_at.strftime("%Y-%m-%d %H:%M") %>
+      </div>
+    </div>
+
+    <!-- 상태 변경 패널 -->
+    <div class="bg-white rounded-xl shadow-sm p-6 space-y-4" id="status-panel">
+      <h2 class="text-lg font-semibold text-gray-900">상태 변경</h2>
+      <div class="space-y-2">
+        <% Reservation::STATUSES.each do |status| %>
+          <% if status != @reservation.status %>
+            <%= button_to Reservation::STATUS_LABELS[status],
+                update_status_admin_reservation_path(@reservation, status: status),
+                method: :patch,
+                class: "w-full px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 text-left",
+                data: { turbo_confirm: "상태를 '#{Reservation::STATUS_LABELS[status]}'(으)로 변경하시겠습니까?" } %>
+          <% else %>
+            <div class="w-full px-4 py-2 bg-indigo-50 border border-indigo-200 rounded-lg text-sm font-medium text-indigo-700 text-left">
+              <%= Reservation::STATUS_LABELS[status] %> (현재)
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

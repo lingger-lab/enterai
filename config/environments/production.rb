@@ -16,10 +16,8 @@ Rails.application.configure do
   # config/master.key, or an environment key such as config/credentials.yml.enc.
   # config.require_master_key = true
 
-  # Enable static file serving from the `/public` folder (turn off if using NGINX/Apache for it).
-  # Render.com에서는 Rails가 정적 파일을 서빙해야 함
-  # 에셋을 Rails 서버가 직접 서빙하도록 설정
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || true
+  # Cloud Run에서는 Rails가 정적 파일을 직접 서빙
+  config.public_file_server.enabled = true
   
   # Propshaft 프로덕션 설정
   # Propshaft는 assets:precompile 실행 시 public/assets/.manifest.json을 생성합니다
@@ -57,9 +55,8 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment).
+  # 비동기 작업 처리: Sidekiq + Redis (Cloud Memorystore)
   config.active_job.queue_adapter = :sidekiq
-  # config.active_job.queue_name_prefix = "enter_ai_production"
 
   config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: ENV.fetch("HOST", "enterlab.com") }
@@ -83,11 +80,10 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
+  # Cloud Run: 로그를 STDOUT으로 출력 (Cloud Logging 자동 수집)
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

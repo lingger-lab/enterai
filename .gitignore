@@ -66,3 +66,8 @@ yarn-debug.log*
 .DS_Store
 Thumbs.db
 
+# Ignore tool caches
+/.claude/
+/.vibe-auditor-cache/
+/.vibe-auditor-history/
+

@@ -69,6 +69,10 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  # 개발 환경: Redis 없이도 동작하도록 :async 어댑터 사용
+  # Sidekiq 테스트 시: REDIS_URL 설정 후 bin/dev로 실행
+  config.active_job.queue_adapter = ENV["REDIS_URL"].present? ? :sidekiq : :async
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
