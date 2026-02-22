@@ -6,7 +6,7 @@ FROM ruby:3.3-slim AS build
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-    build-essential libpq-dev nodejs npm git && \
+    build-essential libpq-dev libyaml-dev nodejs npm git && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -31,7 +31,7 @@ FROM ruby:3.3-slim AS runtime
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
-    libpq5 curl && \
+    libpq5 libyaml-0-2 curl && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
