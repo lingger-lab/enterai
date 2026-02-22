@@ -16,6 +16,5 @@ test:
 
 production:
   <<: *default
-  database: enter_ai_production
-  url: <%= ENV["DATABASE_URL"] %>
+  database: <%= ENV.fetch("DATABASE_NAME") { "enter_ai_production" } %>
 
