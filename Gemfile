@@ -40,6 +40,9 @@ gem "sidekiq", "~> 7.0"
 # 페이지네이션
 gem "pagy", "~> 9.0"
 
+# Rate limiting
+gem "rack-attack", "~> 6.7"
+
 # 환경 변수 관리
 gem "dotenv-rails"
 
