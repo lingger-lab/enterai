@@ -8,6 +8,7 @@ class ReminderNotificationJob < ApplicationJob
 
     SmsNotificationJob.perform_later(reservation.id, "reminder")
     EmailNotificationJob.perform_later(reservation.id, "reminder")
+    KakaoNotificationJob.perform_later(reservation.id, "reminder")
   rescue => e
     Rails.logger.error "리마인더 발송 실패: #{e.message}"
     Rails.logger.error e.backtrace.join("\n")

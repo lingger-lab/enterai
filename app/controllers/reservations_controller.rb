@@ -103,6 +103,7 @@ class ReservationsController < ApplicationController
     @reservation.update!(status: "cancelled")
     SmsNotificationJob.perform_later(@reservation.id, "cancelled")
     EmailNotificationJob.perform_later(@reservation.id, "cancelled")
+    KakaoNotificationJob.perform_later(@reservation.id, "cancelled")
 
     redirect_to lookup_reservations_path, notice: "예약이 취소되었습니다."
   end
