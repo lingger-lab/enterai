@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-02-21T20:19:07.278Z",
+  "timestamp": "2026-02-23T07:13:13.015Z",
   "reason": "compaction",
   "status": {
     "version": "2.0",
-    "lastUpdated": "2026-02-21T20:13:13.348Z",
+    "lastUpdated": "2026-02-23T00:37:32.826Z",
     "activeFeatures": [
       "enterai-main",
       "migrate",
@@ -14,13 +14,15 @@
       "db",
       "mailers",
       "javascript",
-      "helpers"
+      "helpers",
+      "environments",
+      "config"
     ],
     "primaryFeature": "config",
     "features": {
       "config": {
-        "phase": "completed",
-        "phaseNumber": 5,
+        "phase": "do",
+        "phaseNumber": 3,
         "matchRate": 100,
         "iterationCount": 0,
         "requirements": [],
@@ -31,9 +33,9 @@
         "timestamps": {
           "started": "2026-02-21T14:06:40.123Z",
           "completed": "2026-02-22T12:00:00.000Z",
-          "lastUpdated": "2026-02-22T12:00:00.000Z"
+          "lastUpdated": "2026-02-22T12:32:16.501Z"
         },
-        "lastFile": "c:\\workspace\\enterai-main\\docs\\04-report\\config.report.md"
+        "lastFile": "c:\\workspace\\enterai-main\\config\\routes.rb"
       },
       "enterai-main": {
         "phase": "do",
@@ -44,7 +46,7 @@
         "documents": {},
         "timestamps": {
           "started": "2026-02-21T14:14:18.118Z",
-          "lastUpdated": "2026-02-21T17:57:49.223Z"
+          "lastUpdated": "2026-02-23T00:31:59.635Z"
         },
         "lastFile": "c:\\workspace\\enterai-main\\app\\models\\reservation.rb"
       },
@@ -70,9 +72,9 @@
         "documents": {},
         "timestamps": {
           "started": "2026-02-21T16:39:19.639Z",
-          "lastUpdated": "2026-02-21T17:59:42.171Z"
+          "lastUpdated": "2026-02-21T21:32:56.575Z"
         },
-        "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\pagy.rb"
+        "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\sidekiq.rb"
       },
       "jobs": {
         "phase": "do",
@@ -148,9 +150,9 @@
         "documents": {},
         "timestamps": {
           "started": "2026-02-21T17:58:35.342Z",
-          "lastUpdated": "2026-02-21T20:13:13.348Z"
+          "lastUpdated": "2026-02-23T00:37:32.826Z"
         },
-        "lastFile": "c:\\workspace\\enterai-main\\app\\javascript\\controllers\\magnetic_text_controller.js"
+        "lastFile": "c:\\workspace\\enterai-main\\app\\javascript\\controllers\\mobile_menu_controller.js"
       },
       "helpers": {
         "phase": "do",
@@ -164,6 +166,19 @@
           "lastUpdated": "2026-02-21T18:00:17.244Z"
         },
         "lastFile": "c:\\workspace\\enterai-main\\app\\helpers\\application_helper.rb"
+      },
+      "environments": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-02-21T21:33:16.316Z",
+          "lastUpdated": "2026-02-21T21:35:14.895Z"
+        },
+        "lastFile": "c:\\workspace\\enterai-main\\config\\environments\\production.rb"
       }
     },
     "pipeline": {
@@ -174,7 +189,7 @@
     "session": {
       "startedAt": "2026-02-21T12:45:05.031Z",
       "onboardingCompleted": false,
-      "lastActivity": "2026-02-21T20:13:13.348Z"
+      "lastActivity": "2026-02-23T00:37:32.826Z"
     },
     "history": [
       {
@@ -407,6 +422,150 @@
       },
       {
         "timestamp": "2026-02-21T20:13:13.348Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T20:23:19.644Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T20:29:45.521Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T20:29:51.593Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T20:30:05.931Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:02:42.652Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:14:51.740Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:21:27.680Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:32:56.575Z",
+        "feature": "initializers",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:33:16.316Z",
+        "feature": "environments",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:33:45.200Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:34:15.006Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:34:33.239Z",
+        "feature": "environments",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:35:04.145Z",
+        "feature": "environments",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:35:09.719Z",
+        "feature": "environments",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:35:14.895Z",
+        "feature": "environments",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:35:31.959Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-21T21:35:36.654Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-22T12:30:19.388Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-22T12:32:16.501Z",
+        "feature": "config",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-22T12:32:21.803Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-22T12:32:52.560Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-23T00:31:59.635Z",
+        "feature": "enterai-main",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-23T00:32:14.043Z",
+        "feature": "javascript",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-02-23T00:37:32.826Z",
         "feature": "javascript",
         "phase": "do",
         "action": "updated"
