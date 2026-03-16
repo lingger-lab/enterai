@@ -1,18 +1,18 @@
 class Reservation < ApplicationRecord
-  # 개인정보 암호화 설정
-  # ENV['ENCRYPTION_KEY']가 없으면 기본값 사용 (개발/테스트용)
-  ENCRYPTION_KEY = ENV['ENCRYPTION_KEY'] || Rails.application.credentials.secret_key_base&.first(32) || '12345678901234567890123456789012'
+  # 개인정보 암호화 (attr_encrypted)
+  ENCRYPTION_KEY = ENV.fetch("ENCRYPTION_KEY") { Rails.env.production? ? raise("ENCRYPTION_KEY must be set in production") : SecureRandom.hex(16) }
 
   attr_encrypted :name, key: ENCRYPTION_KEY
   attr_encrypted :phone, key: ENCRYPTION_KEY
   attr_encrypted :email, key: ENCRYPTION_KEY
-  
-  # 유효성 검사 (암호화 전 원본 데이터 검증)
+
+  # 유효성 검사
   validates :name, presence: true, length: { maximum: 100 }
-  validates :phone, presence: true, format: { with: /\A\d{10,11}\z/, message: "올바른 전화번호 형식이 아닙니다" }
+  validates :phone, presence: true, format: { with: /\A[\d\-]{10,13}\z/, message: "올바른 전화번호 형식이 아닙니다" }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :reservation_datetime, presence: true
   validates :coaching_type, presence: true
+  validates :requests, length: { maximum: 2000 }
   validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
   
   # 콜백: 예약 생성 후 알림 발송 + 리마인더 스케줄링
@@ -41,6 +41,36 @@ class Reservation < ApplicationRecord
     "수익화 전략"
   ].freeze
 
+  # 패키지 옵션
+  PACKAGES = {
+    "starter" => {
+      name: "STARTER",
+      price: 490_000,
+      label: "AI 체험 코스",
+      duration: "2주 (4시간)",
+      features: ["1:1 코칭 4시간", "MVP 프로토타입 1개", "1개월 Q&A", "3개월 커뮤니티"]
+    },
+    "standard" => {
+      name: "STANDARD",
+      price: 800_000,
+      label: "AI 수익화 코스",
+      duration: "4주 (8시간)",
+      features: ["1:1 코칭 8시간", "완성형 앱 1개 + 배포", "3개월 Q&A", "1년 커뮤니티", "AI 도구 템플릿"]
+    },
+    "premium" => {
+      name: "PREMIUM",
+      price: 1_200_000,
+      label: "AI 창업 코스",
+      duration: "6주 (12시간)",
+      features: ["1:1 코칭 12시간", "앱 + 수익화 전략", "6개월 Q&A", "1년 VIP 커뮤니티", "AI 도구 템플릿 + 전자책", "월 1회 화상 멘토링"]
+    }
+  }.freeze
+
+  validates :package, inclusion: { in: PACKAGES.keys }
+
+  # 공개 조회용 토큰 (IDOR 방지)
+  before_create :generate_access_token
+
   # 상태 한글 표시
   STATUS_LABELS = {
     "pending" => "대기중",
@@ -53,7 +83,31 @@ class Reservation < ApplicationRecord
     STATUS_LABELS[status] || status
   end
 
+  def package_info
+    PACKAGES[package]
+  end
+
+  def package_label
+    PACKAGES.dig(package, :name) || package
+  end
+
+  # 상태 전환 규칙
+  VALID_TRANSITIONS = {
+    "pending" => %w[confirmed cancelled],
+    "confirmed" => %w[cancelled completed],
+    "cancelled" => %w[pending],
+    "completed" => []
+  }.freeze
+
+  def can_transition_to?(new_status)
+    VALID_TRANSITIONS.fetch(status, []).include?(new_status)
+  end
+
   private
+
+  def generate_access_token
+    self.access_token = SecureRandom.urlsafe_base64(32)
+  end
 
   # 알림 발송 메서드 (SMS + 이메일)
   def send_notifications

@@ -1,0 +1,22 @@
+#!/bin/bash
+# Cloud Run용 Sidekiq 시작 스크립트
+# Cloud Run은 PORT에서 HTTP 리스닝을 요구하므로 간단한 헬스체크 서버를 함께 실행
+
+PORT=${PORT:-8080}
+
+# 백그라운드에서 간단한 헬스체크 HTTP 서버 시작
+ruby -e "
+require 'socket'
+server = TCPServer.new('0.0.0.0', ${PORT})
+loop do
+  client = server.accept
+  client.gets
+  client.print \"HTTP/1.1 200 OK\r\nContent-Length: 10\r\n\r\nSidekiq OK\"
+  client.close
+rescue => e
+  STDERR.puts \"Health check error: #{e.message}\"
+end
+" &
+
+# Sidekiq 실행 (foreground)
+exec bundle exec sidekiq -C config/sidekiq.yml

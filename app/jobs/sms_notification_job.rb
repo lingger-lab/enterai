@@ -11,14 +11,16 @@ class SmsNotificationJob < ApplicationJob
   rescue => e
     Rails.logger.error "SMS 발송 실패 (#{notification_type}): #{e.message}"
     Rails.logger.error e.backtrace.join("\n")
-    raise e
+    # API 키 미설정으로 인한 실패는 재시도하지 않음
+    raise e unless e.message.include?("SENS API")
+
   end
 
   private
 
   def sms_message(reservation, type)
     datetime = reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분")
-    contact = ENV.fetch("CONTACT_PHONE", "050-0000-0000")
+    contact = ENV.fetch("CONTACT_PHONE", "0502-1927-1910")
 
     case type
     when "created"

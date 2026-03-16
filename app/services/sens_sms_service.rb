@@ -12,6 +12,11 @@ class SensSmsService
 
   # SMS 발송 메서드
   def self.send_sms(phone, content)
+    unless SENS_ACCESS_KEY.present? && SENS_SECRET_KEY.present? && SENS_SERVICE_ID.present? && SENS_SENDER_NUMBER.present?
+      Rails.logger.warn "SMS 발송 스킵: SENS API 키가 설정되지 않았습니다"
+      return nil
+    end
+
     # 전화번호 형식 변환 (010-1234-5678 -> 01012345678)
     formatted_phone = phone.gsub(/[-\s]/, '')
     

@@ -2,12 +2,13 @@ class Admin::ReservationsController < Admin::BaseController
   before_action :set_reservation, only: [:show, :edit, :update, :update_status, :send_sms]
 
   def index
+    status_counts = Reservation.group(:status).count
     @stats = {
-      total: Reservation.count,
-      pending: Reservation.where(status: "pending").count,
-      confirmed: Reservation.where(status: "confirmed").count,
-      cancelled: Reservation.where(status: "cancelled").count,
-      completed: Reservation.where(status: "completed").count,
+      total: status_counts.values.sum,
+      pending: status_counts.fetch("pending", 0),
+      confirmed: status_counts.fetch("confirmed", 0),
+      cancelled: status_counts.fetch("cancelled", 0),
+      completed: status_counts.fetch("completed", 0),
       today: Reservation.where(reservation_datetime: Date.today.all_day).count,
       this_week: Reservation.where(created_at: 1.week.ago..).count
     }
@@ -40,7 +41,7 @@ class Admin::ReservationsController < Admin::BaseController
     old_status = @reservation.status
     new_status = params[:status]
 
-    if Reservation::STATUSES.include?(new_status) && @reservation.update(status: new_status)
+    if @reservation.can_transition_to?(new_status) && @reservation.update(status: new_status)
       # 상태 변경 SMS + 이메일 발송
       if old_status != new_status
         SmsNotificationJob.perform_later(@reservation.id, new_status)
@@ -68,6 +69,6 @@ class Admin::ReservationsController < Admin::BaseController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:reservation_datetime, :coaching_type, :status, :requests, selected_subjects: [])
+    params.require(:reservation).permit(:reservation_datetime, :coaching_type, :status, :requests, :package, selected_subjects: [])
   end
 end

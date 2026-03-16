@@ -23,7 +23,8 @@ RUN npm ci --production 2>/dev/null || npm install --production
 
 # 소스 복사 및 에셋 빌드
 COPY . .
-RUN npm run build:css && \
+RUN sed -i 's/\r$//' bin/* && \
+    npm run build:css && \
     SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
 # ── Stage 2: 런타임 ──
@@ -40,8 +41,9 @@ WORKDIR /app
 COPY --from=build /app /app
 COPY --from=build /usr/local/bundle /usr/local/bundle
 
-# 비root 사용자로 실행
-RUN groupadd --system rails && \
+# 필요한 디렉토리 생성 및 비root 사용자로 실행
+RUN mkdir -p tmp/pids tmp/cache tmp/sockets log && \
+    groupadd --system rails && \
     useradd rails --system --gid rails --create-home && \
     chown -R rails:rails /app
 USER rails
