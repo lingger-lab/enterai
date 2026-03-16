@@ -71,3 +71,8 @@ Thumbs.db
 /.vibe-auditor-cache/
 /.vibe-auditor-history/
 
+# Claude Code (v6 Post-Dev Workflow)
+.claude/handoff.md
+.claude/checkpoints/
+.claude/web-checklist-state.json
+

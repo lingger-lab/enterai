@@ -1,5 +1,32 @@
 # EnterLab 변경 로그
 
+## [2026-02-23] - 모바일 UX 5대 개선
+
+### 추가됨 (Added)
+- 개인정보 처리방침 전체 페이지 (`/privacy_policy`)
+  - `app/views/home/privacy_policy.html.erb`: 7개 섹션 (수집항목~변경고지)
+  - `config/routes.rb`: `get "privacy_policy"` 라우트
+  - `app/controllers/home_controller.rb`: `privacy_policy` 액션
+- 예약폼 내 개인정보 모달
+  - `app/javascript/controllers/privacy_modal_controller.js`: open/close/backdropClose/ESC 지원
+  - `_form_fields.html.erb`, `new.html.erb`: 모달 HTML + Stimulus 연결
+- 스크롤 기반 fade-in 애니메이션
+  - `app/javascript/controllers/scroll_reveal_controller.js`: IntersectionObserver + stagger
+  - 4개 섹션 적용: 신뢰(150ms), 서비스(200ms), 프로세스(120ms), CTA(단일)
+- 푸터 보안 안심 배지
+  - shield-check SVG 아이콘 + Google Cloud 보안 문구
+
+### 변경됨 (Changed)
+- `app/views/home/index.html.erb`
+  - 히어로 텍스트 모바일 최적화 (arbitrary value: `text-[1.65rem]` 등)
+  - 섹션/카드 여백 반응형 축소 (`py-10 sm:py-20`, `gap-4 sm:gap-8`)
+  - 하드코딩 `<br>` → 반응형 처리 (`hidden sm:inline`)
+  - 스크롤 애니메이션 data 속성 추가 (4개 섹션)
+  - 푸터 개인정보 링크: `href="#"` → `privacy_policy_path`
+  - 푸터 보안 배지 HTML 삽입
+
+---
+
 ## [2026-02-22] - config 기능 완료
 
 ### 추가됨 (Added)
@@ -59,6 +86,13 @@
 
 ## PDCA 메트릭
 
+### 모바일 UX 5대 개선 (완료)
+- **설계 부합율**: 98% (10/10 항목)
+- **반복 횟수**: 0회
+- **소요 기간**: ~4시간
+- **파일 변경**: 5개 수정, 3개 신규 생성
+- **프로덕션 배포**: Cloud Run 재배포 완료
+
 ### config 기능 (완료)
 - **설계 부합율**: 100% (35/35 항목)
 - **반복 횟수**: 0회
@@ -67,5 +101,6 @@
 - **마이그레이션**: 2개 추가
 
 ### 프로젝트 진행률
-- **전체 단계**: 9단계 중 1단계 완료 (Schema/Terminology)
+- **PDCA 사이클**: 2회 완료
+- **누적 Match Rate**: 99% (평균)
 - **Level**: Dynamic
