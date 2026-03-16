@@ -36,6 +36,41 @@
     </div>
   </div>
 
+  <!-- 차트 섹션 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="bg-white rounded-xl shadow-sm p-5"
+         data-controller="chart"
+         data-chart-type-value="line"
+         data-chart-data-value="<%= { labels: @monthly_trend.keys, datasets: [{ label: '월별 예약', data: @monthly_trend.values, borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', fill: true, tension: 0.3 }] }.to_json %>">
+      <h3 class="text-sm font-medium text-gray-500 mb-3">월별 예약 추이</h3>
+      <div style="height: 200px"><canvas></canvas></div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-5"
+         data-controller="chart"
+         data-chart-type-value="doughnut"
+         data-chart-data-value="<%= { labels: @package_revenue.keys, datasets: [{ data: @package_revenue.values, backgroundColor: ['#6366f1', '#8b5cf6', '#a78bfa'] }] }.to_json %>">
+      <h3 class="text-sm font-medium text-gray-500 mb-3">패키지별 매출</h3>
+      <div style="height: 200px"><canvas></canvas></div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-5"
+         data-controller="chart"
+         data-chart-type-value="bar"
+         data-chart-data-value="<%= { labels: @hourly_distribution.keys.map { |h| "#{h}시" }, datasets: [{ label: '예약 수', data: @hourly_distribution.values, backgroundColor: '#6366f1' }] }.to_json %>">
+      <h3 class="text-sm font-medium text-gray-500 mb-3">시간대별 분포</h3>
+      <div style="height: 200px"><canvas></canvas></div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-5"
+         data-controller="chart"
+         data-chart-type-value="pie"
+         data-chart-data-value="<%= { labels: @coaching_popularity.keys, datasets: [{ data: @coaching_popularity.values, backgroundColor: ['#6366f1', '#ec4899', '#f59e0b'] }] }.to_json %>">
+      <h3 class="text-sm font-medium text-gray-500 mb-3">코칭 형태 선호도</h3>
+      <div style="height: 200px"><canvas></canvas></div>
+    </div>
+  </div>
+
   <!-- 상태 필터 탭 -->
   <div class="flex space-x-1 bg-white rounded-lg shadow-sm p-1">
     <%= link_to "전체", admin_reservations_path,

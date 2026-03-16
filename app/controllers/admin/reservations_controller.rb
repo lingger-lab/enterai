@@ -13,6 +13,24 @@ class Admin::ReservationsController < Admin::BaseController
       this_week: Reservation.where(created_at: 1.week.ago..).count
     }
 
+    # 차트 데이터
+    @monthly_trend = Reservation.where("created_at >= ?", 6.months.ago)
+                                .group(Arel.sql("TO_CHAR(created_at, 'YYYY-MM')"))
+                                .order(Arel.sql("TO_CHAR(created_at, 'YYYY-MM')"))
+                                .count
+
+    package_counts = Reservation.where(status: %w[confirmed completed]).group(:package).count
+    @package_revenue = package_counts.map { |pkg, cnt|
+      info = Reservation::PACKAGES[pkg]
+      [info ? info[:name] : pkg, info ? info[:price] * cnt : 0]
+    }.to_h
+
+    @hourly_distribution = Reservation.group(Arel.sql("EXTRACT(HOUR FROM reservation_datetime)::integer"))
+                                      .order(Arel.sql("EXTRACT(HOUR FROM reservation_datetime)::integer"))
+                                      .count
+
+    @coaching_popularity = Reservation.group(:coaching_type).count
+
     reservations = Reservation.order(created_at: :desc)
     reservations = reservations.where(status: params[:status]) if params[:status].present?
     @pagy, @reservations = pagy(reservations)
@@ -30,6 +48,7 @@ class Admin::ReservationsController < Admin::BaseController
       if @reservation.saved_change_to_reservation_datetime?
         SmsNotificationJob.perform_later(@reservation.id, "schedule_changed")
         EmailNotificationJob.perform_later(@reservation.id, "schedule_changed")
+        KakaoNotificationJob.perform_later(@reservation.id, "schedule_changed")
       end
       redirect_to admin_reservation_path(@reservation), notice: "예약이 수정되었습니다."
     else
@@ -46,6 +65,7 @@ class Admin::ReservationsController < Admin::BaseController
       if old_status != new_status
         SmsNotificationJob.perform_later(@reservation.id, new_status)
         EmailNotificationJob.perform_later(@reservation.id, new_status)
+        KakaoNotificationJob.perform_later(@reservation.id, new_status)
       end
 
       respond_to do |format|
