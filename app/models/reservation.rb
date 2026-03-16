@@ -124,7 +124,7 @@ class Reservation < ApplicationRecord
 
   def send_review_request
     return if review.present?
-    review = create_review!
+    create_review!
     EmailNotificationJob.perform_later(self.id, "review_request")
   end
 

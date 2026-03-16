@@ -160,6 +160,14 @@ export default class extends Controller {
     }
 
     this.selectedSlot = { id: slotId, date: dateStr, start, end, coaching }
+
+    // 코칭 형태 자동 세팅 (Step 5 — 슬롯에서 결정되므로 읽기 전용으로 표시)
+    const coachingSelect = document.getElementById("reservation_coaching_type")
+    if (coachingSelect) {
+      coachingSelect.value = coaching
+      coachingSelect.style.pointerEvents = "none"
+      coachingSelect.style.opacity = "0.6"
+    }
   }
 
   prevMonth(event) {
