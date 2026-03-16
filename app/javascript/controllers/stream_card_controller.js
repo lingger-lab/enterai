@@ -20,12 +20,28 @@ export default class extends Controller {
       }
     })
 
+    // Desktop: mouseenter trigger
     this._onEnter = () => this.play()
     this.element.addEventListener("mouseenter", this._onEnter)
+
+    // Mobile/scroll: IntersectionObserver trigger
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.played) {
+            this.play()
+            this._observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -30px 0px" }
+    )
+    this._observer.observe(this.element)
   }
 
   disconnect() {
     this.element.removeEventListener("mouseenter", this._onEnter)
+    if (this._observer) this._observer.disconnect()
     this.cancelAnimation()
     this.items.forEach(item => {
       item.el.textContent = item.original

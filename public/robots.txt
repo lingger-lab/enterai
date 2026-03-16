@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://enterlabs-web-971374860310.asia-northeast3.run.app/sitemap.xml

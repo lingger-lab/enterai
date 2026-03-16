@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   # Chrome DevTools 자동 요청 경로 처리 (404 방지)
   get '/.well-known/*path', to: proc { [204, {}, []] }
 
+  get "privacy_policy", to: "home#privacy_policy", as: :privacy_policy
+
   root "home#index"
   resources :reservations, only: [:new, :create, :show]
 end

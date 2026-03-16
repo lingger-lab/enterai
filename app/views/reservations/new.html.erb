@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center" 
      data-controller="step-form" 
-     data-step-form-total-steps-value="9">
+     data-step-form-total-steps-value="10">
   <!-- 휴대폰 모양 컨테이너 -->
   <div class="w-full max-w-sm mx-auto">
     <!-- 스마트폰 프레임 -->
@@ -15,13 +15,13 @@
         <!-- 진행률 표시 -->
         <div class="px-6 pt-6 pb-4">
           <div class="flex justify-between items-center mb-2">
-            <span class="text-base font-semibold text-gray-900" data-step-form-target="stepNumber">1 / 9 단계</span>
-            <span class="text-base font-semibold text-gray-900" data-step-form-target="progressPercent">11%</span>
+            <span class="text-base font-semibold text-gray-900" data-step-form-target="stepNumber">1 / 10 단계</span>
+            <span class="text-base font-semibold text-gray-900" data-step-form-target="progressPercent">10%</span>
           </div>
           <div class="w-full bg-gray-200 rounded-full h-3 shadow-inner">
             <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-3 rounded-full transition-all duration-500 shadow-sm" 
                  data-step-form-target="progressBar" 
-                 style="width: 11%"></div>
+                 style="width: 10%"></div>
           </div>
         </div>
 
@@ -45,14 +45,14 @@
               <% end %>
             </div>
             <div class="mt-8">
-              <button type="button" 
+              <button type="button"
                       data-action="click->step-form#next"
                       class="w-full bg-gray-800 text-white py-4 px-6 rounded-2xl font-semibold text-base hover:bg-gray-900 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-gray-900/20">
                 다음
               </button>
             </div>
           </div>
-          
+
           <!-- 2단계: 연락처 -->
           <div data-step-form-target="step" class="step-content hidden">
             <div>
@@ -210,16 +210,51 @@
             </div>
           </div>
           
-          <!-- 8단계: 개인정보 동의 -->
+          <!-- 8단계: 패키지 선택 -->
           <div data-step-form-target="step" class="step-content hidden">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">패키지를 선택해주세요</h3>
+              <div class="space-y-3">
+                <% Reservation::PACKAGES.each do |key, pkg| %>
+                  <label class="flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer hover:bg-indigo-50 hover:border-indigo-300 transition-all <%= 'border-indigo-600 bg-indigo-50' if @reservation.package == key %>">
+                    <%= f.radio_button :package, key,
+                        class: "w-6 h-6 text-indigo-600 border-gray-300 focus:ring-indigo-500",
+                        checked: (@reservation.package == key || (@reservation.package.blank? && key == "standard")) %>
+                    <div class="flex-1">
+                      <div class="flex justify-between items-center">
+                        <span class="font-bold text-gray-900"><%= pkg[:name] %></span>
+                        <span class="text-indigo-700 font-bold"><%= (pkg[:price] / 10000).to_i %>만원</span>
+                      </div>
+                      <p class="text-sm text-gray-500 mt-1"><%= pkg[:label] %> · <%= pkg[:duration] %></p>
+                    </div>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+            <div class="mt-8 flex gap-3">
+              <button type="button"
+                      data-action="click->step-form#previous"
+                      class="flex-1 bg-gray-100 text-gray-700 py-4 px-6 rounded-2xl font-semibold text-base hover:bg-gray-200 active:scale-[0.98] transition-all duration-200">
+                이전
+              </button>
+              <button type="button"
+                      data-action="click->step-form#next"
+                      class="flex-1 bg-gray-800 text-white py-4 px-6 rounded-2xl font-semibold text-base hover:bg-gray-900 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-gray-900/20">
+                다음
+              </button>
+            </div>
+          </div>
+
+          <!-- 9단계: 개인정보 동의 -->
+          <div data-step-form-target="step" class="step-content hidden" data-controller="privacy-modal">
             <div>
               <%= f.label :privacy_agreed, "개인정보 수집 및 이용 동의", class: "block text-base font-semibold text-gray-900 mb-4" %>
               <div class="flex items-start space-x-3 p-4 border-2 border-gray-200 rounded-2xl hover:bg-indigo-50 hover:border-indigo-300 hover:shadow-md transition-all">
-                <%= f.check_box :privacy_agreed, 
+                <%= f.check_box :privacy_agreed,
                               { class: "mt-1 w-6 h-6 text-indigo-600 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" } %>
                 <label for="reservation_privacy_agreed" class="text-base text-gray-900 flex-1">
                   개인정보 수집 및 이용에 동의합니다.
-                  <a href="#" class="text-indigo-600 hover:text-indigo-800 underline">자세히 보기</a>
+                  <a href="#" class="text-indigo-600 hover:text-indigo-800 underline" data-action="click->privacy-modal#open">자세히 보기</a>
                 </label>
               </div>
               <% if @reservation.errors[:privacy_agreed].any? %>
@@ -227,24 +262,67 @@
               <% end %>
             </div>
             <div class="mt-8 flex gap-3">
-              <button type="button" 
+              <button type="button"
                       data-action="click->step-form#previous"
                       class="flex-1 bg-gray-100 text-gray-700 py-4 px-6 rounded-2xl font-semibold text-base hover:bg-gray-200 active:scale-[0.98] transition-all duration-200">
                 이전
               </button>
-              <button type="button" 
+              <button type="button"
                       data-action="click->step-form#next"
                       class="flex-1 bg-gray-800 text-white py-4 px-6 rounded-2xl font-semibold text-base hover:bg-gray-900 active:scale-[0.98] transition-all duration-200 shadow-lg shadow-gray-900/20">
                 다음
               </button>
             </div>
+
+            <!-- 개인정보 처리방침 모달 -->
+            <div data-privacy-modal-target="modal"
+                 data-action="click->privacy-modal#backdropClose"
+                 class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4">
+              <div class="bg-white rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-6 relative shadow-2xl">
+                <button type="button" data-action="click->privacy-modal#close"
+                        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+                <h3 class="text-lg font-bold text-gray-900 mb-4">개인정보 처리방침</h3>
+                <div class="text-sm text-gray-700 space-y-4 leading-relaxed">
+                  <div>
+                    <h4 class="font-semibold text-gray-900">1. 개인정보 수집 항목</h4>
+                    <p>이름, 연락처(전화번호), 이메일 주소, 예약 날짜 및 시간, 코칭 형태, 선택 과목, 요청사항</p>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">2. 수집 및 이용 목적</h4>
+                    <p>코칭 예약 접수 및 상담 일정 관리, 예약 확인 및 변경 안내, 서비스 관련 공지사항 전달</p>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">3. 보유 및 이용 기간</h4>
+                    <p>수집 목적이 달성된 후 지체 없이 파기합니다.</p>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">4. 개인정보의 안전성 확보</h4>
+                    <p>개인정보 암호화 저장 및 전송, Google Cloud 인프라 기반 안전한 서버 운영, 접근 권한 관리 및 접근 통제</p>
+                  </div>
+                </div>
+                <div class="mt-6 text-center">
+                  <button type="button" data-action="click->privacy-modal#close"
+                          class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all duration-150">
+                    확인
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <!-- 9단계: 최종 확인 -->
+          <!-- 10단계: 최종 확인 -->
           <div data-step-form-target="step" class="step-content hidden">
             <div>
               <%= f.label :final_review, "입력 정보 확인", class: "block text-base font-semibold text-gray-900 mb-4" %>
               <div class="bg-gradient-to-br from-gray-50 to-indigo-50 rounded-2xl p-6 space-y-3 text-base shadow-inner">
+                <div class="flex justify-between">
+                  <span class="text-gray-700">패키지</span>
+                  <span class="font-semibold text-indigo-700" id="review-package">-</span>
+                </div>
                 <div class="flex justify-between">
                   <span class="text-gray-700">이름</span>
                   <span class="font-semibold text-gray-900" id="review-name">-</span>
@@ -311,7 +389,7 @@
             const controllerInstance = window.Stimulus.getControllerForElementAndIdentifier(controllerElement, 'step-form')
             if (controllerInstance && controllerInstance.updateReview) {
               // 현재 9단계에 있으면 업데이트
-              if (controllerInstance.currentStepValue === 9) {
+              if (controllerInstance.currentStepValue === 10) {
                 controllerInstance.updateReview()
               }
             }

@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["step", "progressBar", "stepNumber", "progressPercent", "form"]
   static values = {
     currentStep: { type: Number, default: 1 },
-    totalSteps: { type: Number, default: 9 }
+    totalSteps: { type: Number, default: 10 }
   }
 
   connect() {
@@ -46,7 +46,7 @@ export default class extends Controller {
     this.stepTargets.forEach((stepElement, index) => {
       if (index + 1 === step) {
         stepElement.classList.remove("hidden")
-        if (step === 9) {
+        if (step === 10) {
           this.updateReview()
         }
       } else {
@@ -59,6 +59,7 @@ export default class extends Controller {
     const form = this.element.querySelector('#reservation-form')
     if (!form) return
 
+    const packageInput = form.querySelector('input[name="reservation[package]"]:checked')
     const nameInput = form.querySelector('#reservation_name')
     const phoneInput = form.querySelector('#reservation_phone')
     const emailInput = form.querySelector('#reservation_email')
@@ -80,6 +81,8 @@ export default class extends Controller {
       }
     }
 
+    const packageLabels = { starter: "STARTER (49만원)", standard: "STANDARD (80만원)", premium: "PREMIUM (120만원)" }
+    updateElement('review-package', packageInput ? (packageLabels[packageInput.value] || packageInput.value) : '-')
     updateElement('review-name', nameInput?.value)
     updateElement('review-phone', phoneInput?.value)
     updateElement('review-email', emailInput?.value)
@@ -172,7 +175,7 @@ export default class extends Controller {
       }
     }
 
-    if (this.currentStepValue === 8) {
+    if (this.currentStepValue === 9) {
       const checkbox = currentStepElement.querySelector('input[type="checkbox"]')
       if (checkbox && !checkbox.checked) {
         this.showError(checkbox, "개인정보 수집 및 이용에 동의해주세요.")

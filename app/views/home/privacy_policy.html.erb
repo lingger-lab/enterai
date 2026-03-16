@@ -1,0 +1,66 @@
+<section class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm p-6 sm:p-10">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">개인정보 처리방침</h1>
+
+    <div class="space-y-6 text-gray-700 text-sm sm:text-base leading-relaxed">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">1. 개인정보 수집 항목</h2>
+        <p>EnterLab은 코칭 예약 서비스 제공을 위해 다음의 개인정보를 수집합니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>이름, 연락처(전화번호), 이메일 주소</li>
+          <li>예약 날짜 및 시간, 코칭 형태, 선택 과목</li>
+          <li>요청사항 (선택 입력)</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">2. 개인정보 수집 및 이용 목적</h2>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>코칭 예약 접수 및 상담 일정 관리</li>
+          <li>예약 확인 및 변경 안내</li>
+          <li>서비스 관련 공지사항 전달</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">3. 개인정보 보유 및 이용 기간</h2>
+        <p>수집된 개인정보는 수집 목적이 달성된 후 지체 없이 파기합니다. 단, 관계 법령에 의해 보존해야 하는 경우 해당 기간 동안 보관합니다.</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">4. 개인정보의 제3자 제공</h2>
+        <p>EnterLab은 원칙적으로 이용자의 개인정보를 제3자에게 제공하지 않습니다. 다만, 법률에 의거하거나 이용자의 동의가 있는 경우에 한하여 제공할 수 있습니다.</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">5. 개인정보의 안전성 확보 조치</h2>
+        <p>EnterLab은 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>개인정보 암호화 저장 및 전송</li>
+          <li>Google Cloud 인프라 기반의 안전한 서버 운영</li>
+          <li>접근 권한 관리 및 접근 통제</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">6. 개인정보 보호 책임자</h2>
+        <p>
+          이메일: <%= ENV.fetch("ADMIN_EMAIL", "iamblackwhite86@gmail.com") %><br>
+          전화: <%= ENV.fetch("CONTACT_PHONE", "0502-1927-1910") %>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">7. 개인정보 처리방침 변경</h2>
+        <p>이 개인정보 처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경 내용의 추가, 삭제 및 정정이 있는 경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.</p>
+        <p class="text-gray-500 mt-2">시행일자: 2025년 1월 1일</p>
+      </div>
+    </div>
+
+    <div class="mt-10 text-center">
+      <%= link_to root_path, class: "text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-150" do %>
+        &larr; 홈으로 돌아가기
+      <% end %>
+    </div>
+  </div>
+</section>
