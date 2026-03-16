@@ -1,0 +1,50 @@
+<div class="min-h-screen bg-gray-100 py-12 px-4 flex items-center justify-center">
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="text-center mb-8">
+        <div class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-indigo-100 mb-4">
+          <svg class="h-7 w-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">예약 조회</h1>
+        <p class="text-gray-500 mt-2 text-sm">예약 시 입력한 이메일과 연락처 뒷자리로 조회합니다.</p>
+      </div>
+
+      <% if flash[:alert] %>
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm mb-6">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <%= form_with url: lookup_reservations_path, method: :post, class: "space-y-5" do |f| %>
+        <div>
+          <%= f.label :email, "이메일", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+          <%= f.email_field :email, required: true, value: params[:email],
+              placeholder: "예약 시 입력한 이메일",
+              class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-indigo-500 transition-all bg-white" %>
+        </div>
+
+        <div>
+          <%= f.label :phone_last4, "연락처 뒷자리 4자리", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+          <%= f.text_field :phone_last4, required: true, maxlength: 4, pattern: "\\d{4}",
+              placeholder: "예: 5678",
+              class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-indigo-500 transition-all bg-white" %>
+        </div>
+
+        <%= f.submit "조회하기",
+            class: "w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all cursor-pointer" %>
+      <% end %>
+
+      <div class="mt-6 text-center">
+        <%= link_to "← 홈으로", root_path, class: "text-sm text-gray-500 hover:text-gray-700" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_16_000004) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_16_000005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,9 +46,25 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000004) do
     t.string "reminder_job_id"
     t.string "package", default: "standard", null: false, comment: "선택 패키지"
     t.string "access_token"
+    t.bigint "time_slot_id"
     t.index ["access_token"], name: "index_reservations_on_access_token", unique: true
     t.index ["package"], name: "index_reservations_on_package"
     t.index ["reservation_datetime"], name: "index_reservations_on_reservation_datetime"
     t.index ["status"], name: "index_reservations_on_status"
+    t.index ["time_slot_id"], name: "index_reservations_on_time_slot_id"
   end
+
+  create_table "time_slots", force: :cascade do |t|
+    t.date "date", null: false
+    t.time "start_time", null: false
+    t.time "end_time", null: false
+    t.string "coaching_type", null: false
+    t.string "status", default: "available", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date", "start_time", "coaching_type"], name: "idx_time_slots_unique", unique: true
+    t.index ["date", "status"], name: "idx_time_slots_date_status"
+  end
+
+  add_foreign_key "reservations", "time_slots"
 end

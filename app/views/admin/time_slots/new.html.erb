@@ -1,0 +1,36 @@
+<div class="max-w-lg mx-auto space-y-6">
+  <div class="flex items-center space-x-4">
+    <%= link_to "← 목록", admin_time_slots_path, class: "text-gray-500 hover:text-gray-700 text-sm" %>
+    <h1 class="text-2xl font-bold text-gray-900">슬롯 생성</h1>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <%= form_with model: [:admin, @time_slot], class: "space-y-4" do |f| %>
+      <div>
+        <%= f.label :date, "날짜", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.date_field :date, required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :start_time, "시작 시간", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.time_field :start_time, required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+        <div>
+          <%= f.label :end_time, "종료 시간", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.time_field :end_time, required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :coaching_type, "코칭 형태", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.select :coaching_type,
+            options_for_select(Reservation::COACHING_TYPES.map { |t| [t, t] }),
+            {},
+            { required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" } %>
+      </div>
+
+      <%= f.submit "생성", class: "w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors cursor-pointer" %>
+    <% end %>
+  </div>
+</div>

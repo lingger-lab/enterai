@@ -175,6 +175,15 @@ export default class extends Controller {
       }
     }
 
+    // Step 4: 슬롯 선택 확인
+    if (this.currentStepValue === 4) {
+      const slotInput = currentStepElement.querySelector('input[name="reservation[time_slot_id]"]')
+      if (slotInput && !slotInput.value) {
+        this.showError(currentStepElement.querySelector("[data-slot-picker-target='slots']") || currentStepElement, "날짜와 시간을 선택해주세요.")
+        return false
+      }
+    }
+
     if (this.currentStepValue === 9) {
       const checkbox = currentStepElement.querySelector('input[type="checkbox"]')
       if (checkbox && !checkbox.checked) {

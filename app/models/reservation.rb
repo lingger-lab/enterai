@@ -61,6 +61,9 @@ class Reservation < ApplicationRecord
     "completed" => []
   }.freeze
 
+  # 연관
+  belongs_to :time_slot, optional: true
+
   # 유효성 검사
   validates :name, presence: true, length: { maximum: 100 }
   validates :phone, presence: true, format: { with: /\A[\d\-]{10,13}\z/, message: "올바른 전화번호 형식이 아닙니다" }
@@ -77,7 +80,9 @@ class Reservation < ApplicationRecord
   before_create :generate_access_token
   after_create_commit :send_notifications
   after_create_commit :schedule_reminder
+  after_create_commit :mark_slot_booked
   after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
+  after_update_commit :release_slot_on_cancel, if: -> { saved_change_to_status? && status == "cancelled" }
 
   def status_label
     STATUS_LABELS[status] || status
@@ -105,6 +110,14 @@ class Reservation < ApplicationRecord
     return if selected_subjects.blank?
     invalid = selected_subjects - SUBJECT_OPTIONS
     errors.add(:selected_subjects, "유효하지 않은 과목이 포함되어 있습니다") if invalid.any?
+  end
+
+  def mark_slot_booked
+    time_slot&.book!
+  end
+
+  def release_slot_on_cancel
+    time_slot&.release!
   end
 
   def send_notifications

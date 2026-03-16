@@ -36,6 +36,7 @@
             <%= link_to "코칭 패키지", "#pricing", class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150", data: { turbo: false } %>
             <%= link_to "커리큘럼", "#curriculum", class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150", data: { turbo: false } %>
             <%= link_to "후기", "#reviews", class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150", data: { turbo: false } %>
+            <%= link_to "예약 조회", lookup_reservations_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
             <%= link_to new_reservation_path,
                         class: "bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-600/90 active:scale-[0.98] transition-all duration-150 ml-2",
                         data: { controller: "cta-button" } do %>
@@ -60,6 +61,7 @@
           <%= link_to "코칭 패키지", "#pricing", class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close", turbo: false } %>
           <%= link_to "커리큘럼", "#curriculum", class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close", turbo: false } %>
           <%= link_to "후기", "#reviews", class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close", turbo: false } %>
+          <%= link_to "예약 조회", lookup_reservations_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
           <%= link_to new_reservation_path,
                       class: "block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600/90 active:scale-[0.98] transition-all duration-150 text-center mt-2",
                       data: { controller: "cta-button", action: "click->mobile-menu#close" } do %>

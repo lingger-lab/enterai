@@ -1,0 +1,60 @@
+<div class="max-w-lg mx-auto space-y-6">
+  <div class="flex items-center space-x-4">
+    <%= link_to "← 목록", admin_time_slots_path, class: "text-gray-500 hover:text-gray-700 text-sm" %>
+    <h1 class="text-2xl font-bold text-gray-900">일괄 슬롯 생성</h1>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <%= form_with url: bulk_create_admin_time_slots_path, method: :post, class: "space-y-4" do |f| %>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :start_date, "시작 날짜", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.date_field :start_date, required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+        <div>
+          <%= f.label :end_date, "종료 날짜", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.date_field :end_date, required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">요일 선택</label>
+        <div class="flex flex-wrap gap-2">
+          <% %w[일 월 화 수 목 금 토].each_with_index do |day, idx| %>
+            <label class="flex items-center space-x-1.5 px-3 py-2 border border-gray-300 rounded-lg hover:bg-indigo-50 cursor-pointer">
+              <%= check_box_tag "weekdays[]", idx, [1, 2, 3, 4, 5].include?(idx), class: "w-4 h-4 text-indigo-600 rounded" %>
+              <span class="text-sm"><%= day %></span>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <%= f.label :start_hour, "시작 시간", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.select :start_hour, (8..20).map { |h| ["#{h}시", h] }, { selected: 10 },
+              { class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" } %>
+        </div>
+        <div>
+          <%= f.label :end_hour, "종료 시간", class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= f.select :end_hour, (9..21).map { |h| ["#{h}시", h] }, { selected: 18 },
+              { class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" } %>
+        </div>
+      </div>
+
+      <div>
+        <%= f.label :interval_minutes, "간격", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.select :interval_minutes, [["30분", 30], ["1시간", 60], ["1시간 30분", 90], ["2시간", 120]], { selected: 60 },
+            { class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" } %>
+      </div>
+
+      <div>
+        <%= f.label :coaching_type, "코칭 형태", class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.select :coaching_type, Reservation::COACHING_TYPES.map { |t| [t, t] }, {},
+            { required: true, class: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" } %>
+      </div>
+
+      <%= f.submit "일괄 생성", class: "w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors cursor-pointer" %>
+    <% end %>
+  </div>
+</div>

@@ -9,6 +9,15 @@ Rails.application.routes.draw do
         post :send_sms
       end
     end
+    resources :time_slots, only: [:index, :new, :create, :destroy] do
+      collection do
+        get :bulk_new
+        post :bulk_create
+      end
+      member do
+        patch :toggle_block
+      end
+    end
   end
 
   # 개발환경 헬스체크 무시
@@ -23,6 +32,17 @@ Rails.application.routes.draw do
   get "privacy_policy", to: "home#privacy_policy", as: :privacy_policy
 
   root "home#index"
-  resources :reservations, only: [:new, :create, :show]
+
+  resources :reservations, only: [:new, :create, :show] do
+    collection do
+      get :available_dates
+      get :available_slots
+      get :lookup
+      post :lookup, action: :lookup_results
+    end
+    member do
+      patch :cancel
+    end
+  end
 end
 
