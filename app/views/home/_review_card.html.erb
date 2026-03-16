@@ -1,7 +1,7 @@
 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
   <div class="flex items-center space-x-3 mb-4">
     <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
-      <%= review.author_name.first %>
+      <%= review.author_name&.first || "?" %>
     </div>
     <div>
       <div class="font-semibold text-gray-900"><%= review.author_name %></div>

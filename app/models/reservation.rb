@@ -79,9 +79,9 @@ class Reservation < ApplicationRecord
 
   # 콜백
   before_create :generate_access_token
+  before_create :mark_slot_booked
   after_create_commit :send_notifications
   after_create_commit :schedule_reminder
-  after_create_commit :mark_slot_booked
   after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
   after_update_commit :release_slot_on_cancel, if: -> { saved_change_to_status? && status == "cancelled" }
   after_update_commit :send_review_request, if: -> { saved_change_to_status? && status == "completed" }

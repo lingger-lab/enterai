@@ -4,8 +4,11 @@ export default class extends Controller {
   static values = { type: String, data: Object, options: Object }
 
   async connect() {
-    const { Chart, registerables } = await import("chart.js")
-    Chart.register(...registerables)
+    const chartModule = await import("chart.js")
+    const Chart = chartModule.Chart || chartModule.default || chartModule
+    if (Chart.register && chartModule.registerables) {
+      Chart.register(...chartModule.registerables)
+    }
 
     const canvas = this.element.querySelector("canvas")
     if (!canvas) return

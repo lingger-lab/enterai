@@ -45,7 +45,7 @@ class ReservationMailer < ApplicationMailer
   def admin_notification(reservation)
     @reservation = reservation
     admin_email = ENV.fetch("ADMIN_EMAIL") { raise "ADMIN_EMAIL must be set" }
-    mail(to: admin_email, subject: "[EnterLab] 새로운 예약이 접수되었습니다 - #{reservation.name}")
+    mail(to: admin_email, subject: "[EnterLab] 새로운 예약이 접수되었습니다 - ##{reservation.id}")
   end
 
   private

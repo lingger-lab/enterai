@@ -42,7 +42,7 @@ class ReservationsController < ApplicationController
   end
 
   def available_dates
-    month = params[:month] ? Date.parse(params[:month]) : Date.current
+    month = params[:month] ? (Date.parse(params[:month]) rescue Date.current) : Date.current
     range = month.beginning_of_month..month.end_of_month
     dates = TimeSlot.available.future.where(date: range).distinct.pluck(:date).map(&:to_s)
     render json: dates

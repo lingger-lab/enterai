@@ -35,16 +35,26 @@ class Admin::TimeSlotsController < Admin::BaseController
   end
 
   def bulk_create
-    start_date = Date.parse(params[:start_date])
-    end_date = Date.parse(params[:end_date])
+    start_date = Date.parse(params[:start_date]) rescue nil
+    end_date = Date.parse(params[:end_date]) rescue nil
+
+    unless start_date && end_date && end_date >= start_date
+      flash[:alert] = "유효한 날짜를 입력해주세요."
+      render :bulk_new, status: :unprocessable_entity and return
+    end
     weekdays = Array(params[:weekdays]).map(&:to_i)
     start_hour = params[:start_hour].to_i
     end_hour = params[:end_hour].to_i
     interval = params[:interval_minutes].to_i
     coaching_type = params[:coaching_type]
 
-    if weekdays.empty? || interval <= 0 || start_hour >= end_hour
-      flash[:alert] = "입력값을 확인해주세요."
+    unless Reservation::COACHING_TYPES.include?(coaching_type)
+      flash[:alert] = "유효하지 않은 코칭 형태입니다."
+      render :bulk_new, status: :unprocessable_entity and return
+    end
+
+    if weekdays.empty? || interval <= 0 || start_hour >= end_hour || (end_date - start_date).to_i > 90
+      flash[:alert] = "입력값을 확인해주세요. (최대 90일 범위)"
       render :bulk_new, status: :unprocessable_entity and return
     end
 
