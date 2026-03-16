@@ -34,6 +34,14 @@ class ReservationMailer < ApplicationMailer
     mail(to: reservation.email, subject: "[EnterLab] 내일 예약이 있습니다")
   end
 
+  def review_request(reservation)
+    @reservation = reservation
+    @review = reservation.review
+    @review_url = write_review_url(token: @review.access_token)
+    @datetime = format_datetime(reservation.reservation_datetime)
+    mail(to: reservation.email, subject: "[EnterLab] 코칭은 어떠셨나요? 후기를 남겨주세요")
+  end
+
   def admin_notification(reservation)
     @reservation = reservation
     admin_email = ENV.fetch("ADMIN_EMAIL") { raise "ADMIN_EMAIL must be set" }

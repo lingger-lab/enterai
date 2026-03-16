@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-gray-100 py-12 px-4 flex items-center justify-center">
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="text-center mb-8">
+        <div class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-yellow-100 mb-4">
+          <svg class="h-7 w-7 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900">코칭 후기 작성</h1>
+        <p class="text-gray-500 mt-2 text-sm">
+          <%= @reservation.reservation_datetime.strftime("%Y년 %m월 %d일") %> <%= @reservation.coaching_type %> 코칭은 어떠셨나요?
+        </p>
+      </div>
+
+      <%= form_with model: @review, url: reviews_path, class: "space-y-5" do |f| %>
+        <%= f.hidden_field :access_token, value: @review.access_token %>
+
+        <!-- 별점 -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">만족도</label>
+          <div data-controller="rating" class="flex space-x-2">
+            <% 5.times do |i| %>
+              <button type="button"
+                      data-rating-target="star"
+                      data-action="click->rating#select"
+                      data-value="<%= i + 1 %>"
+                      class="text-gray-300 hover:text-yellow-400 transition-colors cursor-pointer">
+                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              </button>
+            <% end %>
+            <%= f.hidden_field :rating, data: { rating_target: "input" } %>
+          </div>
+        </div>
+
+        <!-- 작성자 이름 -->
+        <div>
+          <%= f.label :author_name, "이름 (공개용)", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+          <%= f.text_field :author_name, value: @reservation.name,
+              class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-indigo-500 transition-all",
+              placeholder: "예: 홍길동" %>
+        </div>
+
+        <!-- 카테고리 -->
+        <div>
+          <%= f.label :category, "직업군 (선택)", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+          <%= f.select :category,
+              options_for_select(Review::CATEGORIES.map { |c| [c, c] }),
+              { include_blank: "선택 안함" },
+              { class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-indigo-500 transition-all" } %>
+        </div>
+
+        <!-- 후기 내용 -->
+        <div>
+          <%= f.label :content, "후기", class: "block text-sm font-semibold text-gray-700 mb-1" %>
+          <%= f.text_area :content, rows: 5,
+              class: "w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-0 focus:border-indigo-500 transition-all",
+              placeholder: "코칭 경험을 자유롭게 작성해주세요" %>
+        </div>
+
+        <%= f.submit "후기 등록", class: "w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all cursor-pointer" %>
+      <% end %>
+    </div>
+  </div>
+</div>

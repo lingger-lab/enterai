@@ -207,6 +207,17 @@
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-scroll-reveal-target="item">수강생 후기</h2>
     </div>
 
+    <% if @reviews.present? %>
+      <!-- DB 기반 동적 후기 -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-controller="scroll-reveal" data-scroll-reveal-stagger-value="150">
+        <% @reviews.each do |review| %>
+          <div data-scroll-reveal-target="item">
+            <%= render "home/review_card", review: review %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+    <!-- 하드코딩 후기 (DB 리뷰 없을 때) -->
     <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8 sm:mb-10">
       <button data-action="click->tabs#switch" data-tabs-target="btn" data-index="0"
               class="px-3 sm:px-5 py-2 rounded-full font-semibold border-2 border-indigo-600 bg-indigo-600 text-white transition-all text-xs sm:text-sm">
@@ -311,6 +322,8 @@
         </div>
       </div>
     </div>
+
+    <% end %>
 
     <div class="text-center mt-8 sm:mt-10">
       <%= link_to new_reservation_path,

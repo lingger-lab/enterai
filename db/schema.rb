@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_16_000005) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_16_000006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,6 +54,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000005) do
     t.index ["time_slot_id"], name: "index_reservations_on_time_slot_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "reservation_id", null: false
+    t.integer "rating"
+    t.text "content"
+    t.string "author_name"
+    t.string "category"
+    t.boolean "is_published", default: false, null: false
+    t.string "access_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["access_token"], name: "index_reviews_on_access_token", unique: true
+    t.index ["is_published"], name: "index_reviews_on_is_published"
+    t.index ["reservation_id"], name: "index_reviews_on_reservation_id", unique: true
+  end
+
   create_table "time_slots", force: :cascade do |t|
     t.date "date", null: false
     t.time "start_time", null: false
@@ -67,4 +82,5 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000005) do
   end
 
   add_foreign_key "reservations", "time_slots"
+  add_foreign_key "reviews", "reservations"
 end

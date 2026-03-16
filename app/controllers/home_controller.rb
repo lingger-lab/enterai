@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    # 랜딩 페이지
+    @reviews = Review.published.submitted.where.not(content: [nil, ""]).order(created_at: :desc).limit(6)
   end
 
   def privacy_policy

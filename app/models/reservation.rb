@@ -63,6 +63,7 @@ class Reservation < ApplicationRecord
 
   # 연관
   belongs_to :time_slot, optional: true
+  has_one :review
 
   # 유효성 검사
   validates :name, presence: true, length: { maximum: 100 }
@@ -83,6 +84,7 @@ class Reservation < ApplicationRecord
   after_create_commit :mark_slot_booked
   after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
   after_update_commit :release_slot_on_cancel, if: -> { saved_change_to_status? && status == "cancelled" }
+  after_update_commit :send_review_request, if: -> { saved_change_to_status? && status == "completed" }
 
   def status_label
     STATUS_LABELS[status] || status
@@ -120,9 +122,16 @@ class Reservation < ApplicationRecord
     time_slot&.release!
   end
 
+  def send_review_request
+    return if review.present?
+    review = create_review!
+    EmailNotificationJob.perform_later(self.id, "review_request")
+  end
+
   def send_notifications
     SmsNotificationJob.perform_later(self.id, "created")
     EmailNotificationJob.perform_later(self.id, "created")
+    KakaoNotificationJob.perform_later(self.id, "created")
   end
 
   def schedule_reminder

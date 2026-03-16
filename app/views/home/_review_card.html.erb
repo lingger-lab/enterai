@@ -1,0 +1,20 @@
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+  <div class="flex items-center space-x-3 mb-4">
+    <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-lg">
+      <%= review.author_name.first %>
+    </div>
+    <div>
+      <div class="font-semibold text-gray-900"><%= review.author_name %></div>
+      <% if review.category.present? %>
+        <div class="text-xs text-gray-500"><%= review.category %></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-yellow-400 mb-3">
+    <%= "★" * review.rating %><span class="text-gray-200"><%= "★" * (5 - review.rating) %></span>
+  </div>
+  <p class="text-gray-700 text-sm leading-relaxed"><%= truncate(review.content, length: 200) %></p>
+  <div class="text-xs text-gray-400 mt-3">
+    <%= review.reservation.package_label %> 수강 · <%= review.created_at.strftime("%Y.%m") %>
+  </div>
+</div>

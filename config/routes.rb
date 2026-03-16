@@ -18,7 +18,16 @@ Rails.application.routes.draw do
         patch :toggle_block
       end
     end
+    resources :reviews, only: [:index] do
+      member do
+        patch :toggle_publish
+      end
+    end
   end
+
+  # 후기 작성 (공개, 토큰 인증)
+  get "reviews/:token/write", to: "reviews#write", as: :write_review
+  resources :reviews, only: [:create, :show]
 
   # 개발환경 헬스체크 무시
   get '/_stcore/*path', to: proc { [200, {}, ['']] }

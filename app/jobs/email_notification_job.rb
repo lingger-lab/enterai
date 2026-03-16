@@ -21,6 +21,8 @@ class EmailNotificationJob < ApplicationJob
       ReservationMailer.schedule_changed(reservation).deliver_now
     when "reminder"
       ReservationMailer.reminder(reservation).deliver_now
+    when "review_request"
+      ReservationMailer.review_request(reservation).deliver_now if reservation.review.present?
     end
   rescue => e
     Rails.logger.error "이메일 발송 실패 (#{notification_type}): #{e.message}"
