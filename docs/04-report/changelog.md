@@ -1,5 +1,74 @@
 # EnterLab 변경 로그
 
+## [2026-03-16] - PDCA #4: 후기/리뷰 + 대시보드 통계 + 카카오 알림톡
+
+### 추가됨 (Added)
+- 후기/리뷰 시스템
+  - `app/models/review.rb`: Review 모델 (45 LOC, empty shell 패턴)
+  - `app/controllers/reviews_controller.rb`: 리뷰 CRUD (write, create, show)
+  - `app/controllers/admin/reviews_controller.rb`: 관리자 리뷰 관리 (index, toggle_publish)
+  - `db/migrate/20260225000001_add_package_to_reservations.rb`: reviews 테이블 (9컬럼, 3인덱스)
+  - `app/views/reviews/{write,show}.html.erb`: 사용자 폼 및 감사 페이지
+  - `app/views/admin/reviews/index.html.erb`: 리뷰 관리 페이지
+  - `app/views/home/_review_card.html.erb`: 랜딩 페이지 리뷰 카드 파셜
+  - `app/mailers/reservation_mailer/review_request.html.erb`: 리뷰 요청 이메일 템플릿
+- 관리자 대시보드 통계
+  - Chart.js via importmap CDN (4.4.7)
+  - 4개 차트: 월별 추이(line), 패키지 매출(doughnut), 시간대(bar), 코칭타입(pie)
+  - `app/javascript/controllers/chart_controller.js`: Chart.js dynamic import + 렌더링
+  - Admin 대시보드에 2×2 차트 그리드 추가
+- 카카오 알림톡 백엔드
+  - `app/services/kakao_alimtalk_service.rb`: 카카오 서비스 (stub, feature-flagged)
+  - `app/jobs/kakao_notification_job.rb`: 카카오 알림톡 Job (5개 template type)
+  - 5개 연동 포인트: reservation.rb, admin/reservations_controller (2곳), reminder_job, reservations_controller
+  - ENV: KAKAO_ALIMTALK_ENABLED=false (채널 미등록까지 유지)
+
+### 변경됨 (Changed)
+- `app/models/reservation.rb`
+  - `has_one :review` 관계 추가
+  - `after_update_commit :send_review_request` 콜백 (status → completed 시)
+- `app/mailers/reservation_mailer.rb`
+  - `review_request` 메서드 추가 (리뷰 요청 이메일)
+- `app/jobs/email_notification_job.rb`
+  - "review_request" 케이스 추가
+- `app/jobs/reminder_notification_job.rb`
+  - KakaoNotificationJob.perform_later 호출 추가
+- `app/controllers/home_controller.rb`
+  - `@reviews = Review.published.submitted.limit(6)` (동적 후기 로드)
+- `app/views/home/index.html.erb`
+  - 동적 리뷰 영역 추가 (no reviews 시 하드코딩 fallback)
+- `app/controllers/admin/reservations_controller.rb`
+  - 차트 데이터 계산 (monthly_trend, package_revenue, hourly_distribution, coaching_popularity)
+  - update, update_status 메서드에 KakaoNotificationJob 호출 추가
+- `app/views/admin/reservations/index.html.erb`
+  - 4개 차트 그리드 추가 (각 차트 div는 data-controller="chart")
+- `app/controllers/reservations_controller.rb`
+  - cancel 액션에 KakaoNotificationJob.perform_later 호출
+- `config/importmap.rb`
+  - Chart.js UMD CDN pin 추가
+- `config/routes.rb`
+  - `resources :reviews, only: [:create, :show]` 추가
+  - `get "reviews/:token/write"` 라우트 추가
+  - Admin `resources :reviews, only: [:index]`에 member `patch :toggle_publish` 추가
+  - admin/reviews 라우트 추가
+- `app/views/layouts/application.html.erb`
+  - Admin nav에 "후기 관리" 링크 추가
+
+### 기술적 특징
+- **Empty Shell 패턴**: Review는 예약 완료 시 생성(rating/content nullable), 사용자가 폼으로 작성
+- **Lifecycle Validation**: `submitted?` 메서드로 완성 여부 확인, model validation이 폼 제출 시 강제
+- **차트 성능**: Chart.js dynamic import로 불필요 시 로드 방지, N+1 쿼리 없음
+- **Feature Flag**: KAKAO_ALIMTALK_ENABLED=false로 채널 등록까지 대비
+- **Token-based Access**: access_token으로 권한 없는 리뷰 접근 방지
+
+### 파일 통계
+- **신규**: 11개 파일, ~380 LOC
+- **수정**: 13개 파일, ~300 LOC
+- **마이그레이션**: 1개 (reviews 테이블)
+- **설계 부합도**: 99% (61/64 항목, 3개 의도적 개선)
+
+---
+
 ## [2026-03-16] - PDCA #2: 예약 캘린더 + 조회/취소
 
 ### 추가됨 (Added)
@@ -136,6 +205,15 @@
 
 ## PDCA 메트릭
 
+### 후기/리뷰 + 대시보드 + 카카오 (완료, PDCA #4)
+- **설계 부합율**: 99% (61/64 항목)
+- **의도적 개선**: 3개 (nullable 필드로 lifecycle 최적화)
+- **반복 횟수**: 0회
+- **소요 기간**: ~12시간
+- **파일 변경**: 13개 수정, 11개 신규 생성
+- **마이그레이션**: 1개 추가 (reviews 테이블)
+- **기술 특징**: Empty shell 패턴, dynamic import, feature flag, token-based access
+
 ### 예약 캘린더 + 조회/취소 (완료, PDCA #2)
 - **설계 부합율**: 100% (27/27 항목)
 - **반복 횟수**: 0회
@@ -144,23 +222,26 @@
 - **마이그레이션**: 1개 추가
 - **보안**: Race condition, 토큰 기반 접근 제어 구현
 
-### 모바일 UX 5대 개선 (완료, PDCA #1-3)
+### 모바일 UX 5대 개선 (완료, PDCA #3)
 - **설계 부합율**: 98% (10/10 항목)
 - **반복 횟수**: 0회
 - **소요 기간**: ~4시간
 - **파일 변경**: 5개 수정, 3개 신규 생성
 - **프로덕션 배포**: Cloud Run 재배포 완료
 
-### config 기능 (완료)
+### 기본 예약 시스템 (완료, PDCA #1)
 - **설계 부합율**: 100% (35/35 항목)
 - **반복 횟수**: 0회
 - **소요 기간**: ~24시간
 - **파일 변경**: 7개 수정, 11개 신규 생성
 - **마이그레이션**: 2개 추가
 
-### 프로젝트 진행률
-- **PDCA 사이클**: 3회 완료 (기본 4개 + 모바일 UX + 캘린더/조회)
-- **누적 Match Rate**: 100% (평균)
-- **누적 Feature**: 6개 완성
+### 프로젝트 진행률 (4 사이클 누적)
+- **PDCA 사이클**: 4회 완료
+- **누적 Feature**: 10개 완성
+- **누적 Match Rate**: 99.25% (평균)
+- **누적 파일**: ~50개 신규, ~60개 수정
+- **누적 LOC**: ~8,000
 - **Level**: Dynamic
-- **다음 단계**: Phase 2 (테스트 작성, 사용자 경험 개선)
+- **배포 상태**: ✅ 배포 가능 (테스트는 Phase 2 병렬)
+- **다음 단계**: Phase 2 (테스트 작성, Kakao 채널 등록)
