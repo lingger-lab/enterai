@@ -8,12 +8,14 @@ class SmsNotificationJob < ApplicationJob
     content = sms_message(reservation, notification_type)
 
     SensSmsService.send_sms(phone, content)
+  rescue ActiveRecord::RecordNotFound => e
+    Rails.logger.error "SMS 발송 실패: 예약 #{reservation_id} 없음"
+  rescue RestClient::ExceptionWithResponse => e
+    Rails.logger.error "SMS API 오류 (#{notification_type}): #{e.response&.code}"
+    raise e
   rescue => e
-    Rails.logger.error "SMS 발송 실패 (#{notification_type}): #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
-    # API 키 미설정으로 인한 실패는 재시도하지 않음
-    raise e unless e.message.include?("SENS API")
-
+    Rails.logger.error "SMS 발송 실패 (#{notification_type}): #{e.class}"
+    raise e
   end
 
   private

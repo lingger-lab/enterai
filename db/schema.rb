@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_16_000003) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_16_000004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,9 +29,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000003) do
   end
 
   create_table "reservations", force: :cascade do |t|
-    t.string "name", comment: "이름"
-    t.string "phone", comment: "연락처"
-    t.string "email", comment: "이메일"
     t.datetime "reservation_datetime", null: false, comment: "예약 날짜/시간"
     t.string "coaching_type", null: false, comment: "코칭 형태"
     t.string "selected_subjects", default: [], comment: "선택 과목", array: true
@@ -50,7 +47,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000003) do
     t.string "package", default: "standard", null: false, comment: "선택 패키지"
     t.string "access_token"
     t.index ["access_token"], name: "index_reservations_on_access_token", unique: true
-    t.index ["email"], name: "index_reservations_on_email"
     t.index ["package"], name: "index_reservations_on_package"
     t.index ["reservation_datetime"], name: "index_reservations_on_reservation_datetime"
     t.index ["status"], name: "index_reservations_on_status"
