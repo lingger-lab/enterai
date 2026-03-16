@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-03-16T03:05:18.446Z",
+  "lastUpdated": "2026-03-16T06:53:11.150Z",
   "activeFeatures": [
     "enterai-main",
     "migrate",
@@ -13,7 +13,8 @@
     "javascript",
     "helpers",
     "environments",
-    "config"
+    "config",
+    "tmp"
   ],
   "primaryFeature": "enterai-main",
   "features": {
@@ -30,7 +31,7 @@
       "timestamps": {
         "started": "2026-02-21T14:06:40.123Z",
         "completed": "2026-02-22T12:00:00.000Z",
-        "lastUpdated": "2026-02-22T12:32:16.501Z"
+        "lastUpdated": "2026-03-16T06:49:48.571Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\config\\routes.rb"
     },
@@ -45,9 +46,9 @@
       },
       "timestamps": {
         "started": "2026-02-21T14:14:18.118Z",
-        "lastUpdated": "2026-03-16T03:04:26.146Z"
+        "lastUpdated": "2026-03-16T06:51:56.780Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\models\\admin_user.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\reservations_controller.rb"
     },
     "migrate": {
       "phase": "do",
@@ -58,9 +59,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:39:05.488Z",
-        "lastUpdated": "2026-03-16T03:05:04.527Z"
+        "lastUpdated": "2026-03-16T06:45:34.159Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260316000003_add_lockable_to_admin_users.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260316000005_create_time_slots.rb"
     },
     "initializers": {
       "phase": "do",
@@ -71,9 +72,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:39:19.639Z",
-        "lastUpdated": "2026-03-16T03:05:18.446Z"
+        "lastUpdated": "2026-03-16T05:54:54.210Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\rack_attack.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\content_security_policy.rb"
     },
     "jobs": {
       "phase": "do",
@@ -84,7 +85,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:42:10.576Z",
-        "lastUpdated": "2026-02-23T08:35:03.032Z"
+        "lastUpdated": "2026-03-16T05:41:18.520Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\app\\jobs\\sms_notification_job.rb"
     },
@@ -97,9 +98,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:42:48.474Z",
-        "lastUpdated": "2026-03-15T19:40:13.811Z"
+        "lastUpdated": "2026-03-16T06:49:30.922Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin\\reservations_controller.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin\\time_slots_controller.rb"
     },
     "admin_users": {
       "phase": "do",
@@ -149,9 +150,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T17:58:35.342Z",
-        "lastUpdated": "2026-02-25T16:16:01.304Z"
+        "lastUpdated": "2026-03-16T06:53:11.150Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\javascript\\controllers\\scroll_reveal_controller.js"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\javascript\\controllers\\step_form_controller.js"
     },
     "helpers": {
       "phase": "do",
@@ -178,6 +179,19 @@
         "lastUpdated": "2026-03-15T19:40:20.738Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\config\\environments\\production.rb"
+    },
+    "tmp": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-16T06:48:40.701Z",
+        "lastUpdated": "2026-03-16T06:48:40.701Z"
+      },
+      "lastFile": "c:\\workspace\\enterai-main\\tmp\\test_timeslot.rb"
     }
   },
   "pipeline": {
@@ -188,7 +202,7 @@
   "session": {
     "startedAt": "2026-02-21T12:45:05.031Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-03-16T03:05:18.446Z"
+    "lastActivity": "2026-03-16T06:53:11.150Z"
   },
   "history": [
     {
@@ -830,6 +844,174 @@
     {
       "timestamp": "2026-03-16T03:05:18.446Z",
       "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:40:54.784Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:41:06.640Z",
+      "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:41:18.520Z",
+      "feature": "jobs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:41:25.253Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:53:48.215Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:53:54.533Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:00.661Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:10.667Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:16.819Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:22.432Z",
+      "feature": "javascript",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:27.386Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:33.603Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:39.142Z",
+      "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:45.138Z",
+      "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:54:54.210Z",
+      "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T05:56:01.598Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:45:34.159Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:45:47.561Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:46:45.686Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:46:54.781Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:47:05.671Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:48:40.701Z",
+      "feature": "tmp",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:49:30.922Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:49:42.019Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:49:48.571Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:51:56.780Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:52:29.875Z",
+      "feature": "javascript",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-16T06:53:11.150Z",
+      "feature": "javascript",
       "phase": "do",
       "action": "updated"
     }
