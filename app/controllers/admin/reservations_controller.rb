@@ -69,6 +69,6 @@ class Admin::ReservationsController < Admin::BaseController
   end
 
   def reservation_params
-    params.require(:reservation).permit(:reservation_datetime, :coaching_type, :status, :requests, :package, selected_subjects: [])
+    params.require(:reservation).permit(:reservation_datetime, :coaching_type, :requests, :package, selected_subjects: [])
   end
 end

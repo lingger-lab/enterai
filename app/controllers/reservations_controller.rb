@@ -22,8 +22,8 @@ class ReservationsController < ApplicationController
   end
   
   def show
-    @reservation = Reservation.find(params[:id])
-    unless @reservation.access_token.present? && params[:token] == @reservation.access_token
+    @reservation = Reservation.find_by(id: params[:id])
+    unless @reservation && @reservation.access_token.present? && ActiveSupport::SecurityUtils.secure_compare(@reservation.access_token, params[:token].to_s)
       redirect_to root_path, alert: "접근 권한이 없습니다."
     end
   end

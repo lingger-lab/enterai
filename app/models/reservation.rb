@@ -1,38 +1,20 @@
 class Reservation < ApplicationRecord
   # 개인정보 암호화 (attr_encrypted)
-  ENCRYPTION_KEY = ENV.fetch("ENCRYPTION_KEY") { Rails.env.production? ? raise("ENCRYPTION_KEY must be set in production") : SecureRandom.hex(16) }
+  ENCRYPTION_KEY = ENV.fetch("ENCRYPTION_KEY") { Rails.env.production? ? raise("ENCRYPTION_KEY must be set in production") : "dev_fallback_key_0123456789abcdef" }
 
   attr_encrypted :name, key: ENCRYPTION_KEY
   attr_encrypted :phone, key: ENCRYPTION_KEY
   attr_encrypted :email, key: ENCRYPTION_KEY
 
-  # 유효성 검사
-  validates :name, presence: true, length: { maximum: 100 }
-  validates :phone, presence: true, format: { with: /\A[\d\-]{10,13}\z/, message: "올바른 전화번호 형식이 아닙니다" }
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :reservation_datetime, presence: true
-  validates :coaching_type, presence: true
-  validates :requests, length: { maximum: 2000 }
-  validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
-  
-  # 콜백: 예약 생성 후 알림 발송 + 리마인더 스케줄링
-  after_create_commit :send_notifications
-  after_create_commit :schedule_reminder
-  after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
-  
-  # 예약 상태
+  # 상수 정의 (validates에서 참조하므로 먼저 선언)
   STATUSES = %w[pending confirmed cancelled completed].freeze
 
-  validates :status, inclusion: { in: STATUSES }
-
-  # 코칭 형태 옵션 (PRD에 따라 출장/사무실로 변경)
   COACHING_TYPES = [
     "출장 코칭",
     "사무실 코칭",
     "온라인 코칭"
   ].freeze
 
-  # 선택 과목 옵션
   SUBJECT_OPTIONS = [
     "AI 기초 이해",
     "AI 도구 활용",
@@ -41,7 +23,6 @@ class Reservation < ApplicationRecord
     "수익화 전략"
   ].freeze
 
-  # 패키지 옵션
   PACKAGES = {
     "starter" => {
       name: "STARTER",
@@ -66,18 +47,37 @@ class Reservation < ApplicationRecord
     }
   }.freeze
 
-  validates :package, inclusion: { in: PACKAGES.keys }
-
-  # 공개 조회용 토큰 (IDOR 방지)
-  before_create :generate_access_token
-
-  # 상태 한글 표시
   STATUS_LABELS = {
     "pending" => "대기중",
     "confirmed" => "확정",
     "cancelled" => "취소",
     "completed" => "완료"
   }.freeze
+
+  VALID_TRANSITIONS = {
+    "pending" => %w[confirmed cancelled],
+    "confirmed" => %w[cancelled completed],
+    "cancelled" => %w[pending],
+    "completed" => []
+  }.freeze
+
+  # 유효성 검사
+  validates :name, presence: true, length: { maximum: 100 }
+  validates :phone, presence: true, format: { with: /\A[\d\-]{10,13}\z/, message: "올바른 전화번호 형식이 아닙니다" }
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :reservation_datetime, presence: true
+  validates :coaching_type, presence: true, inclusion: { in: COACHING_TYPES }
+  validates :requests, length: { maximum: 2000 }
+  validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
+  validates :status, inclusion: { in: STATUSES }
+  validates :package, inclusion: { in: PACKAGES.keys }
+  validate :validate_selected_subjects
+
+  # 콜백
+  before_create :generate_access_token
+  after_create_commit :send_notifications
+  after_create_commit :schedule_reminder
+  after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
 
   def status_label
     STATUS_LABELS[status] || status
@@ -91,14 +91,6 @@ class Reservation < ApplicationRecord
     PACKAGES.dig(package, :name) || package
   end
 
-  # 상태 전환 규칙
-  VALID_TRANSITIONS = {
-    "pending" => %w[confirmed cancelled],
-    "confirmed" => %w[cancelled completed],
-    "cancelled" => %w[pending],
-    "completed" => []
-  }.freeze
-
   def can_transition_to?(new_status)
     VALID_TRANSITIONS.fetch(status, []).include?(new_status)
   end
@@ -109,13 +101,17 @@ class Reservation < ApplicationRecord
     self.access_token = SecureRandom.urlsafe_base64(32)
   end
 
-  # 알림 발송 메서드 (SMS + 이메일)
+  def validate_selected_subjects
+    return if selected_subjects.blank?
+    invalid = selected_subjects - SUBJECT_OPTIONS
+    errors.add(:selected_subjects, "유효하지 않은 과목이 포함되어 있습니다") if invalid.any?
+  end
+
   def send_notifications
     SmsNotificationJob.perform_later(self.id, "created")
     EmailNotificationJob.perform_later(self.id, "created")
   end
 
-  # 24시간 전 리마인더 스케줄링
   def schedule_reminder
     reminder_time = reservation_datetime - 24.hours
     return if reminder_time <= Time.current
@@ -124,13 +120,11 @@ class Reservation < ApplicationRecord
     update_column(:reminder_job_id, job.provider_job_id) if job.respond_to?(:provider_job_id)
   end
 
-  # 일정 변경 시 리마인더 재스케줄링
   def reschedule_reminder
     cancel_scheduled_reminder
     schedule_reminder
   end
 
-  # 기존 스케줄된 리마인더 취소
   def cancel_scheduled_reminder
     return unless reminder_job_id.present?
 
@@ -142,4 +136,3 @@ class Reservation < ApplicationRecord
     Rails.logger.warn "리마인더 취소 실패: #{e.message}"
   end
 end
-

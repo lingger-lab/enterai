@@ -1,3 +1,3 @@
 class AdminUser < ApplicationRecord
-  devise :database_authenticatable, :rememberable, :validatable, :lockable
+  devise :database_authenticatable, :rememberable, :validatable, :lockable, :timeoutable
 end
