@@ -16,28 +16,20 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
+      - 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '-t'
-      - 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:latest'
+      - 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest'
       - '.'
 
   # 2. Artifact Registry에 푸시
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:$COMMIT_SHA']
+    args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:latest']
+    args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest']
 
-  # 3. DB 마이그레이션 (Cloud Run Jobs)
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args:
-      - 'run'
-      - 'jobs'
-      - 'execute'
-      - 'enterlabs-migrate'
-      - '--region=${_REGION}'
-      - '--wait'
+  # 3. DB 마이그레이션 — 별도 실행 (gcloud run jobs execute enterlabs-migrate)
+  # migrate Job은 수동 생성 후 사용
 
   # 4. Web 서비스 배포
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -46,7 +38,7 @@ steps:
       - 'run'
       - 'deploy'
       - '${_SERVICE_NAME}'
-      - '--image=asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
+      - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '--region=${_REGION}'
       - '--platform=managed'
       - '--allow-unauthenticated'
@@ -64,7 +56,7 @@ steps:
       - 'run'
       - 'deploy'
       - '${_SIDEKIQ_SERVICE_NAME}'
-      - '--image=asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
+      - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '--region=${_REGION}'
       - '--platform=managed'
       - '--no-allow-unauthenticated'
@@ -77,7 +69,7 @@ steps:
       - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1'
 
 images:
-  - 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
-  - 'asia-northeast3-docker.pkg.dev/enterlabs/enterlab/${_SERVICE_NAME}:latest'
+  - 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
+  - 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest'
 
 timeout: '1200s'
