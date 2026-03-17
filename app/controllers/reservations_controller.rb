@@ -18,7 +18,6 @@ class ReservationsController < ApplicationController
         return
       end
       @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.hour, min: slot.start_time.min)
-      @reservation.coaching_type = slot.coaching_type
     end
 
     if @reservation.save

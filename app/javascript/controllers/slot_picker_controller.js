@@ -27,7 +27,7 @@ export default class extends Controller {
     try {
       const response = await fetch(`/reservations/available_slots?date=${dateStr}`)
       const slots = await response.json()
-      this.renderSlots(dateStr, slots)
+      this.renderTimeButtons(dateStr, slots)
     } catch (e) {
       console.error("Failed to fetch slots:", e)
     }
@@ -93,26 +93,38 @@ export default class extends Controller {
     this.calendarTarget.innerHTML = html
   }
 
-  renderSlots(dateStr, slots) {
-    if (slots.length === 0) {
-      this.slotsTarget.innerHTML = '<p class="text-sm text-gray-500 text-center py-4">이 날짜에 예약 가능한 시간이 없습니다.</p>'
-      return
-    }
+  renderTimeButtons(dateStr, slots) {
+    // 2시간 간격으로 그룹핑 (10:00, 12:00, 14:00, 16:00, 18:00, 20:00)
+    const timeBlocks = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
+    const availableHours = new Set(slots.map(s => s.start_time))
 
     const dateParts = dateStr.split("-")
     const dateLabel = `${dateParts[1]}월 ${dateParts[2]}일`
 
-    let html = `<p class="text-sm font-semibold text-gray-700 mb-3">${dateLabel} 예약 가능 시간</p><div class="grid grid-cols-2 gap-2">`
-    for (const slot of slots) {
-      html += `
-        <button type="button" data-action="click->slot-picker#selectSlot"
-          data-slot-id="${slot.id}" data-date="${dateStr}"
-          data-start="${slot.start_time}" data-end="${slot.end_time}"
-          data-coaching="${slot.coaching_type}"
-          class="slot-btn p-3 border-2 border-gray-200 rounded-xl text-left hover:border-indigo-500 hover:bg-indigo-50 transition-all">
-          <div class="text-sm font-bold text-gray-900">${slot.start_time} - ${slot.end_time}</div>
-          <div class="text-xs text-gray-500">${slot.coaching_type}</div>
-        </button>`
+    let html = `<p class="text-sm font-semibold text-gray-700 mb-3">${dateLabel} 시간 선택</p><div class="grid grid-cols-3 gap-2">`
+
+    for (const time of timeBlocks) {
+      // 해당 시간대에 슬롯이 있는지 확인
+      const matchSlot = slots.find(s => s.start_time === time)
+      const endHour = parseInt(time.split(":")[0]) + 2
+      const endTime = `${String(endHour).padStart(2, "0")}:00`
+
+      if (matchSlot) {
+        html += `
+          <button type="button" data-action="click->slot-picker#selectSlot"
+            data-slot-id="${matchSlot.id}" data-date="${dateStr}"
+            data-start="${time}" data-end="${endTime}"
+            class="slot-btn py-3 px-2 border-2 border-gray-200 rounded-xl text-center hover:border-indigo-500 hover:bg-indigo-50 transition-all">
+            <div class="text-sm font-bold text-gray-900">${time}</div>
+            <div class="text-xs text-gray-400">${time}~${endTime}</div>
+          </button>`
+      } else {
+        html += `
+          <div class="py-3 px-2 border-2 border-gray-100 rounded-xl text-center opacity-40">
+            <div class="text-sm font-bold text-gray-400">${time}</div>
+            <div class="text-xs text-gray-300">마감</div>
+          </div>`
+      }
     }
     html += "</div>"
     this.slotsTarget.innerHTML = html
@@ -123,7 +135,6 @@ export default class extends Controller {
     const dateStr = event.currentTarget.dataset.date
     this.fetchSlots(dateStr)
 
-    // Highlight selected date
     this.calendarTarget.querySelectorAll("button[data-date]").forEach(btn => {
       btn.classList.remove("bg-indigo-600", "text-white")
       btn.classList.add("bg-indigo-100", "text-indigo-700")
@@ -139,13 +150,10 @@ export default class extends Controller {
     const dateStr = btn.dataset.date
     const start = btn.dataset.start
     const end = btn.dataset.end
-    const coaching = btn.dataset.coaching
 
-    // Set hidden fields
     this.timeSlotIdTarget.value = slotId
     this.reservationDatetimeTarget.value = `${dateStr}T${start}`
 
-    // Visual feedback
     this.slotsTarget.querySelectorAll(".slot-btn").forEach(b => {
       b.classList.remove("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-500")
       b.classList.add("border-gray-200")
@@ -153,21 +161,12 @@ export default class extends Controller {
     btn.classList.remove("border-gray-200")
     btn.classList.add("border-indigo-600", "bg-indigo-50", "ring-2", "ring-indigo-500")
 
-    // Update display
     if (this.hasSelectedDisplayTarget) {
-      this.selectedDisplayTarget.textContent = `${dateStr} ${start} - ${end} (${coaching})`
+      this.selectedDisplayTarget.textContent = `${dateStr} ${start} ~ ${end}`
       this.selectedDisplayTarget.classList.remove("hidden")
     }
 
-    this.selectedSlot = { id: slotId, date: dateStr, start, end, coaching }
-
-    // 코칭 형태 자동 세팅 (Step 5 — 슬롯에서 결정되므로 읽기 전용으로 표시)
-    const coachingSelect = document.getElementById("reservation_coaching_type")
-    if (coachingSelect) {
-      coachingSelect.value = coaching
-      coachingSelect.style.pointerEvents = "none"
-      coachingSelect.style.opacity = "0.6"
-    }
+    this.selectedSlot = { id: slotId, date: dateStr, start, end }
   }
 
   prevMonth(event) {

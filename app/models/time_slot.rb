@@ -6,7 +6,7 @@ class TimeSlot < ApplicationRecord
   validates :date, presence: true
   validates :start_time, presence: true
   validates :end_time, presence: true
-  validates :coaching_type, presence: true, inclusion: { in: Reservation::COACHING_TYPES }
+  validates :coaching_type, presence: true
   validates :status, inclusion: { in: STATUSES }
   validates :date, uniqueness: { scope: [:start_time, :coaching_type], message: "같은 시간대에 이미 슬롯이 존재합니다" }
   validate :end_after_start
