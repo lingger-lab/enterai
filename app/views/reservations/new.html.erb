@@ -31,6 +31,7 @@
         <%= form_with model: @reservation,
                       class: "space-y-6",
                       id: "reservation-form",
+                      html: { novalidate: true },
                       data: { turbo_frame: "_top" } do |f| %>
           
           <!-- 1단계: 이름 -->
