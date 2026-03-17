@@ -560,8 +560,15 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
       <div>
-        <h3 class="text-white text-lg font-semibold mb-4">EnterLab</h3>
-        <p class="text-gray-400">AI로 당신의 앱을 만들고, 수익을 만드는 1:1 코칭 플랫폼</p>
+        <h3 class="text-white text-lg font-semibold mb-3">EnterLab</h3>
+        <p class="text-gray-400 mb-4">AI로 당신의 앱을 만들고, 수익을 만드는 1:1 코칭 플랫폼</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">앱개발</span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">웹페이지개발</span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">마케팅</span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">경영</span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">자금컨설팅</span>
+        </div>
       </div>
       <div>
         <h4 class="text-white font-semibold mb-4">바로가기</h4>
@@ -576,11 +583,22 @@
       </div>
       <div>
         <h4 class="text-white font-semibold mb-4">문의</h4>
-        <p class="text-gray-400">
+        <p class="text-gray-400 leading-relaxed">
           전화: <%= ENV.fetch("CONTACT_PHONE", "0502-1927-1910") %><br>
-          이메일: <%= ENV.fetch("ADMIN_EMAIL", "iamblackwhite86@gmail.com") %><br>
-          ENTERLABS 경남 김해시 대청로 26번안길 25-8
+          이메일: <%= ENV.fetch("ADMIN_EMAIL", "iamblackwhite86@gmail.com") %>
         </p>
+        <div class="mt-4 pt-4 border-t border-gray-800">
+          <p class="text-gray-500 text-xs leading-relaxed">
+            ENTERLABS 경남 김해시 대청로 26번안길 25-8
+          </p>
+          <div class="flex items-center gap-2 mt-3">
+            <div class="w-1 h-8 bg-indigo-500 rounded-full"></div>
+            <p class="text-gray-400 text-xs leading-relaxed">
+              <span class="text-indigo-400 font-medium">부산대학교</span> 생명자원과학대학<br>
+              생명산업융합연구원 협업
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
