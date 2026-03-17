@@ -53,8 +53,8 @@ class ReservationsController < ApplicationController
     render json: slots.map { |s|
       {
         id: s.id,
-        start_time: s.start_time.strftime("%H:%M"),
-        end_time: s.end_time.strftime("%H:%M"),
+        start_time: s.start_time.utc.strftime("%H:%M"),
+        end_time: s.end_time.utc.strftime("%H:%M"),
         coaching_type: s.coaching_type
       }
     }

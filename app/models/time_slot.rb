@@ -33,7 +33,9 @@ class TimeSlot < ApplicationRecord
   end
 
   def time_range_label
-    "#{start_time.strftime('%H:%M')} - #{end_time.strftime('%H:%M')}"
+    st = start_time.respond_to?(:strftime) ? start_time.strftime("%H:%M") : start_time.to_s[0..4]
+    et = end_time.respond_to?(:strftime) ? end_time.strftime("%H:%M") : end_time.to_s[0..4]
+    "#{st} - #{et}"
   end
 
   def self.bulk_create(start_date:, end_date:, weekdays:, start_hour:, end_hour:, interval_minutes:, coaching_type:)
@@ -47,8 +49,12 @@ class TimeSlot < ApplicationRecord
       end_minutes = end_hour * 60
 
       while current_minutes + interval_minutes <= end_minutes
-        slot_start = Time.utc(2000, 1, 1, current_minutes / 60, current_minutes % 60)
-        slot_end = Time.utc(2000, 1, 1, (current_minutes + interval_minutes) / 60, (current_minutes + interval_minutes) % 60)
+        h1 = current_minutes / 60
+        m1 = current_minutes % 60
+        h2 = (current_minutes + interval_minutes) / 60
+        m2 = (current_minutes + interval_minutes) % 60
+        slot_start = format("%02d:%02d", h1, m1)
+        slot_end = format("%02d:%02d", h2, m2)
 
         slots << {
           date: date,
