@@ -10,6 +10,13 @@ admin.save!
 puts "관리자 계정 생성 완료: #{admin_email}"
 
 # 시간 슬롯 생성 (기존 슬롯이 없을 때만)
+# 기존 1시간 간격 슬롯 정리 (available만)
+old_count = TimeSlot.where(status: "available").where.not(coaching_type: "코칭").count
+if old_count > 0
+  TimeSlot.where(status: "available").where.not(coaching_type: "코칭").destroy_all
+  puts "기존 슬롯 #{old_count}개 정리"
+end
+
 if TimeSlot.future.available.count == 0
   start_date = Date.current + 1.day
   end_date = start_date + 28.days
