@@ -17,19 +17,13 @@ class ReservationsController < ApplicationController
         end
         return
       end
-      @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.hour, min: slot.start_time.min)
+      @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.utc.hour, min: slot.start_time.utc.min)
     end
 
     if @reservation.save
-      respond_to do |format|
-        format.html { redirect_to reservation_path(@reservation, token: @reservation.access_token), notice: "예약이 완료되었습니다!" }
-        format.turbo_stream
-      end
+      redirect_to reservation_path(@reservation, token: @reservation.access_token), notice: "예약이 완료되었습니다!"
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream { render :new, status: :unprocessable_entity }
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 

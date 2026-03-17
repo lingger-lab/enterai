@@ -28,9 +28,10 @@
         <!-- 예약 폼 -->
         <div class="px-6 pb-6">
       <%= turbo_frame_tag "reservation_form" do %>
-        <%= form_with model: @reservation, 
+        <%= form_with model: @reservation,
                       class: "space-y-6",
-                      id: "reservation-form" do |f| %>
+                      id: "reservation-form",
+                      data: { turbo_frame: "_top" } do |f| %>
           
           <!-- 1단계: 이름 -->
           <div data-step-form-target="step" class="step-content">
