@@ -1,17 +1,16 @@
 # Google Cloud Build - Cloud Run 배포 설정
-# 프로젝트: enterlabs (enterlas)
+# 프로젝트: enterlabs-489809
 # 리전: asia-northeast3 (서울)
 #
 # 사용법:
-#   gcloud builds submit --config cloudbuild.yaml --project enterlabs
+#   COMMIT_SHA=$(git rev-parse --short HEAD) && gcloud builds submit --config cloudbuild.yaml --project enterlabs-489809 --substitutions="COMMIT_SHA=$COMMIT_SHA"
 
 substitutions:
   _REGION: asia-northeast3
   _SERVICE_NAME: enterlabs-web
-  _SIDEKIQ_SERVICE_NAME: enterlabs-sidekiq
 
 steps:
-  # 1. Docker 이미지 빌드 (Artifact Registry 사용)
+  # 1. Docker 이미지 빌드
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'build'
@@ -28,45 +27,17 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest']
 
-  # 3. DB 마이그레이션 — 별도 실행 (gcloud run jobs execute enterlabs-migrate)
-  # migrate Job은 수동 생성 후 사용
-
-  # 4. Web 서비스 배포
+  # 3. Web 서비스 배포 (update-env-vars로 기존 환경변수 유지)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - 'run'
-      - 'deploy'
+      - 'services'
+      - 'update'
       - '${_SERVICE_NAME}'
       - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '--region=${_REGION}'
-      - '--platform=managed'
-      - '--allow-unauthenticated'
-      - '--port=8080'
-      - '--memory=512Mi'
-      - '--cpu=1'
-      - '--min-instances=0'
-      - '--max-instances=3'
-      - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1,RAILS_SERVE_STATIC_FILES=1'
-
-  # 5. Sidekiq 워커 배포 (같은 이미지, 다른 명령어)
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args:
-      - 'run'
-      - 'deploy'
-      - '${_SIDEKIQ_SERVICE_NAME}'
-      - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
-      - '--region=${_REGION}'
-      - '--platform=managed'
-      - '--no-allow-unauthenticated'
-      - '--command=bundle,exec,sidekiq,-C,config/sidekiq.yml'
-      - '--memory=512Mi'
-      - '--cpu=1'
-      - '--min-instances=1'
-      - '--max-instances=1'
-      - '--no-cpu-throttling'
-      - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1'
+      - '--update-env-vars=RAILS_SERVE_STATIC_FILES=1,RAILS_LOG_TO_STDOUT=1'
 
 images:
   - 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
