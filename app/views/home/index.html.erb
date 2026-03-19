@@ -639,6 +639,95 @@
   </div>
 </section>
 
+<!-- ============================================ -->
+<!-- 앱 개발 의뢰 프라이싱 -->
+<!-- ============================================ -->
+<section class="py-6 sm:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-16" data-controller="scroll-reveal">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4" data-scroll-reveal-target="item">앱 개발 의뢰</h2>
+      <p class="text-lg text-gray-600" data-scroll-reveal-target="item">AI 바이브코딩으로 빠르고 합리적인 앱 개발</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto" data-controller="scroll-reveal" data-scroll-reveal-stagger-value="150">
+
+      <!-- 베이직 -->
+      <div class="bg-white rounded-2xl shadow-sm border-2 border-gray-200 p-6 sm:p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300" data-scroll-reveal-target="item">
+        <div class="text-center mb-6">
+          <h3 class="text-xl font-bold text-gray-900">BASIC</h3>
+          <p class="text-sm text-gray-500 mt-1">MVP · 프로토타입 구축</p>
+          <span class="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 font-semibold">난이도: 하</span>
+          <div class="mt-4">
+            <span class="text-4xl font-bold text-gray-900">290</span>
+            <span class="text-lg text-gray-600">만원~</span>
+          </div>
+        </div>
+        <ul class="space-y-3 text-gray-700 mb-8">
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> PRD 작성 및 핵심 비즈니스 로직 설계</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> 기본 UI/UX 프론트엔드 화면 구성</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> Cloud SQL 연동 데이터베이스 (CRUD)</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> <strong>최단기간 동작하는 프로토타입 제공</strong></li>
+        </ul>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed">아이디어 검증과 문제 해결에 집중하여, 최단기간 내에 동작하는 프로토타입을 제공합니다.</p>
+        <%= link_to new_reservation_path,
+                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all" do %>
+          무료 상담 신청
+        <% end %>
+      </div>
+
+      <!-- 스탠다드 (추천) -->
+      <div class="bg-white rounded-2xl shadow-xl border-2 border-indigo-600 p-6 sm:p-8 relative hover:-translate-y-2 transition-all duration-300" data-scroll-reveal-target="item">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+          추천
+        </div>
+        <div class="text-center mb-6">
+          <h3 class="text-xl font-bold text-indigo-700">STANDARD</h3>
+          <p class="text-sm text-gray-500 mt-1">상용 서비스 런칭 · 수익화</p>
+          <span class="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 font-semibold">난이도: 중</span>
+          <div class="mt-4">
+            <span class="text-4xl font-bold text-indigo-700">500</span>
+            <span class="text-lg text-gray-600">만원~</span>
+          </div>
+        </div>
+        <ul class="space-y-3 text-gray-700 mb-8">
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> UX 중심 프로덕트 완성도 고도화</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> 외부 API 연동 (MCP 활용)</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> <strong>결제 시스템 + 소셜 로그인 연동</strong></li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> Vercel/GCP 배포 + 도메인 + 관리자 대시보드</li>
+        </ul>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed">시니어 특유의 기획력과 서비스 품질 관리 역량으로 상용 서비스 수준의 결과물을 만듭니다.</p>
+        <%= link_to new_reservation_path,
+                    class: "block w-full text-center bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 shadow-lg shadow-indigo-600/25 transition-all" do %>
+          무료 상담 신청 →
+        <% end %>
+      </div>
+
+      <!-- 프리미엄 -->
+      <div class="bg-white rounded-2xl shadow-sm border-2 border-gray-200 p-6 sm:p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300" data-scroll-reveal-target="item">
+        <div class="text-center mb-6">
+          <h3 class="text-xl font-bold text-gray-900">PREMIUM</h3>
+          <p class="text-sm text-gray-500 mt-1">다중 AI 에이전트 · 완전 자동화</p>
+          <span class="inline-block mt-2 text-xs px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 font-semibold">난이도: 상</span>
+          <div class="mt-4">
+            <span class="text-4xl font-bold text-gray-900">1,000</span>
+            <span class="text-lg text-gray-600">만원~</span>
+          </div>
+        </div>
+        <ul class="space-y-3 text-gray-700 mb-8">
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> 다중 AI 에이전트 기반 대규모 시스템 개발</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> <strong>챗봇 + 마케팅 자동화 + 자동 쿠폰 발송</strong></li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> 실시간 매출 데이터 시각화</li>
+          <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> AI 기반 PMF 분석 리포트 시스템</li>
+        </ul>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed">개발팀 전체를 지휘하는 '지휘자'로서, 자동화된 비즈니스 시스템 전체를 납품합니다.</p>
+        <%= link_to new_reservation_path,
+                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all" do %>
+          무료 상담 신청
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================ -->
 <!-- CTA 섹션 -->
