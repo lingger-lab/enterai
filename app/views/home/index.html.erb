@@ -211,6 +211,48 @@
 </section>
 
 <!-- ============================================ -->
+<!-- VIP 커리큘럼 슬라이드 -->
+<!-- ============================================ -->
+<section class="py-6 sm:py-12 lg:py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-interval-value="4000">
+    <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">VIP 커리큘럼 미리보기</h2>
+      <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">실제 코칭에서 사용하는 커리큘럼을 확인해보세요</p>
+    </div>
+    <div class="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group"
+         role="region" aria-roledescription="carousel" aria-label="VIP 커리큘럼 슬라이드"
+         data-action="mouseenter->carousel#pause mouseleave->carousel#resume touchstart->carousel#touchStart touchmove->carousel#touchMove touchend->carousel#touchEnd"
+         style="touch-action: pan-y">
+      <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
+        <% (1..12).each do |i| %>
+          <img data-carousel-target="slide"
+               src="/slide/vip_curiculum/VIP_Curriculum<%= i %>.png"
+               alt="VIP 커리큘럼 <%= i %>페이지"
+               loading="lazy"
+               class="w-full flex-shrink-0">
+        <% end %>
+      </div>
+      <button data-action="click->carousel#prev" aria-label="이전 슬라이드"
+              class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button data-action="click->carousel#next" aria-label="다음 슬라이드"
+              class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="flex justify-center items-center gap-1 sm:gap-1.5 mt-3 sm:mt-4 flex-wrap">
+      <% (1..12).each do |i| %>
+        <button data-carousel-target="dot" data-action="click->carousel#selectDot" data-index="<%= i - 1 %>"
+                aria-label="<%= i %>번 슬라이드로 이동"
+                class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all min-w-[8px] min-h-[8px]"></button>
+      <% end %>
+      <span data-carousel-target="counter" class="text-xs sm:text-sm text-gray-500 ml-2 sm:ml-3">1 / 12</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
 <!-- 후기 섹션 -->
 <!-- ============================================ -->
 <section id="reviews" class="py-6 sm:py-20 bg-white" data-controller="tabs" data-tabs-interval-value="5000">
@@ -438,6 +480,48 @@
         <p class="text-sm font-bold text-slate-900">정부자금 50건</p>
         <p class="text-xs text-slate-500 mt-1">총 100억 경험</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- 시니어 비교우위 슬라이드 -->
+<!-- ============================================ -->
+<section class="py-6 sm:py-12 lg:py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-interval-value="4000">
+    <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">왜 EnterLab인가요?</h2>
+      <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">다른 코딩 교육과 EnterLab의 차이를 확인해보세요</p>
+    </div>
+    <div class="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group"
+         role="region" aria-roledescription="carousel" aria-label="시니어 비교우위 슬라이드"
+         data-action="mouseenter->carousel#pause mouseleave->carousel#resume touchstart->carousel#touchStart touchmove->carousel#touchMove touchend->carousel#touchEnd"
+         style="touch-action: pan-y">
+      <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
+        <% (1..11).each do |i| %>
+          <img data-carousel-target="slide"
+               src="/slide/senior_predominance/Senior<%= i %>.png"
+               alt="시니어 비교우위 <%= i %>페이지"
+               loading="lazy"
+               class="w-full flex-shrink-0">
+        <% end %>
+      </div>
+      <button data-action="click->carousel#prev" aria-label="이전 슬라이드"
+              class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button data-action="click->carousel#next" aria-label="다음 슬라이드"
+              class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="flex justify-center items-center gap-1 sm:gap-1.5 mt-3 sm:mt-4 flex-wrap">
+      <% (1..11).each do |i| %>
+        <button data-carousel-target="dot" data-action="click->carousel#selectDot" data-index="<%= i - 1 %>"
+                aria-label="<%= i %>번 슬라이드로 이동"
+                class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gray-300 cursor-pointer transition-all min-w-[8px] min-h-[8px]"></button>
+      <% end %>
+      <span data-carousel-target="counter" class="text-xs sm:text-sm text-gray-500 ml-2 sm:ml-3">1 / 11</span>
     </div>
   </div>
 </section>
