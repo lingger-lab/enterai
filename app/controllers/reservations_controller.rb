@@ -11,10 +11,7 @@ class ReservationsController < ApplicationController
       slot = TimeSlot.lock.find_by(id: @reservation.time_slot_id)
       unless slot&.available?
         @reservation.errors.add(:base, "선택한 시간대가 이미 예약되었습니다. 다른 시간을 선택해주세요.")
-        respond_to do |format|
-          format.html { render :new, status: :unprocessable_entity }
-          format.turbo_stream { render :new, status: :unprocessable_entity }
-        end
+        render :new, status: :unprocessable_entity
         return
       end
       @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.utc.hour, min: slot.start_time.utc.min)

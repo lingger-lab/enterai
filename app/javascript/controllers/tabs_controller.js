@@ -2,10 +2,94 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["btn", "panel"]
+  static values = {
+    interval: { type: Number, default: 5000 },
+    current: { type: Number, default: 0 }
+  }
+
+  connect() {
+    this.isHovered = false
+    this.setupObserver()
+  }
+
+  disconnect() {
+    this.stopAutoRotation()
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  setupObserver() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.startAutoRotation()
+          } else {
+            this.stopAutoRotation()
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+    this.observer.observe(this.element)
+  }
+
+  startAutoRotation() {
+    if (this.timer) return
+    this.timer = setInterval(() => {
+      if (!this.isHovered) {
+        const next = (this.currentValue + 1) % this.panelTargets.length
+        this.switchTo(next)
+      }
+    }, this.intervalValue)
+  }
+
+  stopAutoRotation() {
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  }
+
+  resetAutoRotation() {
+    this.stopAutoRotation()
+    this.startAutoRotation()
+  }
 
   switch(event) {
     const index = parseInt(event.currentTarget.dataset.index)
+    this.switchTo(index)
+    this.resetAutoRotation()
+  }
 
+  switchTo(index) {
+    const currentPanel = this.panelTargets[this.currentValue]
+    const nextPanel = this.panelTargets[index]
+
+    if (currentPanel === nextPanel) return
+
+    // fade out current
+    currentPanel.style.opacity = "0"
+    currentPanel.style.transform = "translateY(0.5rem)"
+
+    setTimeout(() => {
+      // hide current, show next
+      this.panelTargets.forEach((panel, i) => {
+        panel.classList.toggle("hidden", i !== index)
+      })
+
+      // prepare next for fade in
+      nextPanel.style.opacity = "0"
+      nextPanel.style.transform = "translateY(0.5rem)"
+
+      // trigger reflow then fade in
+      void nextPanel.offsetHeight
+      nextPanel.style.opacity = "1"
+      nextPanel.style.transform = "translateY(0)"
+    }, 300)
+
+    // update buttons
     this.btnTargets.forEach((btn, i) => {
       if (i === index) {
         btn.classList.add("bg-indigo-600", "text-white", "border-indigo-600")
@@ -16,8 +100,14 @@ export default class extends Controller {
       }
     })
 
-    this.panelTargets.forEach((panel, i) => {
-      panel.classList.toggle("hidden", i !== index)
-    })
+    this.currentValue = index
+  }
+
+  panelEnter() {
+    this.isHovered = true
+  }
+
+  panelLeave() {
+    this.isHovered = false
   }
 }
