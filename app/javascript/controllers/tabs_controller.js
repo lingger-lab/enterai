@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["btn", "panel"]
   static values = {
-    interval: { type: Number, default: 5000 },
+    interval: { type: Number, default: 8000 },
     current: { type: Number, default: 0 }
   }
 

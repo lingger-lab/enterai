@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center" 
      data-controller="step-form" 
-     data-step-form-total-steps-value="10">
+     data-step-form-total-steps-value="<%= @service_type == 'app_development' ? 8 : 10 %>">
   <!-- 휴대폰 모양 컨테이너 -->
   <div class="w-full max-w-sm mx-auto">
     <!-- 스마트폰 프레임 -->
@@ -31,7 +31,8 @@
                       class: "space-y-6",
                       id: "reservation-form",
                       html: { novalidate: true } do |f| %>
-          
+          <%= f.hidden_field :service_type, value: @service_type || "coaching" %>
+
           <!-- 1단계: 이름 -->
           <div data-step-form-target="step" class="step-content">
             <div>
@@ -132,7 +133,8 @@
             </div>
           </div>
           
-          <!-- 5단계: 코칭 형태 -->
+          <!-- 5단계: 코칭 형태 (코칭만) -->
+          <% if @service_type != "app_development" %>
           <div data-step-form-target="step" class="step-content hidden">
             <div>
               <%= f.label :coaching_type, "코칭 형태를 선택해주세요", class: "block text-base font-semibold text-gray-900 mb-4" %>
@@ -165,8 +167,10 @@
               </button>
             </div>
           </div>
-          
-          <!-- 6단계: 선택 과목 -->
+          <% end %>
+
+          <!-- 6단계: 선택 과목 (코칭만) -->
+          <% if @service_type != "app_development" %>
           <div data-step-form-target="step" class="step-content hidden">
             <div>
               <%= f.label :selected_subjects, "선택 과목 (복수 선택 가능)", class: "block text-base font-semibold text-gray-900 mb-3" %>
@@ -195,7 +199,8 @@
               </button>
             </div>
           </div>
-          
+          <% end %>
+
           <!-- 7단계: 요청사항 -->
           <div data-step-form-target="step" class="step-content hidden">
             <div>
@@ -231,24 +236,45 @@
           <!-- 8단계: 패키지 선택 -->
           <div data-step-form-target="step" class="step-content hidden">
             <div>
-              <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">패키지를 선택해주세요</h3>
-              <p class="text-sm text-center text-indigo-600 mb-6 bg-indigo-50 py-2 rounded-xl">상담 후 후불 결제입니다. 부담 없이 선택하세요!</p>
-              <div class="space-y-3">
-                <% Reservation::PACKAGES.each do |key, pkg| %>
-                  <label class="flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer hover:bg-indigo-50 hover:border-indigo-300 transition-all <%= 'border-indigo-600 bg-indigo-50' if @reservation.package == key %>">
-                    <%= f.radio_button :package, key,
-                        class: "w-6 h-6 text-indigo-600 border-gray-300 focus:ring-indigo-500",
-                        checked: (@reservation.package == key || (@reservation.package.blank? && key == "standard")) %>
-                    <div class="flex-1">
-                      <div class="flex justify-between items-center">
-                        <span class="font-bold text-gray-900"><%= pkg[:name] %></span>
-                        <span class="text-indigo-700 font-bold"><%= (pkg[:price] / 10000).to_i %>만원</span>
+              <% if @service_type == "app_development" %>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">앱 개발 패키지를 선택해주세요</h3>
+                <p class="text-sm text-center text-indigo-600 mb-6 bg-indigo-50 py-2 rounded-xl">상담 후 견적을 안내드립니다. 부담 없이 선택하세요!</p>
+                <div class="space-y-3">
+                  <% Reservation::APP_DEV_PACKAGES.each do |key, pkg| %>
+                    <label class="flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer hover:bg-indigo-50 hover:border-indigo-300 transition-all <%= 'border-indigo-600 bg-indigo-50' if @reservation.package == key %>">
+                      <%= f.radio_button :package, key,
+                          class: "w-6 h-6 text-indigo-600 border-gray-300 focus:ring-indigo-500",
+                          checked: (@reservation.package == key || (@reservation.package.blank? && key == "standard_dev")) %>
+                      <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                          <span class="font-bold text-gray-900"><%= pkg[:name] %></span>
+                          <span class="text-indigo-700 font-bold"><%= (pkg[:price] / 10000).to_i %>만원~</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1"><%= pkg[:label] %> · <%= pkg[:duration] %></p>
                       </div>
-                      <p class="text-sm text-gray-500 mt-1"><%= pkg[:label] %> · <%= pkg[:duration] %></p>
-                    </div>
-                  </label>
-                <% end %>
-              </div>
+                    </label>
+                  <% end %>
+                </div>
+              <% else %>
+                <h3 class="text-xl font-bold text-gray-900 mb-2 text-center">패키지를 선택해주세요</h3>
+                <p class="text-sm text-center text-indigo-600 mb-6 bg-indigo-50 py-2 rounded-xl">상담 후 후불 결제입니다. 부담 없이 선택하세요!</p>
+                <div class="space-y-3">
+                  <% Reservation::PACKAGES.each do |key, pkg| %>
+                    <label class="flex items-center gap-4 p-4 border-2 rounded-2xl cursor-pointer hover:bg-indigo-50 hover:border-indigo-300 transition-all <%= 'border-indigo-600 bg-indigo-50' if @reservation.package == key %>">
+                      <%= f.radio_button :package, key,
+                          class: "w-6 h-6 text-indigo-600 border-gray-300 focus:ring-indigo-500",
+                          checked: (@reservation.package == key || (@reservation.package.blank? && key == "standard")) %>
+                      <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                          <span class="font-bold text-gray-900"><%= pkg[:name] %></span>
+                          <span class="text-indigo-700 font-bold"><%= (pkg[:price] / 10000).to_i %>만원</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1"><%= pkg[:label] %> · <%= pkg[:duration] %></p>
+                      </div>
+                    </label>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
             <div class="mt-8 flex gap-3">
               <button type="button"

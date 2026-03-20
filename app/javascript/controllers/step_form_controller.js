@@ -81,7 +81,7 @@ export default class extends Controller {
       }
     }
 
-    const packageLabels = { starter: "STARTER (98만원)", standard: "STANDARD (148만원)", premium: "PREMIUM (249만원)" }
+    const packageLabels = { starter: "STARTER (98만원)", standard: "STANDARD (148만원)", premium: "PREMIUM (249만원)", basic: "BASIC (290만원~)", standard_dev: "STANDARD (500만원~)", premium_dev: "PREMIUM (1,000만원~)" }
     updateElement('review-package', packageInput ? (packageLabels[packageInput.value] || packageInput.value) : '-')
     updateElement('review-name', nameInput?.value)
     updateElement('review-phone', phoneInput?.value)

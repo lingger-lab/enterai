@@ -47,6 +47,32 @@ class Reservation < ApplicationRecord
     }
   }.freeze
 
+  APP_DEV_PACKAGES = {
+    "basic" => {
+      name: "BASIC",
+      price: 2_900_000,
+      label: "MVP·프로토타입 구축",
+      duration: "2~4주",
+      features: ["PRD 작성 및 비즈니스 로직 설계", "기본 UI/UX 프론트엔드 구성", "Cloud SQL 연동 DB (CRUD)", "동작하는 프로토타입 제공"]
+    },
+    "standard_dev" => {
+      name: "STANDARD",
+      price: 5_000_000,
+      label: "상용 서비스 런칭·수익화",
+      duration: "4~8주",
+      features: ["UX 중심 프로덕트 고도화", "외부 API 연동 (MCP)", "결제 시스템 + 소셜 로그인", "Vercel/GCP 배포 + 관리자 대시보드"]
+    },
+    "premium_dev" => {
+      name: "PREMIUM",
+      price: 10_000_000,
+      label: "완전 자동화 시스템",
+      duration: "8~12주",
+      features: ["다중 AI 에이전트 대규모 개발", "챗봇 + 마케팅 자동화", "실시간 매출 데이터 시각화", "AI 기반 PMF 분석 리포트"]
+    }
+  }.freeze
+
+  SERVICE_TYPES = %w[coaching app_development].freeze
+
   STATUS_LABELS = {
     "pending" => "대기중",
     "confirmed" => "확정",
@@ -74,7 +100,8 @@ class Reservation < ApplicationRecord
   validates :requests, length: { maximum: 2000 }
   validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
   validates :status, inclusion: { in: STATUSES }
-  validates :package, inclusion: { in: PACKAGES.keys }
+  validates :package, inclusion: { in: PACKAGES.keys + APP_DEV_PACKAGES.keys }
+  validates :service_type, inclusion: { in: SERVICE_TYPES }
   validate :validate_selected_subjects
 
   # 콜백
@@ -91,11 +118,15 @@ class Reservation < ApplicationRecord
   end
 
   def package_info
-    PACKAGES[package]
+    PACKAGES[package] || APP_DEV_PACKAGES[package]
   end
 
   def package_label
-    PACKAGES.dig(package, :name) || package
+    PACKAGES.dig(package, :name) || APP_DEV_PACKAGES.dig(package, :name) || package
+  end
+
+  def app_development?
+    service_type == "app_development"
   end
 
   def can_transition_to?(new_status)

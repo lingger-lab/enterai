@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_16_000006) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_20_051018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_16_000006) do
     t.string "package", default: "standard", null: false, comment: "선택 패키지"
     t.string "access_token"
     t.bigint "time_slot_id"
+    t.string "service_type", default: "coaching"
     t.index ["access_token"], name: "index_reservations_on_access_token", unique: true
     t.index ["package"], name: "index_reservations_on_package"
     t.index ["reservation_datetime"], name: "index_reservations_on_reservation_datetime"

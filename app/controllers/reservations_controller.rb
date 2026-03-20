@@ -1,7 +1,13 @@
 class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
-    @reservation.package = params[:package] if params[:package].present? && Reservation::PACKAGES.key?(params[:package])
+    @service_type = params[:service_type] || "coaching"
+    @reservation.service_type = @service_type
+    if @service_type == "app_development"
+      @reservation.package = params[:package] if params[:package].present? && Reservation::APP_DEV_PACKAGES.key?(params[:package])
+    else
+      @reservation.package = params[:package] if params[:package].present? && Reservation::PACKAGES.key?(params[:package])
+    end
   end
 
   def create
@@ -111,6 +117,7 @@ class ReservationsController < ApplicationController
       :privacy_agreed,
       :package,
       :time_slot_id,
+      :service_type,
       selected_subjects: []
     )
   end

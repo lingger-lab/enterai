@@ -69,17 +69,29 @@ export default class extends Controller {
     window.addEventListener("resize", this._onResize)
 
     this.animationId = null
+    this.autoAnimating = false
     this.animate()
+
+    // Mobile: auto wave animation
+    if (isMobile) {
+      this._onTouchStart = () => {
+        this.stopAutoAnimation()
+      }
+      this.element.addEventListener("touchstart", this._onTouchStart, { passive: true })
+      setTimeout(() => this.startAutoAnimation(), 2000)
+    }
   }
 
   disconnect() {
     if (this.animationId) cancelAnimationFrame(this.animationId)
+    this.stopAutoAnimation()
     clearTimeout(this._resizeTimer)
 
     this.element.removeEventListener("mousemove", this._onMouseMove)
     this.element.removeEventListener("mouseleave", this._onMouseLeave)
     this.element.removeEventListener("touchmove", this._onTouchMove)
     this.element.removeEventListener("touchend", this._onTouchEnd)
+    if (this._onTouchStart) this.element.removeEventListener("touchstart", this._onTouchStart)
     window.removeEventListener("resize", this._onResize)
 
     // Restore original HTML
@@ -241,6 +253,57 @@ export default class extends Controller {
       }
     }
 
-    return anyMoving || this.isPointerActive
+    return anyMoving || this.isPointerActive || this.autoAnimating
+  }
+
+  startAutoAnimation() {
+    if (this.autoAnimating) return
+    this.autoAnimating = true
+    this.autoWave()
+  }
+
+  stopAutoAnimation() {
+    this.autoAnimating = false
+    if (this.autoTimer) {
+      clearTimeout(this.autoTimer)
+      this.autoTimer = null
+    }
+  }
+
+  autoWave() {
+    if (!this.autoAnimating || this.charStates.length === 0) return
+
+    const rect = this.element.getBoundingClientRect()
+    const startX = rect.left - 50
+    const endX = rect.right + 50
+    const centerY = rect.top + rect.height / 2
+    const duration = 2500
+    const startTime = performance.now()
+
+    const sweep = (now) => {
+      if (!this.autoAnimating) return
+
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2
+
+      this.pointerX = startX + (endX - startX) * eased
+      this.pointerY = centerY + Math.sin(progress * Math.PI * 2) * 20
+      this.isPointerActive = true
+      this.ensureAnimating()
+
+      if (progress < 1) {
+        requestAnimationFrame(sweep)
+      } else {
+        this.pointerX = -9999
+        this.pointerY = -9999
+        this.isPointerActive = false
+        this.autoTimer = setTimeout(() => this.autoWave(), 4000)
+      }
+    }
+
+    requestAnimationFrame(sweep)
   }
 }
