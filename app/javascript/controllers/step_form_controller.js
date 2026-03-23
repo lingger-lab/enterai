@@ -64,7 +64,7 @@ export default class extends Controller {
     const phoneInput = form.querySelector('#reservation_phone')
     const emailInput = form.querySelector('#reservation_email')
     const datetimeInput = form.querySelector('#reservation_reservation_datetime')
-    const coachingSelect = form.querySelector('#reservation_coaching_type')
+    const coachingRadio = form.querySelector('input[name="reservation[coaching_type]"]:checked')
 
     const selectedSubjects = []
     const subjectCheckboxes = form.querySelectorAll('input[name="reservation[selected_subjects][]"]:checked')
@@ -105,7 +105,7 @@ export default class extends Controller {
       updateElement('review-datetime', '-')
     }
 
-    updateElement('review-coaching', coachingSelect?.value)
+    updateElement('review-coaching', coachingRadio?.value)
 
     const subjectsContainer = document.getElementById('review-subjects-container')
     const subjectsElement = document.getElementById('review-subjects')
@@ -180,6 +180,15 @@ export default class extends Controller {
       const slotInput = currentStepElement.querySelector('input[name="reservation[time_slot_id]"]')
       if (slotInput && !slotInput.value) {
         this.showError(currentStepElement.querySelector("[data-slot-picker-target='slots']") || currentStepElement, "날짜와 시간을 선택해주세요.")
+        return false
+      }
+    }
+
+    // Step 5: 코칭 형태 선택 확인
+    if (this.currentStepValue === 5) {
+      const coachingRadio = currentStepElement.querySelector('input[name="reservation[coaching_type]"]:checked')
+      if (!coachingRadio) {
+        this.showError(currentStepElement.querySelector(".space-y-3") || currentStepElement, "코칭 형태를 선택해주세요.")
         return false
       }
     }
