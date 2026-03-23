@@ -73,6 +73,9 @@ class Reservation < ApplicationRecord
 
   SERVICE_TYPES = %w[coaching app_development].freeze
 
+  # service_type은 폼에서만 사용 (DB 컬럼 불필요)
+  attr_accessor :service_type
+
   STATUS_LABELS = {
     "pending" => "대기중",
     "confirmed" => "확정",
@@ -101,7 +104,7 @@ class Reservation < ApplicationRecord
   validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
   validates :status, inclusion: { in: STATUSES }
   validates :package, inclusion: { in: PACKAGES.keys + APP_DEV_PACKAGES.keys }
-  validates :service_type, inclusion: { in: SERVICE_TYPES }
+  validates :service_type, inclusion: { in: SERVICE_TYPES }, allow_nil: true
   validate :validate_selected_subjects
 
   # 콜백
