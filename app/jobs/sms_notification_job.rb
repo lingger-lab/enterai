@@ -8,6 +8,13 @@ class SmsNotificationJob < ApplicationJob
     content = sms_message(reservation, notification_type)
 
     SensSmsService.send_sms(phone, content)
+
+    if notification_type == "created"
+      admin_phone = ENV["ADMIN_PHONE"]
+      if admin_phone.present?
+        SensSmsService.send_sms(admin_phone, admin_sms_message(reservation))
+      end
+    end
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error "SMS 발송 실패: 예약 #{reservation_id} 없음"
   rescue RestClient::ExceptionWithResponse => e
@@ -19,6 +26,19 @@ class SmsNotificationJob < ApplicationJob
   end
 
   private
+
+  def admin_sms_message(reservation)
+    datetime = reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분")
+    <<~MSG
+      [EnterLab] 새 예약 접수!
+
+      고객: #{reservation.name}
+      연락처: #{reservation.phone}
+      일시: #{datetime}
+      형태: #{reservation.coaching_type || "웹개발의뢰"}
+      패키지: #{reservation.package}
+    MSG
+  end
 
   def sms_message(reservation, type)
     datetime = reservation.reservation_datetime.strftime("%Y년 %m월 %d일 %H시 %M분")

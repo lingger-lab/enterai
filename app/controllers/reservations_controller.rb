@@ -12,6 +12,7 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
+    @service_type = @reservation.service_type || "coaching"
 
     if @reservation.time_slot_id.present?
       slot = TimeSlot.lock.find_by(id: @reservation.time_slot_id)

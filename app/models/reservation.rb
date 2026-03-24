@@ -99,7 +99,8 @@ class Reservation < ApplicationRecord
   validates :phone, presence: true, format: { with: /\A[\d\-]{10,13}\z/, message: "올바른 전화번호 형식이 아닙니다" }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :reservation_datetime, presence: true
-  validates :coaching_type, presence: true, inclusion: { in: COACHING_TYPES }
+  validates :coaching_type, presence: true, inclusion: { in: COACHING_TYPES },
+            unless: -> { service_type == "app_development" }
   validates :requests, length: { maximum: 2000 }
   validates :privacy_agreed, acceptance: { message: "개인정보 동의는 필수입니다" }
   validates :status, inclusion: { in: STATUSES }

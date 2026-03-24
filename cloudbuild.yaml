@@ -37,7 +37,7 @@ steps:
       - '${_SERVICE_NAME}'
       - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '--region=${_REGION}'
-      - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1,RAILS_SERVE_STATIC_FILES=1,SECRET_KEY_BASE=c8d8b5f10519b028fa7303db0ba502ec95201604f986d73dad2bba87f78e1fb27265af8df733a7660daaf4a9d8dffbb71a290f6946f3f00e6f8e9cdd630256b7,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_PASSWORD=EnterLab2026!,DATABASE_NAME=enter_ai_production,HOST=enterlab.cloud,ENCRYPTION_KEY=prod_enterlab_enc_key_2026secure,ADMIN_EMAIL=admin@enterlab.com,CONTACT_PHONE=0502-1927-1910'
+      - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1,RAILS_SERVE_STATIC_FILES=1,SECRET_KEY_BASE=c8d8b5f10519b028fa7303db0ba502ec95201604f986d73dad2bba87f78e1fb27265af8df733a7660daaf4a9d8dffbb71a290f6946f3f00e6f8e9cdd630256b7,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_PASSWORD=EnterLab2026!,DATABASE_NAME=enter_ai_production,HOST=enterlab.cloud,ENCRYPTION_KEY=prod_enterlab_enc_key_2026secure,ADMIN_EMAIL=admin@enterlab.com,ADMIN_PHONE=010-5529-1912,CONTACT_PHONE=0502-1927-1910'
       - '--add-cloudsql-instances=enterlabs-489809:asia-northeast3:enterlab'
 
 images:
