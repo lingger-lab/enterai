@@ -116,9 +116,16 @@ export default class extends Controller {
 
   pause() {
     this.stopAuto()
+    // 안전장치: 8초 후 자동 재개 (모바일 mouseleave/touchend 누락 대비)
+    if (this.pauseTimeout) clearTimeout(this.pauseTimeout)
+    this.pauseTimeout = setTimeout(() => this.startAuto(), 8000)
   }
 
   resume() {
+    if (this.pauseTimeout) {
+      clearTimeout(this.pauseTimeout)
+      this.pauseTimeout = null
+    }
     this.startAuto()
   }
 

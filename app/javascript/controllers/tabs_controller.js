@@ -105,9 +105,18 @@ export default class extends Controller {
 
   panelEnter() {
     this.isHovered = true
+    // 안전장치: 8초 후 자동 해제 (모바일 touchend 누락 대비)
+    if (this.hoverTimeout) clearTimeout(this.hoverTimeout)
+    this.hoverTimeout = setTimeout(() => {
+      this.isHovered = false
+    }, 8000)
   }
 
   panelLeave() {
     this.isHovered = false
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout)
+      this.hoverTimeout = null
+    }
   }
 }
