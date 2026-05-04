@@ -76,3 +76,7 @@ Thumbs.db
 .claude/checkpoints/
 .claude/web-checklist-state.json
 
+
+# Firebase
+.firebase/
+firebase-debug.log
