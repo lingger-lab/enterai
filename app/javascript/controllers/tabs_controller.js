@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = ["btn", "panel"]
   static values = {
     interval: { type: Number, default: 16000 },
-    current: { type: Number, default: 0 }
+    current: { type: Number, default: 0 },
+    auto: { type: Boolean, default: true }
   }
 
   connect() {
@@ -36,6 +37,7 @@ export default class extends Controller {
   }
 
   startAutoRotation() {
+    if (!this.autoValue) return
     if (this.timer) return
     this.timer = setInterval(() => {
       if (!this.isHovered) {

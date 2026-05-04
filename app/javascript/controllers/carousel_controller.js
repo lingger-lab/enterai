@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = ["track", "slide", "dot", "counter"]
   static values = {
     interval: { type: Number, default: 7000 },
-    current: { type: Number, default: 0 }
+    current: { type: Number, default: 0 },
+    auto: { type: Boolean, default: true }
   }
 
   connect() {
@@ -98,6 +99,7 @@ export default class extends Controller {
 
   // Auto rotation
   startAuto() {
+    if (!this.autoValue) return
     if (this.timer) return
     this.timer = setInterval(() => this.next(), this.intervalValue)
   }

@@ -43,7 +43,7 @@
 <!-- ============================================ -->
 <!-- 문제 공감 섹션 (페르소나별 탭) -->
 <!-- ============================================ -->
-<section class="py-10 sm:py-24 bg-white" data-controller="tabs" data-tabs-interval-value="16000">
+<section class="py-10 sm:py-24 bg-white" data-controller="tabs" data-tabs-auto-value="false">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-8 sm:mb-12" data-controller="scroll-reveal">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight" style="text-wrap: balance" data-scroll-reveal-target="item">혹시 이런 고민 하고 계신가요?</h2>
@@ -118,7 +118,7 @@
 <!-- ============================================ -->
 <!-- 커리큘럼 섹션 -->
 <!-- ============================================ -->
-<section id="curriculum" class="py-10 sm:py-24 bg-gray-50" data-controller="tabs" data-tabs-interval-value="16000">
+<section id="curriculum" class="py-10 sm:py-24 bg-gray-50" data-controller="tabs" data-tabs-auto-value="false">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-8 sm:mb-12" data-controller="scroll-reveal">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight" style="text-wrap: balance" data-scroll-reveal-target="item">커리큘럼</h2>
@@ -224,7 +224,7 @@
 <!-- VIP 커리큘럼 슬라이드 -->
 <!-- ============================================ -->
 <section class="py-6 sm:py-12 lg:py-20 bg-white">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-interval-value="7000">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-auto-value="false">
     <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">VIP 커리큘럼 미리보기</h2>
       <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">실제 코칭에서 사용하는 커리큘럼을 확인해보세요</p>
@@ -265,7 +265,7 @@
 <!-- ============================================ -->
 <!-- 후기 섹션 -->
 <!-- ============================================ -->
-<section id="reviews" class="py-10 sm:py-24 bg-white" data-controller="tabs" data-tabs-interval-value="16000">
+<section id="reviews" class="py-10 sm:py-24 bg-white" data-controller="tabs" data-tabs-auto-value="false">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-8 sm:mb-12" data-controller="scroll-reveal">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight" style="text-wrap: balance" data-scroll-reveal-target="item">수강생 후기</h2>
@@ -517,7 +517,7 @@
 <!-- 시니어 비교우위 슬라이드 -->
 <!-- ============================================ -->
 <section class="py-6 sm:py-12 lg:py-20 bg-white">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-interval-value="7000">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-controller="carousel" data-carousel-auto-value="false">
     <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">왜 EnterLab인가요?</h2>
       <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">바이브코딩시대, 4060시니어의 반격</p>
@@ -678,9 +678,9 @@
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> Cloud SQL 연동 데이터베이스 (CRUD)</li>
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> <strong>최단기간 동작하는 프로토타입 제공</strong></li>
         </ul>
-        <p class="text-xs text-gray-500 mb-6 leading-relaxed">아이디어 검증과 문제 해결에 집중하여, 최단기간 내에 동작하는 프로토타입을 제공합니다.</p>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed mt-auto">아이디어 검증과 문제 해결에 집중하여, 최단기간 내에 동작하는 프로토타입을 제공합니다.</p>
         <%= link_to new_reservation_path(service_type: "app_development", package: "basic"),
-                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all mt-auto" do %>
+                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all" do %>
           무료 상담 신청
         <% end %>
       </div>
@@ -705,9 +705,9 @@
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> <strong>결제 시스템 + 소셜 로그인 연동</strong></li>
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> Vercel/GCP 배포 + 도메인 + 관리자 대시보드</li>
         </ul>
-        <p class="text-xs text-gray-500 mb-6 leading-relaxed">시니어 특유의 기획력과 서비스 품질 관리 역량으로 상용 서비스 수준의 결과물을 만듭니다.</p>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed mt-auto">시니어 특유의 기획력과 서비스 품질 관리 역량으로 상용 서비스 수준의 결과물을 만듭니다.</p>
         <%= link_to new_reservation_path(service_type: "app_development", package: "standard_dev"),
-                    class: "block w-full text-center bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 shadow-lg shadow-indigo-600/25 transition-all mt-auto" do %>
+                    class: "block w-full text-center bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 shadow-lg shadow-indigo-600/25 transition-all" do %>
           무료 상담 신청 →
         <% end %>
       </div>
@@ -729,9 +729,9 @@
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> 실시간 매출 데이터 시각화</li>
           <li class="flex items-start"><span class="text-indigo-600 mr-2 mt-1">✓</span> AI 기반 PMF 분석 리포트 시스템</li>
         </ul>
-        <p class="text-xs text-gray-500 mb-6 leading-relaxed">개발팀 전체를 지휘하는 '지휘자'로서, 자동화된 비즈니스 시스템 전체를 납품합니다.</p>
+        <p class="text-xs text-gray-500 mb-6 leading-relaxed mt-auto">개발팀 전체를 지휘하는 '지휘자'로서, 자동화된 비즈니스 시스템 전체를 납품합니다.</p>
         <%= link_to new_reservation_path(service_type: "app_development", package: "premium_dev"),
-                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all mt-auto" do %>
+                    class: "block w-full text-center bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all" do %>
           무료 상담 신청
         <% end %>
       </div>
