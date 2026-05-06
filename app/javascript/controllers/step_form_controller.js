@@ -10,6 +10,126 @@ export default class extends Controller {
   connect() {
     this.showStep(this.currentStepValue)
     this.updateProgress()
+    this.setupSubmitGuard()
+    this.setupAutoSave()
+  }
+
+  setupSubmitGuard() {
+    const form = this.element.querySelector('#reservation-form')
+    if (!form) return
+    form.addEventListener('submit', (e) => {
+      const submitBtn = form.querySelector('button[type="submit"], input[type="submit"]')
+      if (!submitBtn) return
+      if (submitBtn.dataset.submitting === "true") {
+        e.preventDefault()
+        return
+      }
+      submitBtn.dataset.submitting = "true"
+      submitBtn.disabled = true
+      const originalText = submitBtn.textContent || submitBtn.value
+      submitBtn.dataset.originalText = originalText
+      if (submitBtn.tagName === "BUTTON") {
+        submitBtn.innerHTML = '<span class="inline-flex items-center gap-2"><svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>처리 중...</span>'
+      } else {
+        submitBtn.value = "처리 중..."
+      }
+      // 안전장치: 30초 후 다시 활성화 (네트워크 오류 등 대비)
+      setTimeout(() => {
+        if (submitBtn.dataset.submitting === "true") {
+          submitBtn.disabled = false
+          submitBtn.dataset.submitting = "false"
+          if (submitBtn.tagName === "BUTTON") {
+            submitBtn.textContent = submitBtn.dataset.originalText
+          } else {
+            submitBtn.value = submitBtn.dataset.originalText
+          }
+        }
+      }, 30000)
+    })
+  }
+
+  // localStorage 자동 저장/복구
+  storageKey() {
+    const serviceType = this.element.querySelector('#reservation_service_type')?.value || 'coaching'
+    return `enterlab_reservation_${serviceType}`
+  }
+
+  setupAutoSave() {
+    const form = this.element.querySelector('#reservation-form')
+    if (!form) return
+    this.restoreFromStorage()
+    form.addEventListener('input', () => this.saveToStorage())
+    form.addEventListener('change', () => this.saveToStorage())
+    form.addEventListener('submit', () => this.clearStorage())
+  }
+
+  saveToStorage() {
+    try {
+      const form = this.element.querySelector('#reservation-form')
+      if (!form) return
+      const data = {}
+      const inputs = form.querySelectorAll('input:not([type="hidden"]):not([name="authenticity_token"]):not([type="submit"]), textarea, select')
+      inputs.forEach(input => {
+        const name = input.name
+        if (!name) return
+        if (input.type === 'checkbox') {
+          if (name.endsWith('[]')) {
+            if (!data[name]) data[name] = []
+            if (input.checked) data[name].push(input.value)
+          } else {
+            data[name] = input.checked
+          }
+        } else if (input.type === 'radio') {
+          if (input.checked) data[name] = input.value
+        } else {
+          data[name] = input.value
+        }
+      })
+      data._step = this.currentStepValue
+      localStorage.setItem(this.storageKey(), JSON.stringify(data))
+    } catch (e) {
+      // localStorage 비활성/시크릿 모드 무시
+    }
+  }
+
+  restoreFromStorage() {
+    try {
+      const raw = localStorage.getItem(this.storageKey())
+      if (!raw) return
+      const data = JSON.parse(raw)
+      const form = this.element.querySelector('#reservation-form')
+      if (!form) return
+      Object.entries(data).forEach(([name, value]) => {
+        if (name === '_step') return
+        if (Array.isArray(value)) {
+          value.forEach(v => {
+            const input = form.querySelector(`input[name="${name}"][value="${v}"]`)
+            if (input) input.checked = true
+          })
+        } else if (typeof value === 'boolean') {
+          const input = form.querySelector(`input[name="${name}"]`)
+          if (input && input.type === 'checkbox') input.checked = value
+        } else {
+          const radio = form.querySelector(`input[name="${name}"][value="${value}"]`)
+          if (radio && radio.type === 'radio') {
+            radio.checked = true
+          } else {
+            const input = form.querySelector(`[name="${name}"]`)
+            if (input && input.type !== 'hidden') input.value = value
+          }
+        }
+      })
+    } catch (e) {
+      // 복구 실패 무시
+    }
+  }
+
+  clearStorage() {
+    try {
+      localStorage.removeItem(this.storageKey())
+    } catch (e) {
+      // 무시
+    }
   }
 
   next(event) {
