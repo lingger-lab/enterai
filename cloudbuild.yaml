@@ -2,6 +2,12 @@
 # 프로젝트: enterlabs-489809
 # 리전: asia-northeast3 (서울)
 #
+# ⚠️ 보안 주의:
+# - DATABASE_PASSWORD, SECRET_KEY_BASE, ENCRYPTION_KEY 등 비밀은
+#   이 파일에 절대 평문으로 넣지 말 것.
+# - Cloud Run 서비스에 직접 설정하거나 Secret Manager 사용.
+# - 마이그레이션은 별도 수동 실행 (필요 시 cloud-sql-proxy 사용).
+#
 # 사용법:
 #   COMMIT_SHA=$(git rev-parse --short HEAD) && gcloud builds submit --config cloudbuild.yaml --project enterlabs-489809 --substitutions="COMMIT_SHA=$COMMIT_SHA"
 
@@ -27,22 +33,9 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest']
 
-  # 3. DB 마이그레이션 (Cloud Run Job 일회성 실행)
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: bash
-    args:
-      - '-c'
-      - |
-        gcloud run jobs deploy enterlabs-migrate \
-          --image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA \
-          --region=${_REGION} \
-          --set-cloudsql-instances=enterlabs-489809:asia-northeast3:enterlab \
-          --set-env-vars=RAILS_ENV=production,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_PASSWORD=EnterLab2026!,DATABASE_NAME=enter_ai_production,SECRET_KEY_BASE=c8d8b5f10519b028fa7303db0ba502ec95201604f986d73dad2bba87f78e1fb27265af8df733a7660daaf4a9d8dffbb71a290f6946f3f00e6f8e9cdd630256b7,ENCRYPTION_KEY=prod_enterlab_enc_key_2026secure \
-          --command=bundle \
-          --args=exec,rails,db:migrate
-        gcloud run jobs execute enterlabs-migrate --region=${_REGION} --wait
-
-  # 4. Web 서비스 배포 (update-env-vars로 기존 환경변수 유지)
+  # 3. Web 서비스 배포 (update-env-vars로 기존 비밀 env var 유지)
+  #    비밀 값(DATABASE_PASSWORD/SECRET_KEY_BASE/ENCRYPTION_KEY)은 Cloud Run 서비스에 이미 설정되어 있어 유지됨.
+  #    여기서는 비기밀 값만 보정 (변경 시 일관성 유지).
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -52,7 +45,7 @@ steps:
       - '${_SERVICE_NAME}'
       - '--image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA'
       - '--region=${_REGION}'
-      - '--set-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1,RAILS_SERVE_STATIC_FILES=1,SECRET_KEY_BASE=c8d8b5f10519b028fa7303db0ba502ec95201604f986d73dad2bba87f78e1fb27265af8df733a7660daaf4a9d8dffbb71a290f6946f3f00e6f8e9cdd630256b7,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_PASSWORD=EnterLab2026!,DATABASE_NAME=enter_ai_production,HOST=enterlab.cloud,ENCRYPTION_KEY=prod_enterlab_enc_key_2026secure,ADMIN_EMAIL=admin@enterlab.com,ADMIN_PHONE=010-5529-1912,CONTACT_PHONE=0502-1927-1910'
+      - '--update-env-vars=RAILS_ENV=production,RAILS_LOG_TO_STDOUT=1,RAILS_SERVE_STATIC_FILES=1,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_NAME=enter_ai_production,HOST=enterlab.cloud,ADMIN_EMAIL=admin@enterlab.com,ADMIN_PHONE=010-5529-1912,CONTACT_PHONE=0502-1927-1910'
       - '--add-cloudsql-instances=enterlabs-489809:asia-northeast3:enterlab'
 
 images:
