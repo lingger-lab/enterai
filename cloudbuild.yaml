@@ -27,7 +27,22 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:latest']
 
-  # 3. Web 서비스 배포 (update-env-vars로 기존 환경변수 유지)
+  # 3. DB 마이그레이션 (Cloud Run Job 일회성 실행)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        gcloud run jobs deploy enterlabs-migrate \
+          --image=asia-northeast3-docker.pkg.dev/enterlabs-489809/enterlab/${_SERVICE_NAME}:$COMMIT_SHA \
+          --region=${_REGION} \
+          --set-cloudsql-instances=enterlabs-489809:asia-northeast3:enterlab \
+          --set-env-vars=RAILS_ENV=production,DATABASE_HOST=/cloudsql/enterlabs-489809:asia-northeast3:enterlab,DATABASE_USER=postgres,DATABASE_PASSWORD=EnterLab2026!,DATABASE_NAME=enter_ai_production,SECRET_KEY_BASE=c8d8b5f10519b028fa7303db0ba502ec95201604f986d73dad2bba87f78e1fb27265af8df733a7660daaf4a9d8dffbb71a290f6946f3f00e6f8e9cdd630256b7,ENCRYPTION_KEY=prod_enterlab_enc_key_2026secure \
+          --command=bundle \
+          --args=exec,rails,db:migrate
+        gcloud run jobs execute enterlabs-migrate --region=${_REGION} --wait
+
+  # 4. Web 서비스 배포 (update-env-vars로 기존 환경변수 유지)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:

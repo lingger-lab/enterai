@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-05-04T11:37:03.941Z",
+  "lastUpdated": "2026-05-06T03:16:58.729Z",
   "activeFeatures": [
     "enterai-main",
     "migrate",
@@ -14,7 +14,8 @@
     "helpers",
     "environments",
     "config",
-    "tmp"
+    "tmp",
+    "test"
   ],
   "primaryFeature": "enterai-main",
   "features": {
@@ -59,9 +60,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:39:05.488Z",
-        "lastUpdated": "2026-03-20T05:10:31.213Z"
+        "lastUpdated": "2026-05-06T03:16:14.654Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260320051018_add_service_type_to_reservations.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260506031600_allow_null_coaching_type_on_reservations.rb"
     },
     "initializers": {
       "phase": "do",
@@ -192,6 +193,19 @@
         "lastUpdated": "2026-03-17T13:38:19.706Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\tmp\\seed_slots.rb"
+    },
+    "test": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-05-06T03:00:46.061Z",
+        "lastUpdated": "2026-05-06T03:16:58.728Z"
+      },
+      "lastFile": "c:\\workspace\\enterai-main\\test\\controllers\\reservations_controller_test.rb"
     }
   },
   "pipeline": {
@@ -202,7 +216,7 @@
   "session": {
     "startedAt": "2026-02-21T12:45:05.031Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-05-04T11:37:03.941Z"
+    "lastActivity": "2026-05-06T03:16:58.729Z"
   },
   "history": [
     {
@@ -1618,6 +1632,54 @@
     {
       "timestamp": "2026-05-04T11:37:03.941Z",
       "feature": "javascript",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:00:46.062Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:01:06.582Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:01:31.452Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:06:08.392Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:06:14.387Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:06:28.506Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:16:14.654Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T03:16:58.728Z",
+      "feature": "test",
       "phase": "do",
       "action": "updated"
     }

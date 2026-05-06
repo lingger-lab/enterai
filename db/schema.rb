@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_20_051018) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_06_031600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,7 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_20_051018) do
 
   create_table "reservations", force: :cascade do |t|
     t.datetime "reservation_datetime", null: false, comment: "예약 날짜/시간"
-    t.string "coaching_type", null: false, comment: "코칭 형태"
+    t.string "coaching_type", comment: "코칭 형태"
     t.string "selected_subjects", default: [], comment: "선택 과목", array: true
     t.text "requests", comment: "요청사항"
     t.boolean "privacy_agreed", default: false, null: false, comment: "개인정보 동의"
