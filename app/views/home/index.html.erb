@@ -228,6 +228,7 @@
     <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">VIP 커리큘럼 미리보기</h2>
       <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">실제 코칭에서 사용하는 커리큘럼을 확인해보세요</p>
+      <p class="text-xs sm:text-sm text-indigo-600 mt-2" data-scroll-reveal-target="item">🔍 슬라이드를 클릭하면 크게 볼 수 있습니다</p>
     </div>
     <div class="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group"
          role="region" aria-roledescription="carousel" aria-label="VIP 커리큘럼 슬라이드"
@@ -236,13 +237,14 @@
       <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
         <% (1..12).each do |i| %>
           <img data-carousel-target="slide"
+               data-action="click->carousel#zoom"
                src="/slide/vip_curiculum/VIP_Curriculum<%= i %>.webp"
                alt="VIP 커리큘럼 <%= i %>페이지"
                width="1920"
                height="1080"
                loading="lazy"
                decoding="async"
-               class="w-full flex-shrink-0">
+               class="w-full flex-shrink-0 cursor-zoom-in">
         <% end %>
       </div>
       <button data-action="click->carousel#prev" aria-label="이전 슬라이드"
@@ -524,6 +526,7 @@
     <div class="text-center mb-6 sm:mb-10" data-controller="scroll-reveal">
       <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4" data-scroll-reveal-target="item">왜 EnterLab인가요?</h2>
       <p class="text-sm sm:text-base lg:text-lg text-gray-600" data-scroll-reveal-target="item">바이브코딩시대, 4060시니어의 반격</p>
+      <p class="text-xs sm:text-sm text-indigo-600 mt-2" data-scroll-reveal-target="item">🔍 슬라이드를 클릭하면 크게 볼 수 있습니다</p>
     </div>
     <div class="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group"
          role="region" aria-roledescription="carousel" aria-label="시니어 비교우위 슬라이드"
@@ -532,13 +535,14 @@
       <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
         <% (1..11).each do |i| %>
           <img data-carousel-target="slide"
+               data-action="click->carousel#zoom"
                src="/slide/senior_predominance/Senior<%= i %>.webp"
                alt="시니어 비교우위 <%= i %>페이지"
                width="1920"
                height="1080"
                loading="lazy"
                decoding="async"
-               class="w-full flex-shrink-0">
+               class="w-full flex-shrink-0 cursor-zoom-in">
         <% end %>
       </div>
       <button data-action="click->carousel#prev" aria-label="이전 슬라이드"

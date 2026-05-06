@@ -8,10 +8,12 @@ Rails.application.configure do
     policy.object_src  :none
     policy.script_src  :self, "https://ga.jspm.io"
     policy.style_src   :self, :unsafe_inline, "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"
-    policy.connect_src :self, "https://ga.jspm.io"
+    policy.connect_src :self, "https://ga.jspm.io", "https://cdn.jsdelivr.net"
     policy.frame_ancestors :none
   end
 
   config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
-  config.content_security_policy_nonce_directives = %w[script-src style-src]
+  # style-src는 'unsafe-inline'을 사용하므로 nonce 대상에서 제외
+  # (CSP3 규격: nonce 있으면 'unsafe-inline' 무시 → 다수 inline style 차단됨)
+  config.content_security_policy_nonce_directives = %w[script-src]
 end

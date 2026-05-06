@@ -131,6 +131,35 @@ export default class extends Controller {
     this.startAuto()
   }
 
+  // 슬라이드 클릭 시 전체화면 확대
+  zoom(event) {
+    const img = event.currentTarget
+    if (!img || !img.src) return
+
+    const overlay = document.createElement('div')
+    overlay.className = 'fixed inset-0 z-[100] bg-black/95 flex items-center justify-center cursor-zoom-out p-4'
+    overlay.setAttribute('role', 'dialog')
+    overlay.setAttribute('aria-label', '슬라이드 확대 보기')
+    overlay.innerHTML = `
+      <img src="${img.src}" alt="${img.alt || ''}" class="max-w-full max-h-full object-contain pointer-events-none">
+      <button type="button" aria-label="닫기" class="absolute top-3 right-3 w-11 h-11 bg-white/10 hover:bg-white/20 active:bg-white/30 text-white rounded-full flex items-center justify-center transition-colors text-2xl backdrop-blur-sm">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <p class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-white/70 bg-black/30 px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">탭하면 닫힙니다 · 모바일은 손가락으로 확대 가능</p>
+    `
+
+    const close = () => {
+      overlay.remove()
+      document.removeEventListener('keydown', escHandler)
+      document.body.style.overflow = ''
+    }
+    const escHandler = (e) => { if (e.key === 'Escape') close() }
+    overlay.addEventListener('click', close)
+    document.addEventListener('keydown', escHandler)
+    document.body.style.overflow = 'hidden'
+    document.body.appendChild(overlay)
+  }
+
   // Touch swipe
   touchStart(event) {
     this.touchStartX = event.touches[0].clientX
