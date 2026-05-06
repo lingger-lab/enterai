@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   get "reviews/:token/write", to: "reviews#write", as: :write_review
   resources :reviews, only: [:create, :show]
 
+  # 헬스체크 (UptimeRobot/HetrixTools 등 외부 모니터링용 — DB 쿼리 없음)
+  get '/health', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['ok']] }
+
   # 개발환경 헬스체크 무시
   get '/_stcore/*path', to: proc { [200, {}, ['']] }
 

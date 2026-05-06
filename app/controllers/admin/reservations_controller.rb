@@ -31,7 +31,7 @@ class Admin::ReservationsController < Admin::BaseController
 
     @coaching_popularity = Reservation.group(:coaching_type).count
 
-    reservations = Reservation.order(created_at: :desc)
+    reservations = Reservation.includes(:time_slot, :review).order(created_at: :desc)
     reservations = reservations.where(status: params[:status]) if params[:status].present?
     @pagy, @reservations = pagy(reservations)
   end

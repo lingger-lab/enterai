@@ -10,7 +10,7 @@ class Review < ApplicationRecord
   validates :reservation_id, uniqueness: true
 
   scope :published, -> { where(is_published: true) }
-  scope :submitted, -> { where.not(rating: nil) }
+  scope :submitted, -> { where.not(rating: nil).where.not(content: [nil, ""]) }
   scope :by_category, ->(cat) { where(category: cat) }
 
   before_create :generate_access_token

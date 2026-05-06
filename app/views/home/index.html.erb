@@ -235,11 +235,25 @@
          data-action="mouseenter->carousel#pause mouseleave->carousel#resume touchstart->carousel#touchStart touchmove->carousel#touchMove touchend->carousel#touchEnd"
          style="touch-action: pan-y">
       <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
+        <% vip_titles = [
+          "프로그램 개요",
+          "1주차 — 디지털 기초 + AI 체험",
+          "2주차 — 앱 아이디어 발굴",
+          "3주차 — 웹 개발 실습 (1)",
+          "4주차 — 웹 개발 실습 (2)",
+          "5주차 — 배포와 사업화",
+          "6주차 — 수익화 전략",
+          "산출물 예시",
+          "수강 후 지원",
+          "수강료 및 패키지",
+          "FAQ",
+          "신청 절차"
+        ] %>
         <% (1..12).each do |i| %>
           <img data-carousel-target="slide"
                data-action="click->carousel#zoom"
                src="/slide/vip_curiculum/VIP_Curriculum<%= i %>.webp"
-               alt="VIP 커리큘럼 <%= i %>페이지"
+               alt="VIP 커리큘럼 슬라이드 <%= i %>페이지: <%= vip_titles[i - 1] %>"
                width="1920"
                height="1080"
                loading="lazy"
@@ -533,11 +547,24 @@
          data-action="mouseenter->carousel#pause mouseleave->carousel#resume touchstart->carousel#touchStart touchmove->carousel#touchMove touchend->carousel#touchEnd"
          style="touch-action: pan-y">
       <div data-carousel-target="track" class="flex will-change-transform" style="transition: transform 0.4s ease-in-out">
+        <% senior_titles = [
+          "시니어가 AI 시대에 가진 비교 우위",
+          "경험 + AI = 가장 빠른 학습 곡선",
+          "기획력과 도메인 지식의 가치",
+          "축적된 경력의 강점",
+          "관계 자산과 신뢰도",
+          "리스크 관리 능력",
+          "재무 안정성과 투자 여력",
+          "시니어 시장의 잠재력",
+          "AI가 보완하는 부분",
+          "시니어가 AI로 만드는 차별화",
+          "지금 시작해야 하는 이유"
+        ] %>
         <% (1..11).each do |i| %>
           <img data-carousel-target="slide"
                data-action="click->carousel#zoom"
                src="/slide/senior_predominance/Senior<%= i %>.webp"
-               alt="시니어 비교우위 <%= i %>페이지"
+               alt="시니어 비교우위 슬라이드 <%= i %>페이지: <%= senior_titles[i - 1] %>"
                width="1920"
                height="1080"
                loading="lazy"

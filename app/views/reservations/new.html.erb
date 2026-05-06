@@ -1,5 +1,7 @@
-<div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center" 
-     data-controller="step-form" 
+<% content_for :title, @service_type == "app_development" ? "웹 개발 의뢰 무료 상담 신청" : "AI 코칭 무료 상담 신청" %>
+<% content_for :description, "EnterLab #{@service_type == 'app_development' ? '웹 개발' : 'AI 코칭'} 무료 상담 신청 폼. 3분이면 예약 완료." %>
+<div class="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center"
+     data-controller="step-form"
      data-step-form-total-steps-value="<%= @service_type == 'app_development' ? 8 : 10 %>">
   <!-- 휴대폰 모양 컨테이너 -->
   <div class="w-full max-w-sm mx-auto">
