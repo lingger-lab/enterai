@@ -26,6 +26,17 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
+    <% if Rails.env.production? %>
+    <!-- Google Analytics 4 -->
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-RJ1JTWX6S5" async nonce="<%= content_security_policy_nonce %>"></script>
+    <script nonce="<%= content_security_policy_nonce %>">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RJ1JTWX6S5');
+    </script>
+    <% end %>
+
     <style>
       html {
         scroll-behavior: smooth;

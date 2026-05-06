@@ -6,9 +6,13 @@ Rails.application.configure do
     policy.font_src    :self, "https://fonts.gstatic.com", "https://cdn.jsdelivr.net"
     policy.img_src     :self, :data, "https:"
     policy.object_src  :none
-    policy.script_src  :self, "https://ga.jspm.io"
+    policy.script_src  :self, "https://ga.jspm.io", "https://www.googletagmanager.com"
     policy.style_src   :self, :unsafe_inline, "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"
-    policy.connect_src :self, "https://ga.jspm.io", "https://cdn.jsdelivr.net"
+    policy.connect_src :self, "https://ga.jspm.io", "https://cdn.jsdelivr.net",
+                       "https://www.google-analytics.com",
+                       "https://*.google-analytics.com",
+                       "https://*.analytics.google.com",
+                       "https://*.googletagmanager.com"
     policy.frame_ancestors :none
   end
 
