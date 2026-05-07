@@ -24,7 +24,7 @@
       시니어 기획자가 직접 AI로 창업한 경험을 —<br>
       당신에게 1:1로 전수합니다.
     </p>
-    <p class="text-sm text-gray-400 mb-6 sm:mb-8" data-magnetic-text-target="text">무료 상담 · 부담 없는 첫 만남 · 3분이면 예약 완료</p>
+    <p class="text-sm text-gray-500 mb-6 sm:mb-8" data-magnetic-text-target="text">무료 상담 · 부담 없는 첫 만남 · 3분이면 예약 완료</p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
       <%= link_to new_reservation_path,
                   class: "bg-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-lg shadow-indigo-600/25 hover:bg-indigo-700 hover:shadow-xl hover:scale-105 hover:-translate-y-0.5 active:scale-[0.97] transition-all duration-200",
@@ -288,6 +288,7 @@
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-8 sm:mb-12" data-controller="scroll-reveal">
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight" style="text-wrap: balance" data-scroll-reveal-target="item">수강생 후기</h2>
+      <p class="text-xs text-gray-500 mt-2" data-scroll-reveal-target="item">* 아래는 실제 수강생 사례를 바탕으로 각색된 시나리오입니다. 실제 수강생 사례는 향후 본 페이지에 직접 등록됩니다. 수익은 개별 사례이며 모든 수강생에게 적용되지 않습니다.</p>
     </div>
 
     <% if @reviews.present? %>
@@ -819,6 +820,15 @@
           <li><a href="#reviews" data-turbo="false" class="hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150">수강생 후기</a></li>
           <li><a href="#app-development" data-turbo="false" class="hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150">웹 개발 의뢰</a></li>
           <li>
+            <%= link_to "FAQ", faq_path, class: "hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150" %>
+          </li>
+          <li>
+            <%= link_to "이용약관", terms_path, class: "hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150" %>
+          </li>
+          <li>
+            <%= link_to "환불 정책", refund_policy_path, class: "hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150" %>
+          </li>
+          <li>
             <%= link_to "개인정보 처리방침", privacy_policy_path, class: "hover:text-white hover:underline hover:underline-offset-4 hover:translate-x-1 inline-block transition-all duration-150" %>
           </li>
         </ul>
@@ -840,11 +850,11 @@
           </tr>
           <tr>
             <td class="pr-3 py-0.5 text-gray-500 whitespace-nowrap align-top">연 락 처</td>
-            <td class="py-0.5">0502-1927-1910</td>
+            <td class="py-0.5"><a href="tel:050219271910" class="hover:text-white hover:underline">0502-1927-1910</a></td>
           </tr>
           <tr>
             <td class="pr-3 py-0.5 text-gray-500 whitespace-nowrap align-top">이 메 일</td>
-            <td class="py-0.5">iamblackwhite86@gmail.com</td>
+            <td class="py-0.5"><a href="mailto:iamblackwhite86@gmail.com" class="hover:text-white hover:underline">iamblackwhite86@gmail.com</a></td>
           </tr>
           <tr>
             <td class="pr-3 py-0.5 text-gray-500 whitespace-nowrap align-top">협 &nbsp;&nbsp;&nbsp; 업</td>

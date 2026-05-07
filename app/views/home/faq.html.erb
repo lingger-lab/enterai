@@ -1,0 +1,83 @@
+<% content_for :title, "자주 묻는 질문 (FAQ)" %>
+<% content_for :description, "EnterLab 코칭/웹 개발 의뢰 자주 묻는 질문 모음" %>
+<% faqs = [
+  { q: "코딩을 전혀 모르는데 정말 앱을 만들 수 있나요?",
+    a: "네. AI가 코드를 작성하고 코치가 1:1로 방향을 잡아드립니다. 시니어/직장인/소상공인 수강생 다수가 코딩 경험 없이 4~6주 만에 앱을 완성했습니다. 진짜 필요한 건 ‘아이디어’와 ‘끈기’입니다." },
+  { q: "코칭은 어떤 형태로 진행되나요?",
+    a: "사무실 방문, 출장, 온라인 화상 — 세 가지 중 선택할 수 있습니다. 출장은 김해/장유 중심 반경 100km 이내 가능하며 출장비가 별도 청구될 수 있습니다." },
+  { q: "월 최대 4명만 받는다고 했는데, 정원이 차면요?",
+    a: "강의 품질 유지를 위해 월 4명 한도를 운영합니다. 정원이 찼다면 다음 달 일정에 우선 배정해드립니다. 무료 상담 시 가능한 일정을 안내해드립니다." },
+  { q: "결제는 어떻게 하나요?",
+    a: "무료 상담 후 계약 시점에 결제 방법(계좌이체/카드)을 안내해드립니다. 현재 사이트 내 자동 결제는 지원하지 않습니다." },
+  { q: "환불 가능한가요?",
+    a: "결제 후 7일 이내 + 코칭 시작 전이면 100% 환불됩니다. 그 외 진행 정도에 따라 부분 환불됩니다. 자세한 내용은 환불 정책 페이지를 참조해주세요." },
+  { q: "중간에 일정 변경이 가능한가요?",
+    a: "코칭 시작 24시간 전까지 변경 가능합니다. 코치 일정과 협의하여 가능한 시간으로 재조정합니다." },
+  { q: "코칭이 끝나도 질문할 수 있나요?",
+    a: "패키지에 따라 다릅니다. STARTER 3개월, STANDARD/PREMIUM 1년 동안 카톡 채팅 커뮤니티 지원이 포함됩니다." },
+  { q: "만든 앱의 저작권은 누구에게 있나요?",
+    a: "수강생이 만든 앱/웹사이트의 저작권은 수강생 본인에게 있습니다. 회사는 코칭 자료(전자책, 템플릿)에 대한 저작권만 보유합니다." },
+  { q: "수익이 보장되나요?",
+    a: "수익을 보장하지 않습니다. 수익은 시장 상황, 사용자의 노력, 마케팅 등 다양한 요인에 따라 달라집니다. 후기에 표시된 수익 사례는 개별 사례이며 모두에게 적용되지 않습니다." },
+  { q: "개인정보는 어떻게 관리되나요?",
+    a: "이름/연락처/이메일은 컬럼 단위로 암호화되어 저장됩니다. 한국 리전(서울)의 Google Cloud 인프라에서 운영되며, 자세한 내용은 개인정보 처리방침을 확인해주세요." },
+  { q: "웹 개발 의뢰와 코칭의 차이는 무엇인가요?",
+    a: "코칭은 ‘함께 만드는 것’ — 수강생이 직접 만들 수 있게 가르칩니다. 웹 개발 의뢰는 ‘대신 만드는 것’ — 회사가 PRD부터 배포까지 전 과정을 수행합니다." }
+] %>
+<section class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-10">
+      <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">자주 묻는 질문</h1>
+      <p class="text-gray-600">코칭/웹 개발 의뢰에 관한 궁금한 점을 모았습니다.</p>
+    </div>
+
+    <div class="space-y-4">
+      <% faqs.each_with_index do |faq, i| %>
+        <details class="bg-white rounded-2xl shadow-sm border border-gray-100 group">
+          <summary class="cursor-pointer p-5 sm:p-6 flex items-start gap-3 list-none">
+            <span class="flex-shrink-0 w-7 h-7 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center text-sm font-bold mt-0.5">Q</span>
+            <span class="flex-1 font-semibold text-gray-900 text-base sm:text-lg"><%= faq[:q] %></span>
+            <span class="flex-shrink-0 text-gray-400 group-open:rotate-180 transition-transform mt-1" aria-hidden="true">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 sm:px-6 pb-5 sm:pb-6 pl-14 sm:pl-16 text-gray-700 leading-relaxed">
+            <%= faq[:a] %>
+          </div>
+        </details>
+      <% end %>
+    </div>
+
+    <div class="mt-10 text-center bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+      <p class="text-gray-700 mb-4">더 궁금한 점이 있으시면 무료 상담을 신청해주세요.</p>
+      <%= link_to "무료 상담 신청하기 →", new_reservation_path,
+          class: "inline-block bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors" %>
+    </div>
+
+    <div class="mt-6 text-center">
+      <%= link_to root_path, class: "text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-150" do %>
+        ← 홈으로 돌아가기
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Structured Data -->
+<script type="application/ld+json" nonce="<%= content_security_policy_nonce %>">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    <% faqs.each_with_index do |faq, i| %>
+    {
+      "@type": "Question",
+      "name": <%= faq[:q].to_json.html_safe %>,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": <%= faq[:a].to_json.html_safe %>
+      }
+    }<%= "," unless i == faqs.length - 1 %>
+    <% end %>
+  ]
+}
+</script>

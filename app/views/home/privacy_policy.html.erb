@@ -5,63 +5,150 @@
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">개인정보 처리방침</h1>
 
     <div class="space-y-6 text-gray-700 text-sm sm:text-base leading-relaxed">
+      <p class="text-gray-600">
+        ENTERLABS(이하 "회사")는 정보주체의 개인정보를 중요시하며,
+        개인정보 보호법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률 등
+        관련 법령을 준수하기 위해 다음과 같은 처리방침을 두고 있습니다.
+      </p>
+
       <div>
         <h2 class="text-lg font-semibold text-gray-900 mb-2">1. 개인정보 수집 항목</h2>
-        <p>EnterLab은 코칭 예약 서비스 제공을 위해 다음의 개인정보를 수집합니다:</p>
+        <p>회사는 코칭/웹 개발 의뢰 예약 서비스 제공을 위해 다음의 개인정보를 수집합니다:</p>
         <ul class="list-disc pl-5 mt-2 space-y-1">
-          <li>이름, 연락처(전화번호), 이메일 주소</li>
-          <li>예약 날짜 및 시간, 코칭 형태, 선택 과목</li>
-          <li>요청사항 (선택 입력)</li>
+          <li><strong>필수 항목:</strong> 이름, 연락처(전화번호), 이메일 주소, 예약 일시, 코칭 형태, 선택 과목</li>
+          <li><strong>선택 항목:</strong> 요청사항</li>
+          <li><strong>자동 수집:</strong> 접속 IP, 쿠키, 방문 일시, 서비스 이용 기록 (Google Analytics)</li>
         </ul>
       </div>
 
       <div>
         <h2 class="text-lg font-semibold text-gray-900 mb-2">2. 개인정보 수집 및 이용 목적</h2>
         <ul class="list-disc pl-5 space-y-1">
-          <li>코칭 예약 접수 및 상담 일정 관리</li>
-          <li>예약 확인 및 변경 안내</li>
-          <li>서비스 관련 공지사항 전달</li>
+          <li>코칭/개발 의뢰 예약 접수 및 상담 일정 관리</li>
+          <li>예약 확인, 변경, 취소 안내 (SMS, 이메일, 카카오톡)</li>
+          <li>리마인더 발송 (예약 24시간 전)</li>
+          <li>서비스 관련 공지사항 및 후기 요청 발송</li>
+          <li>서비스 개선을 위한 통계 분석 (Google Analytics)</li>
         </ul>
       </div>
 
       <div>
         <h2 class="text-lg font-semibold text-gray-900 mb-2">3. 개인정보 보유 및 이용 기간</h2>
-        <p>수집된 개인정보는 수집 목적이 달성된 후 지체 없이 파기합니다. 단, 관계 법령에 의해 보존해야 하는 경우 해당 기간 동안 보관합니다.</p>
-      </div>
-
-      <div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-2">4. 개인정보의 제3자 제공</h2>
-        <p>EnterLab은 원칙적으로 이용자의 개인정보를 제3자에게 제공하지 않습니다. 다만, 법률에 의거하거나 이용자의 동의가 있는 경우에 한하여 제공할 수 있습니다.</p>
-      </div>
-
-      <div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-2">5. 개인정보의 안전성 확보 조치</h2>
-        <p>EnterLab은 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다:</p>
-        <ul class="list-disc pl-5 mt-2 space-y-1">
-          <li>개인정보 암호화 저장 및 전송</li>
-          <li>Google Cloud 인프라 기반의 안전한 서버 운영</li>
-          <li>접근 권한 관리 및 접근 통제</li>
+        <ul class="list-disc pl-5 space-y-1">
+          <li><strong>예약 취소 후:</strong> 90일 후 자동 삭제</li>
+          <li><strong>코칭 완료 후:</strong> 1년 후 개인식별정보 자동 익명화 (서비스 통계는 보존)</li>
+          <li><strong>전자상거래법:</strong> 계약/청약철회 기록 5년, 대금결제 기록 5년 (해당 시)</li>
+          <li>정보주체의 삭제 요청 시 즉시 파기</li>
         </ul>
       </div>
 
       <div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-2">6. 개인정보 보호 책임자</h2>
-        <p>
-          이메일: <%= ENV.fetch("ADMIN_EMAIL", "iamblackwhite86@gmail.com") %><br>
-          전화: <%= ENV.fetch("CONTACT_PHONE", "0502-1927-1910") %>
-        </p>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">4. 개인정보 처리위탁 (국내 + 국외)</h2>
+        <p>회사는 서비스 제공을 위해 다음과 같이 개인정보 처리를 위탁하고 있습니다:</p>
+        <div class="overflow-x-auto mt-2">
+          <table class="text-sm w-full border border-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="border px-3 py-2 text-left">수탁업체</th>
+                <th class="border px-3 py-2 text-left">위탁 업무</th>
+                <th class="border px-3 py-2 text-left">국가</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-2">Google Cloud Platform (Google LLC)</td><td class="border px-3 py-2">서버 호스팅 및 데이터 저장</td><td class="border px-3 py-2">대한민국 (서울 리전)</td></tr>
+              <tr><td class="border px-3 py-2">Twilio SendGrid</td><td class="border px-3 py-2">이메일 발송</td><td class="border px-3 py-2">미국</td></tr>
+              <tr><td class="border px-3 py-2">네이버 클라우드 (SENS)</td><td class="border px-3 py-2">SMS 발송</td><td class="border px-3 py-2">대한민국</td></tr>
+              <tr><td class="border px-3 py-2">카카오 (알림톡)</td><td class="border px-3 py-2">카카오톡 알림 발송</td><td class="border px-3 py-2">대한민국</td></tr>
+              <tr><td class="border px-3 py-2">Google Analytics</td><td class="border px-3 py-2">서비스 통계/분석</td><td class="border px-3 py-2">미국</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-2 text-gray-600">위탁계약 시 개인정보보호 관련 법령 준수, 보안 유지, 재위탁 제한 등을 명시하고 있습니다.</p>
       </div>
 
       <div>
-        <h2 class="text-lg font-semibold text-gray-900 mb-2">7. 개인정보 처리방침 변경</h2>
-        <p>이 개인정보 처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경 내용의 추가, 삭제 및 정정이 있는 경우에는 변경사항의 시행 7일 전부터 공지사항을 통하여 고지할 것입니다.</p>
-        <p class="text-gray-500 mt-2">시행일자: 2025년 1월 1일</p>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">5. 개인정보의 제3자 제공</h2>
+        <p>회사는 원칙적으로 정보주체의 개인정보를 제3자에게 제공하지 않습니다. 다만, 다음의 경우에는 예외로 합니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>정보주체로부터 별도의 동의를 받은 경우</li>
+          <li>법률에 특별한 규정이 있는 경우</li>
+          <li>정보주체 또는 그 법정대리인의 생명, 신체, 재산상 이익을 위해 필요한 경우</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">6. 정보주체의 권리·의무 및 행사 방법</h2>
+        <p>정보주체는 회사에 대해 언제든지 다음의 권리를 행사할 수 있습니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>개인정보 <strong>열람</strong> 요구</li>
+          <li>개인정보 <strong>정정·삭제</strong> 요구</li>
+          <li>개인정보 <strong>처리정지</strong> 요구</li>
+          <li>개인정보 처리에 대한 <strong>동의 철회</strong></li>
+        </ul>
+        <p class="mt-2">위 권리 행사는 아래 연락처로 요청 가능합니다. 회사는 지체 없이 (10일 이내) 조치합니다.</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">7. 자동 수집 장치(쿠키)의 운영 및 거부</h2>
+        <p>회사는 서비스 개선을 위해 Google Analytics 쿠키를 사용합니다.</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li><strong>수집 목적:</strong> 방문자 행동 분석을 통한 서비스 개선</li>
+          <li><strong>거부 방법:</strong> 브라우저 설정에서 쿠키 차단 가능 (단, 일부 기능 제한 가능)</li>
+          <li><strong>Google Analytics 옵트아웃:</strong> <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener" class="text-indigo-600 underline">tools.google.com/dlpage/gaoptout</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">8. 만 14세 미만 아동의 개인정보</h2>
+        <p>회사는 만 14세 미만 아동의 개인정보를 수집하지 않습니다. 만 14세 미만 아동이 본 서비스를 이용하는 경우 즉시 해당 정보를 파기합니다.</p>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">9. 개인정보의 안전성 확보 조치</h2>
+        <p>회사는 개인정보의 안전성 확보를 위해 다음의 조치를 취하고 있습니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>개인정보 컬럼 단위 암호화 저장 (이름, 연락처, 이메일)</li>
+          <li>HTTPS/TLS 암호화 통신</li>
+          <li>접근 권한 분리 및 통제</li>
+          <li>침입 차단/탐지 시스템 운영 (Cloud Run 기반)</li>
+          <li>비밀번호 일방향 암호화 (bcrypt)</li>
+          <li>이용 기록 모니터링 및 감사</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">10. 개인정보 보호 책임자</h2>
+        <div class="bg-gray-50 rounded-lg p-4 mt-2">
+          <p class="font-semibold text-gray-900">개인정보 보호 책임자</p>
+          <ul class="mt-2 space-y-1">
+            <li>성명: 김동현 (대표자)</li>
+            <li>이메일: <a href="mailto:<%= ENV.fetch('ADMIN_EMAIL', 'iamblackwhite86@gmail.com') %>" class="text-indigo-600 underline"><%= ENV.fetch('ADMIN_EMAIL', 'iamblackwhite86@gmail.com') %></a></li>
+            <li>전화: <a href="tel:<%= ENV.fetch('CONTACT_PHONE', '0502-1927-1910').gsub('-', '') %>" class="text-indigo-600 underline"><%= ENV.fetch('CONTACT_PHONE', '0502-1927-1910') %></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">11. 권익침해 구제 방법</h2>
+        <p>개인정보 침해로 인한 신고/상담은 아래 기관에 문의 가능합니다:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>개인정보분쟁조정위원회: 1833-6972 (<a href="https://www.kopico.go.kr" target="_blank" rel="noopener" class="text-indigo-600 underline">kopico.go.kr</a>)</li>
+          <li>개인정보침해신고센터: 118 (<a href="https://privacy.kisa.or.kr" target="_blank" rel="noopener" class="text-indigo-600 underline">privacy.kisa.or.kr</a>)</li>
+          <li>대검찰청 사이버수사과: 1301</li>
+          <li>경찰청 사이버수사국: 182</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">12. 처리방침 변경</h2>
+        <p>이 개인정보 처리방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경 내용의 추가, 삭제 및 정정이 있는 경우에는 변경사항 시행 7일 전부터 공지사항을 통해 고지합니다.</p>
+        <p class="text-gray-500 mt-2">최종 시행일자: 2026년 5월 7일</p>
       </div>
     </div>
 
     <div class="mt-10 text-center">
       <%= link_to root_path, class: "text-indigo-600 hover:text-indigo-800 font-semibold transition-colors duration-150" do %>
-        &larr; 홈으로 돌아가기
+        ← 홈으로 돌아가기
       <% end %>
     </div>
   </div>

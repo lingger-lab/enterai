@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   get '/.well-known/*path', to: proc { [204, {}, []] }
 
   get "privacy_policy", to: "home#privacy_policy", as: :privacy_policy
+  get "terms", to: "home#terms", as: :terms
+  get "refund_policy", to: "home#refund_policy", as: :refund_policy
+  get "faq", to: "home#faq", as: :faq
 
   root "home#index"
 
