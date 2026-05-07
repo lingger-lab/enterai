@@ -1,15 +1,12 @@
-name: Deploy to Cloud Run
+name: Deploy to Cloud Run (Manual)
 
+# 수동 트리거 전용 (자동 배포는 GCP_SA_KEY secret 추가 후 push 트리거로 변경 가능)
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # CI(test) 통과 후 배포
-    needs: []  # 별도 워크플로 (수동 트리거 가능)
 
     permissions:
       contents: read
@@ -22,7 +19,6 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          # 사용자가 GitHub Secrets에 GCP_SA_KEY (서비스 계정 JSON) 추가 후 활성화
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up gcloud
