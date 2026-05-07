@@ -41,10 +41,12 @@
               <%= f.label :name, "이름 (닉네임 가능)", class: "block text-base font-semibold text-gray-900 mb-3" %>
               <%= f.text_field :name,
                               required: true,
+                              autocomplete: "name",
                               class: "w-full px-5 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-indigo-500 focus:shadow-lg focus:shadow-indigo-500/20 transition-all duration-200 bg-white placeholder:text-gray-400",
-                              placeholder: "예: 홍길동 또는 닉네임" %>
+                              placeholder: "예: 홍길동 또는 닉네임",
+                              aria: { invalid: @reservation.errors[:name].any?, describedby: @reservation.errors[:name].any? ? "name-error" : nil } %>
               <% if @reservation.errors[:name].any? %>
-                <p class="mt-2 text-sm text-red-500"><%= @reservation.errors[:name].first %></p>
+                <p id="name-error" class="mt-2 text-sm text-red-500" role="alert"><%= @reservation.errors[:name].first %></p>
               <% end %>
             </div>
             <div class="mt-8">
@@ -60,12 +62,15 @@
           <div data-step-form-target="step" class="step-content hidden">
             <div>
               <%= f.label :phone, "연락처", class: "block text-base font-semibold text-gray-900 mb-3" %>
-              <%= f.telephone_field :phone, 
+              <%= f.telephone_field :phone,
                                    required: true,
+                                   autocomplete: "tel",
+                                   inputmode: "numeric",
                                    class: "w-full px-5 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-indigo-500 focus:shadow-lg focus:shadow-indigo-500/20 transition-all duration-200 bg-white placeholder:text-gray-400",
-                                   placeholder: "예: 01012345678" %>
+                                   placeholder: "예: 01012345678",
+                                   aria: { invalid: @reservation.errors[:phone].any?, describedby: @reservation.errors[:phone].any? ? "phone-error" : nil } %>
               <% if @reservation.errors[:phone].any? %>
-                <p class="mt-2 text-sm text-red-500"><%= @reservation.errors[:phone].first %></p>
+                <p id="phone-error" class="mt-2 text-sm text-red-500" role="alert"><%= @reservation.errors[:phone].first %></p>
               <% end %>
             </div>
             <div class="mt-8 flex gap-3">
@@ -86,12 +91,14 @@
           <div data-step-form-target="step" class="step-content hidden">
             <div>
               <%= f.label :email, "이메일", class: "block text-base font-semibold text-gray-900 mb-3" %>
-              <%= f.email_field :email, 
+              <%= f.email_field :email,
                               required: true,
+                              autocomplete: "email",
                               class: "w-full px-5 py-4 text-base border-2 border-gray-200 rounded-2xl focus:ring-0 focus:border-indigo-500 focus:shadow-lg focus:shadow-indigo-500/20 transition-all duration-200 bg-white placeholder:text-gray-400",
-                              placeholder: "예: example@email.com" %>
+                              placeholder: "예: example@email.com",
+                              aria: { invalid: @reservation.errors[:email].any?, describedby: @reservation.errors[:email].any? ? "email-error" : nil } %>
               <% if @reservation.errors[:email].any? %>
-                <p class="mt-2 text-sm text-red-500"><%= @reservation.errors[:email].first %></p>
+                <p id="email-error" class="mt-2 text-sm text-red-500" role="alert"><%= @reservation.errors[:email].first %></p>
               <% end %>
             </div>
             <div class="mt-8 flex gap-3">

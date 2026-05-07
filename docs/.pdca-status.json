@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-05-06T08:51:16.464Z",
+  "lastUpdated": "2026-05-07T03:46:13.262Z",
   "activeFeatures": [
     "enterai-main",
     "migrate",
@@ -86,9 +86,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:42:10.576Z",
-        "lastUpdated": "2026-03-24T16:25:48.926Z"
+        "lastUpdated": "2026-05-07T03:46:13.262Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\jobs\\sms_notification_job.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\jobs\\purge_old_reservations_job.rb"
     },
     "admin": {
       "phase": "do",
@@ -138,9 +138,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T17:55:50.457Z",
-        "lastUpdated": "2026-03-16T09:38:05.992Z"
+        "lastUpdated": "2026-05-07T03:44:31.388Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\mailers\\reservation_mailer.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\test\\mailers\\reservation_mailer_test.rb"
     },
     "javascript": {
       "phase": "do",
@@ -203,9 +203,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-05-06T03:00:46.061Z",
-        "lastUpdated": "2026-05-06T03:16:58.728Z"
+        "lastUpdated": "2026-05-06T09:08:34.440Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\test\\controllers\\reservations_controller_test.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\test\\test_helper.rb"
     }
   },
   "pipeline": {
@@ -216,7 +216,7 @@
   "session": {
     "startedAt": "2026-02-21T12:45:05.031Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-05-06T08:51:16.464Z"
+    "lastActivity": "2026-05-07T03:46:13.262Z"
   },
   "history": [
     {
@@ -1746,6 +1746,60 @@
     {
       "timestamp": "2026-05-06T08:51:16.464Z",
       "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:55:12.711Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:55:29.935Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:55:45.640Z",
+      "feature": "jobs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:55:57.489Z",
+      "feature": "jobs",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:56:09.273Z",
+      "feature": "mailers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T08:57:18.026Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-06T09:08:34.440Z",
+      "feature": "test",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-07T03:44:31.388Z",
+      "feature": "mailers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-07T03:46:13.262Z",
+      "feature": "jobs",
       "phase": "do",
       "action": "updated"
     }
