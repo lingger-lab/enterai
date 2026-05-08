@@ -842,7 +842,10 @@
           </tr>
           <tr>
             <td class="pr-3 py-0.5 text-gray-500 whitespace-nowrap align-top">사업자번호</td>
-            <td class="py-0.5">405-02-46113</td>
+            <td class="py-0.5">
+              405-02-46113
+              <a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=405-02-46113" target="_blank" rel="noopener" class="ml-1 text-xs text-gray-500 hover:text-white underline">[진위확인]</a>
+            </td>
           </tr>
           <tr>
             <td class="pr-3 py-0.5 text-gray-500 whitespace-nowrap align-top">주 &nbsp;&nbsp;&nbsp; 소</td>
@@ -864,8 +867,16 @@
       </div>
     </div>
 
+    <!-- 글자 크기 조절 (시니어 친화) -->
+    <div class="border-t border-gray-800 mt-8 pt-6 flex flex-wrap items-center justify-center gap-3" data-controller="font-size">
+      <span class="text-sm text-gray-400">글자 크기:</span>
+      <button type="button" data-action="click->font-size#small" data-font-size-target="smallBtn" aria-pressed="false" class="px-3 py-1.5 text-xs rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">작게</button>
+      <button type="button" data-action="click->font-size#normal" data-font-size-target="normalBtn" aria-pressed="true" class="px-3 py-1.5 text-sm rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">보통</button>
+      <button type="button" data-action="click->font-size#large" data-font-size-target="largeBtn" aria-pressed="false" class="px-3 py-1.5 text-base rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors">크게</button>
+    </div>
+
     <!-- 보안 안심 배지 -->
-    <div class="border-t border-gray-800 mt-8 pt-6">
+    <div class="border-t border-gray-800 mt-4 pt-6">
       <div class="flex items-center justify-center gap-3 text-gray-400">
         <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
