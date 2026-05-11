@@ -1,0 +1,39 @@
+<div class="max-w-3xl mx-auto py-8 px-4">
+  <h1 class="text-2xl font-bold mb-6">운영 설정</h1>
+  <p class="text-sm text-gray-600 mb-6">변경 사항은 즉시 사이트에 반영됩니다 (재배포 불필요).</p>
+
+  <%= form_with url: admin_settings_path, method: :patch, class: "space-y-6" do |f| %>
+    <% @settings.each do |setting| %>
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+        <label class="block text-sm font-semibold text-gray-900 mb-1" for="settings_<%= setting[:key] %>">
+          <%= setting[:key].humanize %>
+          <% if setting[:is_default] %>
+            <span class="text-xs text-amber-600 font-normal">(기본값)</span>
+          <% end %>
+        </label>
+        <p class="text-xs text-gray-500 mb-2"><%= setting_description(setting[:key]) %></p>
+        <%= text_field_tag "settings[#{setting[:key]}]", setting[:value],
+              id: "settings_#{setting[:key]}",
+              class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+    <% end %>
+
+    <div class="flex gap-3">
+      <%= f.submit "저장", class: "bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700" %>
+      <%= link_to "취소", admin_settings_path, class: "px-6 py-2 text-gray-600 hover:text-gray-900" %>
+    </div>
+  <% end %>
+</div>
+
+<%
+  def setting_description(key)
+    case key
+    when "business_hours" then "푸터 및 문의 페이지에 표시되는 영업 시간 (예: 평일 10:00~18:00)"
+    when "response_sla" then "문의 응답 시간 약속 (예: 영업일 24시간 내 답변)"
+    when "commerce_reg_no" then "통신판매업 신고번호 (결제 도입 시 필수)"
+    when "vat_included" then "가격에 부가세 포함 여부 (true/false)"
+    when "kakao_channel_url" then "카카오톡 채널 URL (개설 후)"
+    else ""
+    end
+  end
+%>

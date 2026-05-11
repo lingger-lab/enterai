@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-05-08T05:41:53.084Z",
+  "lastUpdated": "2026-05-11T04:36:09.389Z",
   "activeFeatures": [
     "enterai-main",
     "migrate",
@@ -15,7 +15,8 @@
     "environments",
     "config",
     "tmp",
-    "test"
+    "test",
+    "billing"
   ],
   "primaryFeature": "enterai-main",
   "features": {
@@ -32,7 +33,7 @@
       "timestamps": {
         "started": "2026-02-21T14:06:40.123Z",
         "completed": "2026-02-22T12:00:00.000Z",
-        "lastUpdated": "2026-05-07T08:37:24.371Z"
+        "lastUpdated": "2026-05-11T04:36:09.389Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\config\\routes.rb"
     },
@@ -47,9 +48,9 @@
       },
       "timestamps": {
         "started": "2026-02-21T14:14:18.118Z",
-        "lastUpdated": "2026-05-07T08:37:30.733Z"
+        "lastUpdated": "2026-05-11T04:35:14.492Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\home_controller.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\account_controller.rb"
     },
     "migrate": {
       "phase": "do",
@@ -60,9 +61,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:39:05.488Z",
-        "lastUpdated": "2026-05-06T03:16:14.654Z"
+        "lastUpdated": "2026-05-11T04:24:39.129Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260506031600_allow_null_coaching_type_on_reservations.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\db\\migrate\\20260511042334_add_user_and_payment_ref_to_reservations.rb"
     },
     "initializers": {
       "phase": "do",
@@ -73,9 +74,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:39:19.639Z",
-        "lastUpdated": "2026-05-06T06:26:38.018Z"
+        "lastUpdated": "2026-05-11T04:34:03.275Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\content_security_policy.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\config\\initializers\\feature_flags.rb"
     },
     "jobs": {
       "phase": "do",
@@ -99,9 +100,9 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-21T16:42:48.474Z",
-        "lastUpdated": "2026-05-06T08:51:16.464Z"
+        "lastUpdated": "2026-05-11T04:35:23.321Z"
       },
-      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin\\reservations_controller.rb"
+      "lastFile": "c:\\workspace\\enterai-main\\app\\controllers\\admin\\settings_controller.rb"
     },
     "admin_users": {
       "phase": "do",
@@ -206,6 +207,19 @@
         "lastUpdated": "2026-05-06T09:08:34.440Z"
       },
       "lastFile": "c:\\workspace\\enterai-main\\test\\test_helper.rb"
+    },
+    "billing": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-05-11T04:34:30.089Z",
+        "lastUpdated": "2026-05-11T04:34:46.296Z"
+      },
+      "lastFile": "c:\\workspace\\enterai-main\\app\\services\\billing\\toss_adapter.rb"
     }
   },
   "pipeline": {
@@ -216,7 +230,7 @@
   "session": {
     "startedAt": "2026-02-21T12:45:05.031Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-05-08T05:41:53.084Z"
+    "lastActivity": "2026-05-11T04:36:09.389Z"
   },
   "history": [
     {
@@ -1818,6 +1832,102 @@
     {
       "timestamp": "2026-05-08T05:41:53.084Z",
       "feature": "javascript",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:23:59.132Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:24:14.191Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:24:25.457Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:24:39.129Z",
+      "feature": "migrate",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:32:56.079Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:33:09.837Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:33:16.986Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:33:51.024Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:34:03.275Z",
+      "feature": "initializers",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:34:30.089Z",
+      "feature": "billing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:34:46.296Z",
+      "feature": "billing",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:35:03.651Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:35:14.492Z",
+      "feature": "enterai-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:35:23.321Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:35:59.528Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-05-11T04:36:09.389Z",
+      "feature": "config",
       "phase": "do",
       "action": "updated"
     }

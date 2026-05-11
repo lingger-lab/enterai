@@ -92,7 +92,9 @@ class Reservation < ApplicationRecord
 
   # 연관
   belongs_to :time_slot, optional: true
+  belongs_to :user, optional: true
   has_one :review
+  has_many :payments, dependent: :destroy
 
   # 유효성 검사
   validates :name, presence: true, length: { maximum: 100 }
