@@ -16,10 +16,13 @@ class Setting < ApplicationRecord
     "kakao_channel_url" => "" # 카카오 채널 URL
   }.freeze
 
-  # 빠른 조회 (캐싱 가능)
+  # 빠른 조회 (캐싱 가능, 테이블 없으면 DEFAULTS 폴백)
   def self.get(key)
     record = find_by(key: key)
     record&.value.presence || DEFAULTS[key.to_s] || ""
+  rescue ActiveRecord::StatementInvalid
+    # 마이그레이션 미적용 시 안전장치
+    DEFAULTS[key.to_s] || ""
   end
 
   def self.set(key, value)
