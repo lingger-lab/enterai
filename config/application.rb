@@ -22,6 +22,9 @@ module EnterAi
     # in config/environments, which are processed later.
     #
     config.time_zone = "Seoul"
+    config.i18n.default_locale = :ko
+    config.i18n.available_locales = [ :ko, :en ]
+    config.i18n.fallbacks = [ :en ]
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.

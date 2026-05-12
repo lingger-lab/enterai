@@ -116,7 +116,12 @@
             <%= link_to "앱 개발 의뢰", root_path(anchor: "app-development"), class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150", data: { turbo: false } %>
             <%= link_to "후기", root_path(anchor: "reviews"), class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150", data: { turbo: false } %>
             <%= link_to "FAQ", faq_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
-            <%= link_to "예약 조회", lookup_reservations_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
+            <% if user_signed_in? %>
+              <%= link_to "마이페이지", account_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
+            <% else %>
+              <%= link_to "로그인", new_user_session_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
+              <%= link_to "예약 조회", lookup_reservations_path, class: "text-gray-700 font-medium hover:text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-lg transition-all duration-150" %>
+            <% end %>
             <%= link_to new_reservation_path,
                         class: "bg-indigo-600 text-white px-5 py-2 rounded-lg font-semibold hover:bg-indigo-600/90 active:scale-[0.98] transition-all duration-150 ml-2",
                         data: { controller: "cta-button" } do %>
@@ -151,7 +156,13 @@
           <%= link_to "앱 개발 의뢰", root_path(anchor: "app-development"), class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close", turbo: false } %>
           <%= link_to "후기", root_path(anchor: "reviews"), class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close", turbo: false } %>
           <%= link_to "FAQ", faq_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
-          <%= link_to "예약 조회", lookup_reservations_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
+          <% if user_signed_in? %>
+            <%= link_to "마이페이지", account_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
+            <%= button_to "로그아웃", destroy_user_session_path, method: :delete, class: "block w-full text-left text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150" %>
+          <% else %>
+            <%= link_to "로그인", new_user_session_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
+            <%= link_to "예약 조회", lookup_reservations_path, class: "block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md transition-colors duration-150", data: { action: "click->mobile-menu#close" } %>
+          <% end %>
           <%= link_to new_reservation_path,
                       class: "block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600/90 active:scale-[0.98] transition-all duration-150 text-center mt-2",
                       data: { controller: "cta-button", action: "click->mobile-menu#close" } do %>

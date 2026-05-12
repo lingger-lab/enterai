@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   devise_for :admin_users, path: "admin", controllers: { sessions: "admin_users/sessions" }
 
+  # 수강생 회원 인증 (Devise) — A안: 이메일/비밀번호 가입 활성
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    registrations: "users/registrations"
+  }, path: "", path_names: {
+    sign_in: "login",
+    sign_up: "signup",
+    sign_out: "logout"
+  }
+
   namespace :admin do
     root "reservations#index"
     resources :reservations, only: [:index, :show, :edit, :update] do
