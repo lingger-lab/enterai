@@ -25,6 +25,20 @@ class User < ApplicationRecord
 
   # :validatable이 email presence/uniqueness/format + password length 자동 검증
 
+  # 회원 가입 시 동일 이메일의 비회원 예약을 자동 연결
+  after_create :link_legacy_reservations
+
+  # 비회원 예약 중 이 회원의 이메일과 일치하는 것을 user_id로 연결
+  # NOTE: attr_encrypted 이메일은 deterministic 아니므로 메모리에서 복호화 후 비교
+  # 사이트 규모상 비회원 예약 수가 적어 OK. 대규모 시 별도 hash 컬럼 권장.
+  def link_legacy_reservations
+    Reservation.where(user_id: nil).find_each do |r|
+      r.update_column(:user_id, self.id) if r.email&.downcase == self.email&.downcase
+    rescue => e
+      Rails.logger.warn "[User#link_legacy_reservations] Reservation ##{r.id} 복호화 실패: #{e.message}"
+    end
+  end
+
   # OAuth provider로 가입한 경우 (이메일/비밀번호 가입은 provider/uid 모두 nil)
   scope :oauth_users, -> { where.not(provider: nil) }
   scope :email_users, -> { where(provider: nil) }

@@ -14,6 +14,9 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @service_type = @reservation.service_type || "coaching"
 
+    # 회원 로그인 시 user_id 자동 연결
+    @reservation.user_id = current_user.id if user_signed_in?
+
     if @reservation.time_slot_id.present?
       slot = TimeSlot.lock.find_by(id: @reservation.time_slot_id)
       unless slot&.available?
@@ -33,7 +36,7 @@ class ReservationsController < ApplicationController
 
   def show
     @reservation = Reservation.find_by(id: params[:id])
-    unless @reservation && @reservation.access_token.present? && ActiveSupport::SecurityUtils.secure_compare(@reservation.access_token, params[:token].to_s)
+    unless @reservation && authorized_for_reservation?(@reservation)
       redirect_to root_path, alert: "접근 권한이 없습니다."
     end
   end
@@ -85,9 +88,8 @@ class ReservationsController < ApplicationController
 
   def cancel
     @reservation = Reservation.find_by(id: params[:id])
-    token = params[:token]
 
-    unless @reservation && @reservation.access_token.present? && ActiveSupport::SecurityUtils.secure_compare(@reservation.access_token, token.to_s)
+    unless @reservation && authorized_for_reservation?(@reservation)
       redirect_to lookup_reservations_path, alert: "접근 권한이 없습니다."
       return
     end
@@ -106,6 +108,18 @@ class ReservationsController < ApplicationController
   end
 
   private
+
+  # 예약 접근 권한: (1) 토큰 일치 OR (2) 회원이고 본인 예약
+  def authorized_for_reservation?(reservation)
+    return false unless reservation
+
+    # 1) 회원이 본인 예약이면 토큰 불필요
+    return true if user_signed_in? && reservation.user_id == current_user.id
+
+    # 2) 토큰 일치
+    return false if reservation.access_token.blank? || params[:token].blank?
+    ActiveSupport::SecurityUtils.secure_compare(reservation.access_token, params[:token].to_s)
+  end
 
   def reservation_params
     params.require(:reservation).permit(
