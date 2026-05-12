@@ -18,12 +18,12 @@ class User < ApplicationRecord
   attr_encrypted :name, key: ENCRYPTION_KEY
   attr_encrypted :phone, key: ENCRYPTION_KEY
 
-  # Devise (database_authenticatable + recoverable + rememberable + omniauthable)
-  devise :database_authenticatable, :recoverable, :rememberable
+  # Devise (database_authenticatable + registerable + recoverable + rememberable)
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   has_many :reservations, dependent: :nullify
 
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  # :validatable이 email presence/uniqueness/format + password length 자동 검증
 
   # OAuth provider로 가입한 경우 (이메일/비밀번호 가입은 provider/uid 모두 nil)
   scope :oauth_users, -> { where.not(provider: nil) }
