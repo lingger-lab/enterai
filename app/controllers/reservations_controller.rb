@@ -17,17 +17,30 @@ class ReservationsController < ApplicationController
     # 회원 로그인 시 user_id 자동 연결
     @reservation.user_id = current_user.id if user_signed_in?
 
-    if @reservation.time_slot_id.present?
-      slot = TimeSlot.lock.find_by(id: @reservation.time_slot_id)
-      unless slot&.available?
-        @reservation.errors.add(:base, "선택한 시간대가 이미 예약되었습니다. 다른 시간을 선택해주세요.")
-        render :new, status: :unprocessable_entity
-        return
+    saved = false
+    slot_unavailable = false
+
+    ActiveRecord::Base.transaction do
+      if @reservation.time_slot_id.present?
+        # FOR UPDATE 락은 트랜잭션 종료까지 유지됨 (동시 예약 방지)
+        slot = TimeSlot.lock.find_by(id: @reservation.time_slot_id)
+        unless slot&.available?
+          slot_unavailable = true
+          raise ActiveRecord::Rollback
+        end
+        @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.utc.hour, min: slot.start_time.utc.min)
+        # 슬롯을 트랜잭션 내에서 즉시 booked로 변경 (after_create_commit 콜백 의존 X)
+        slot.update!(status: "booked")
       end
-      @reservation.reservation_datetime = slot.date.to_datetime.change(hour: slot.start_time.utc.hour, min: slot.start_time.utc.min)
+
+      saved = @reservation.save
+      raise ActiveRecord::Rollback unless saved
     end
 
-    if @reservation.save
+    if slot_unavailable
+      @reservation.errors.add(:base, "선택한 시간대가 이미 예약되었습니다. 다른 시간을 선택해주세요.")
+      render :new, status: :unprocessable_entity
+    elsif saved
       redirect_to reservation_path(@reservation, token: @reservation.access_token), notice: "예약이 완료되었습니다!"
     else
       render :new, status: :unprocessable_entity

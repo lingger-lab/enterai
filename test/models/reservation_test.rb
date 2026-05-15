@@ -123,6 +123,24 @@ class ReservationTest < ActiveSupport::TestCase
     refute res.can_transition_to?("cancelled")
   end
 
+  test "cancelled → 다른 상태 전환 불가 (cancelled는 종착)" do
+    res = Reservation.create!(valid_attrs(status: "cancelled"))
+    refute res.can_transition_to?("pending"), "cancelled → pending 차단 (슬롯 이중예약 위험)"
+    refute res.can_transition_to?("confirmed")
+    refute res.can_transition_to?("completed")
+  end
+
+  test "과거 시간으로 예약 생성 불가" do
+    res = Reservation.new(valid_attrs(reservation_datetime: 1.hour.ago))
+    refute res.valid?
+    assert res.errors[:reservation_datetime].present?
+  end
+
+  test "미래 시간으로 예약 생성 가능" do
+    res = Reservation.new(valid_attrs(reservation_datetime: 1.hour.from_now))
+    assert res.valid?, res.errors.full_messages.to_sentence
+  end
+
   test "package_label은 패키지명을 반환" do
     res = Reservation.new(valid_attrs(package: "standard"))
     assert_equal "STANDARD", res.package_label

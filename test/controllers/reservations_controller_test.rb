@@ -127,4 +127,49 @@ class ReservationsControllerTest < ActionDispatch::IntegrationTest
       post reservations_path, params: { reservation: valid_params }
     end
   end
+
+  test "POST /reservations — 슬롯 예약 성공 시 슬롯이 booked로 변경" do
+    slot = TimeSlot.create!(
+      date: 3.days.from_now.to_date,
+      start_time: "14:00",
+      end_time: "15:00",
+      coaching_type: "온라인 코칭",
+      status: "available"
+    )
+
+    assert_difference -> { Reservation.count }, 1 do
+      post reservations_path, params: {
+        reservation: valid_params(time_slot_id: slot.id)
+      }
+    end
+    assert_response :redirect
+    assert_equal "booked", slot.reload.status
+  end
+
+  test "POST /reservations — 이미 booked인 슬롯은 예약 실패" do
+    slot = TimeSlot.create!(
+      date: 3.days.from_now.to_date,
+      start_time: "15:00",
+      end_time: "16:00",
+      coaching_type: "온라인 코칭",
+      status: "booked"
+    )
+
+    assert_no_difference -> { Reservation.count } do
+      post reservations_path, params: {
+        reservation: valid_params(time_slot_id: slot.id)
+      }
+    end
+    assert_response :unprocessable_entity
+    assert_match(/이미 예약/, @response.body)
+  end
+
+  test "POST /reservations — 과거 시간으로 예약 시 422" do
+    assert_no_difference -> { Reservation.count } do
+      post reservations_path, params: {
+        reservation: valid_params(reservation_datetime: 1.hour.ago)
+      }
+    end
+    assert_response :unprocessable_entity
+  end
 end

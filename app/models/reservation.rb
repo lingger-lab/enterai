@@ -83,10 +83,13 @@ class Reservation < ApplicationRecord
     "completed" => "완료"
   }.freeze
 
+  # 상태 전이 규칙:
+  # - cancelled는 종착 상태 (재활성화 시 슬롯 재예약 로직이 없어 슬롯 이중 예약 위험)
+  # - completed도 종착 상태
   VALID_TRANSITIONS = {
     "pending" => %w[confirmed cancelled],
     "confirmed" => %w[cancelled completed],
-    "cancelled" => %w[pending],
+    "cancelled" => [],
     "completed" => []
   }.freeze
 
@@ -109,11 +112,13 @@ class Reservation < ApplicationRecord
   validates :package, inclusion: { in: PACKAGES.keys + APP_DEV_PACKAGES.keys }
   validates :service_type, inclusion: { in: SERVICE_TYPES }, allow_nil: true
   validate :validate_selected_subjects
+  validate :reservation_datetime_must_be_future, on: :create
 
   # 콜백
+  # 주의: 슬롯 예약(booked 상태 변경)은 ReservationsController에서 트랜잭션 내 처리
+  #       (race condition 방지를 위해 after_create_commit 콜백을 사용하지 않음)
   before_create :generate_access_token
   after_create_commit :send_notifications
-  after_create_commit :mark_slot_booked
   after_create_commit :schedule_reminder
   after_update_commit :reschedule_reminder, if: :saved_change_to_reservation_datetime?
   after_update_commit :release_slot_on_cancel, if: -> { saved_change_to_status? && status == "cancelled" }
@@ -151,8 +156,9 @@ class Reservation < ApplicationRecord
     errors.add(:selected_subjects, "유효하지 않은 과목이 포함되어 있습니다") if invalid.any?
   end
 
-  def mark_slot_booked
-    time_slot&.book!
+  def reservation_datetime_must_be_future
+    return if reservation_datetime.blank?
+    errors.add(:reservation_datetime, "지난 시간으로는 예약할 수 없습니다") if reservation_datetime < Time.current
   end
 
   def release_slot_on_cancel
